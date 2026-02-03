@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../logo.svg";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -22,7 +21,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8 sm:py-5 md:px-12">
         <Link href="/" className="group flex items-center gap-2 sm:gap-3">
           <Image
-            src={logo}
+            src="/images/claude_logo.svg"
             alt="Claude logo"
             width={40}
             height={40}

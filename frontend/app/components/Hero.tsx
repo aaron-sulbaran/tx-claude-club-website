@@ -8,7 +8,7 @@ export default function Hero() {
       </div>
 
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/70 sm:mt-10 sm:text-lg md:text-xl">
-        Join the University of Texas community of builders exploring, creating,
+        Join a community of builders exploring, creating,
         and shipping with Claude. Workshops, hackathons, and demos every month.
       </p>
 

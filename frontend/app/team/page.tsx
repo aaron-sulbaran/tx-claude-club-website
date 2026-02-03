@@ -34,10 +34,10 @@ const TEAM_MEMBERS = [
     id: "3",
     name: "Rohan Yelandur",
     role: "Ambassador",
-    bio: "Brief bio about this team member and their involvement with the club.",
-    image: null, // TO ADD PHOTO: Save as /frontend/public/images/team/rohan-yelandur.jpg, then change to: "/images/team/rohan-yelandur.jpg"
+    bio: "Rohan is a 2nd year Coputer Science major who loves competing in hackathons. He's excited to help students grow with Claude.",
+    image: "/images/team/rohan.jpg",
     linkedin: "https://www.linkedin.com/in/rohan-yelandur/",
-    email: "email@utexas.edu",
+    email: "rohan.yelandur@utexas.edu",
   },
   {
     id: "4",

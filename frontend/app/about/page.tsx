@@ -21,20 +21,11 @@ export default function AboutPage() {
         {/* Photo Section - Placeholder for group photo */}
         <section className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
           <div className="overflow-hidden rounded-2xl bg-muted/10">
-            {/* Placeholder for photo - replace src with actual photo */}
-            <div className="flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-primary/5 to-cream sm:aspect-[21/9]">
-              <div className="text-center">
-                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 sm:mb-4 sm:h-20 sm:w-20">
-                  <FaUsers className="h-8 w-8 text-primary sm:h-10 sm:w-10" />
-                </div>
-                <p className="text-sm font-medium text-foreground/50 sm:text-base">
-                  Club photo coming soon
-                </p>
-                <p className="mt-1 text-xs text-foreground/40 sm:text-sm">
-                  Come to our first GM to be a part of our club (and this photo)!
-                </p>
-              </div>
-            </div>
+            <img
+              src="/images/GM1.jpg"
+              alt="Claude Builder Club general meeting"
+              className="aspect-[16/9] w-full object-cover sm:aspect-[21/9]"
+            />
           </div>
         </section>
 
