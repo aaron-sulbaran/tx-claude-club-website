@@ -142,6 +142,12 @@ export default function TeamPage() {
             ))}
           </div>
         </section>
+
+        <section className="px-4 pb-10 sm:px-8 sm:pb-16">
+          <p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-foreground/70 sm:text-base md:max-w-4xl md:text-lg">
+            This club is by students, for students. If you have any questions, please don&apos;t hesitate to reach out.
+          </p>
+        </section>
       </main>
 
       <Footer />

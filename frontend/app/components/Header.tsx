@@ -6,7 +6,6 @@ import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const navLinks = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Team", href: "/team" },
   { label: "Events", href: "/events" },
@@ -28,7 +27,7 @@ export default function Header() {
             className="h-5 w-5 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-6 sm:w-6 md:h-7 md:w-7"
           />
           <div className="flex flex-col leading-tight">
-            <span className="text-xs font-bold tracking-tight text-foreground sm:text-sm md:text-base">
+            <span className="font-sans text-xs font-bold tracking-tight text-foreground sm:text-sm md:text-base">
               University of Texas at Austin
             </span>
             <span className="text-[10px] font-semibold tracking-wide text-primary sm:text-xs md:text-sm">

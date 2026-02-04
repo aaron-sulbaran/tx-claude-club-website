@@ -1,15 +1,15 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { FaLightbulb, FaUsers, FaRocket, FaGraduationCap } from "react-icons/fa";
+import { FaLightbulb, FaUsers, FaRocket, FaGraduationCap, FaScroll } from "react-icons/fa";
 
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 bg-cream">
         {/* Page Hero */}
-        <section className="border-b border-muted/20 bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
+        <section className="bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
           <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
             About the Claude Builder Club
           </h1>
@@ -18,23 +18,23 @@ export default function AboutPage() {
           </p>
         </section>
 
-        {/* Photo Section - Placeholder for group photo */}
-        <section className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-          <div className="overflow-hidden rounded-2xl bg-muted/10">
-            <img
-              src="/images/GM1.jpg"
-              alt="Claude Builder Club general meeting"
-              className="aspect-[16/9] w-full object-cover sm:aspect-[21/9]"
-            />
-          </div>
-        </section>
-
         {/* Mission Section */}
-        <section className="bg-surface px-4 py-10 sm:px-8 sm:py-16">
+        <section className="px-4 py-10 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-center text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-              Our Mission
-            </h2>
+            <div className="flex items-center justify-center gap-3">
+              <h2 className="text-center text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
+                Our Mission
+              </h2>
+              <a
+                href="https://www.anthropic.com/constitution"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
+                title="Anthropic's Constitution"
+              >
+                <FaScroll className="h-4 w-4" />
+              </a>
+            </div>
             <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
               The Claude Builder Club at UT Austin is dedicated to fostering a community of
               students passionate about artificial intelligence. We provide hands-on experience
@@ -109,7 +109,7 @@ export default function AboutPage() {
         </section>
 
         {/* Backed by Anthropic Section */}
-        <section className="border-t border-muted/20 bg-cream/50 px-4 py-10 sm:px-8 sm:py-16">
+        <section className="px-4 py-10 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-medium uppercase tracking-wider text-foreground/50 sm:text-sm">
               Official Partner
@@ -143,7 +143,9 @@ export default function AboutPage() {
                 View Upcoming Events
               </a>
               <a
-                href="/#join"
+                href="https://www.jotform.com/253555944387168"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-md border-2 border-primary px-6 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white sm:px-8 sm:py-3 sm:text-base"
               >
                 Sign Up Now

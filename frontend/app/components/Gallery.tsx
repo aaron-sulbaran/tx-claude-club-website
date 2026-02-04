@@ -17,7 +17,7 @@ export default function Gallery() {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .gallery-track { animation: gallery-scroll 15s linear infinite; }
+        .gallery-track { animation: gallery-scroll 8s linear infinite; }
         @media (min-width: 640px) { .gallery-track { animation-duration: 25s; } }
         @media (min-width: 768px) { .gallery-track { animation-duration: 30s; } }
       `}</style>
@@ -27,7 +27,8 @@ export default function Gallery() {
             key={i}
             src={img.src}
             alt={img.alt}
-            className="h-48 w-auto flex-shrink-0 rounded-lg object-cover sm:h-64 md:h-80"
+            style={{ height: "clamp(16rem, 30vw, 100rem)" }}
+            className="w-auto flex-shrink-0 rounded-lg object-cover"
           />
         ))}
       </div>

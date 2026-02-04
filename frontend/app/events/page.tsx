@@ -513,11 +513,11 @@ export default function EventsPage() {
         {/* Selected Event Detail Modal/Panel */}
         {selectedEvent && (
           <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/50 p-0 sm:items-center sm:p-4"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/50 p-0 animate-fade-in sm:items-center sm:p-4"
             onClick={() => setSelectedEvent(null)}
           >
             <div
-              className={`max-h-[85vh] w-full overflow-y-auto rounded-t-2xl bg-surface p-5 shadow-xl sm:max-h-[90vh] sm:max-w-lg sm:rounded-2xl md:p-8 ${
+              className={`max-h-[85vh] w-full overflow-y-auto rounded-t-2xl bg-surface p-5 shadow-xl animate-slide-up sm:max-h-[90vh] sm:max-w-lg sm:rounded-2xl md:p-8 ${
                 selectedEvent.isFlagship
                   ? "ring-2 ring-primary ring-offset-2"
                   : ""
