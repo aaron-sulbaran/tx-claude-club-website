@@ -4,12 +4,10 @@ An open-source, production-ready website template for Claude Builder Clubs. Buil
 
 ## Overview
 
-This website was built entirely with [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) (Anthropic's agentic coding tool) as a real-world demonstration of what you can build with Claude. We designed the site around two core principles:
+This website was built in part with [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) (Anthropic's agentic coding tool) as a real-world demonstration of what you can build with Claude. We designed the site around two core principles:
 
 1. **Zero-code content management** — Club officers update events and meeting slides through Google Calendar and Google Sheets. The website pulls from those sources automatically, so nobody ever needs to touch the codebase to keep content fresh.
 2. **Anthropic's design philosophy** — We match Anthropic's conversational, clean, and friendly aesthetic. The site prioritizes readability and functionality, making it easy for visitors to learn about the club, find upcoming events, and access past meeting materials.
-
-The entire site — from the initial scaffold to the API integrations — was built through natural language conversations with Claude Code.
 
 ## Inspiration
 
@@ -126,7 +124,7 @@ The easiest way to deploy is with [Vercel](https://vercel.com/):
 
 ## Credits
 
-Built with Claude Code by the Texas Claude Builder Club at UT Austin.
+Built by the Texas Claude Builder Club at UT Austin.
 
 Inspired by [Cambridge's AI Build Club site](https://cambridge-ai-build-club.github.io/CUABC-Web/).
 
