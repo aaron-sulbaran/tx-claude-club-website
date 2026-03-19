@@ -2,9 +2,8 @@ const images = [
   { src: "/images/GM1.jpg", alt: "General meeting" },
   { src: "/images/hackathonwinners.jpg", alt: "Hackathon winners" },
   { src: "/images/tabling.jpg", alt: "Tabling"},
+  { src: "/images/GM2.jpg", alt: "General meeting"},
 ];
-
-const scrollImages = [...images, ...images, ...images, ...images];
 
 export default function Gallery() {
   return (
@@ -17,19 +16,26 @@ export default function Gallery() {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .gallery-track { animation: gallery-scroll 8s linear infinite; }
-        @media (min-width: 640px) { .gallery-track { animation-duration: 25s; } }
-        @media (min-width: 768px) { .gallery-track { animation-duration: 30s; } }
+        .gallery-track { 
+          animation: gallery-scroll 16s linear infinite; 
+          width: max-content;
+        }
+        @media (min-width: 640px) { .gallery-track { animation-duration: 50s; } }
+        @media (min-width: 768px) { .gallery-track { animation-duration: 60s; } }
       `}</style>
-      <div className="gallery-track flex gap-4 sm:gap-6">
-        {scrollImages.map((img, i) => (
-          <img
-            key={i}
-            src={img.src}
-            alt={img.alt}
-            style={{ height: "clamp(16rem, 30vw, 100rem)" }}
-            className="w-auto flex-shrink-0 rounded-lg object-cover"
-          />
+      <div className="gallery-track flex">
+        {[...Array(4)].map((_, groupIndex) => (
+          <div key={`group-${groupIndex}`} className="flex flex-shrink-0 gap-4 pr-4 sm:gap-6 sm:pr-6">
+            {images.map((img, i) => (
+              <img
+                key={`img-${groupIndex}-${i}`}
+                src={img.src}
+                alt={img.alt}
+                style={{ height: "clamp(16rem, 30vw, 100rem)" }}
+                className="w-auto flex-shrink-0 rounded-lg object-cover"
+              />
+            ))}
+          </div>
         ))}
       </div>
     </section>

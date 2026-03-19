@@ -10,9 +10,6 @@ export default function Form() {
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-8 sm:py-12 md:py-16">
       <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-16">
         <div className="flex-1">
-          <h2 className="mb-3 text-lg font-bold text-foreground sm:mb-4 sm:text-xl md:text-3xl">
-            Fill out this form to join!
-          </h2>
           <div className="overflow-hidden rounded-lg border border-muted/20">
             <iframe
               id="JotFormIFrame-253555944387168"
