@@ -97,7 +97,6 @@ export default function HackathonPage() {
               {[
                 { time: "10:00 AM", event: "Opening Ceremony" },
                 { time: "10:30 AM", event: "Hacking Begins" },
-                { time: "12:30 PM - 1:30 PM", event: "Lunch Served" },
                 { time: "5:00 PM", event: "Submissions Due" },
                 { time: "5:30 PM - 6:30 PM", event: "Judging" },
                 { time: "7:00 PM - 7:30 PM", event: "Awards Ceremony" },
