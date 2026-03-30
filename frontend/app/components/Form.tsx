@@ -18,7 +18,7 @@ export default function Form() {
               style={{
                 minWidth: "100%",
                 maxWidth: "100%",
-                height: 450,
+                height: 2000,
                 border: "none",
               }}
               scrolling="yes"

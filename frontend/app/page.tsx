@@ -24,7 +24,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-foreground">We're Hosting a Hackathon!</h3>
-                  <p className="mt-1 text-sm text-foreground/70">April 4th | Build anything. All experience levels. $450+ in prizes.</p>
+                  <p className="mt-1 text-sm text-foreground/70">April 4th | Build anything. All experience levels. $2000+ in prizes.</p>
                 </div>
               </div>
               <div className="flex-shrink-0">

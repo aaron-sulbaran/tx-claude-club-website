@@ -81,7 +81,7 @@ export default function HackathonPage() {
               </div>
               <h3 className="text-base font-semibold text-foreground sm:text-lg">Win Prizes</h3>
               <p className="mt-2 text-xs leading-relaxed text-foreground/70 sm:text-sm">
-                $450+ in cash prizes across 5 categories, plus free Claude Pro and $25 in API credits for all CBC members.
+                $2000+ in cash prizes across 5 categories, plus free Claude Pro and $25 in API credits for all CBC members.
               </p>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function HackathonPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm font-medium text-foreground/80 sm:mt-10 sm:text-base">
-            <span className="text-primary font-bold">Prize pool: $450+ in cash prizes.</span> Final amounts per category TBD.
+            <span className="text-primary font-bold">Prize pool: $2000+ in cash prizes.</span> Final amounts per category TBD.
           </p>
         </section>
 
