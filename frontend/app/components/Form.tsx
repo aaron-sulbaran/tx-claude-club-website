@@ -1,5 +1,5 @@
 const cards = [
-  { icon: "/images/claude-icons/grid.png", title: "API credits", desc: "$25 in Anthropic API credits for members who check in at meetings" },
+  { icon: "/images/claude-icons/grid.png", title: "API credits", desc: "$25 in API credits when you check in at a meeting" },
   { icon: "/images/claude-icons/lightning.png", title: "Hackathons", desc: "Compete & win tons of amazing prizes" },
   { icon: "/images/claude-icons/flowers.png", title: "Community", desc: "Connect with students passionate about AI" },
   { icon: "/images/claude-icons/lightbulb.png", title: "Learn", desc: "Hands-on tutorials for all skill-levels" },
