@@ -9,7 +9,7 @@ export default function Gallery() {
   return (
     <section className="overflow-hidden bg-cream pb-16 pt-10 sm:pb-20 sm:pt-14 md:pb-24 md:pt-16">
       <h2 className="mb-6 px-4 text-center text-xl font-bold text-foreground sm:mb-8 sm:text-2xl md:text-3xl">
-        What we've been up to...
+        What we&apos;ve been up to...
       </h2>
       <style>{`
         @keyframes gallery-scroll {
