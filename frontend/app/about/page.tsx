@@ -101,7 +101,7 @@ export default function AboutPage() {
                 Resources
               </h3>
               <p className="mt-2 text-xs text-foreground/70 sm:text-sm">
-                Get access to Claude Pro subscriptions, API credits, exclusive tutorials,
+                Get access to API credits, exclusive tutorials,
                 and the latest AI development tools.
               </p>
             </div>

@@ -15,7 +15,7 @@ const TEAM_MEMBERS = [
   {
     id: "1",
     name: "Rohan Yelandur",
-    role: "Ambassador",
+    role: "Co-president",
     bio: "Rohan is a 3rd year Computer Science major who loves competing in hackathons. He's excited to help students grow with Claude.",
     image: "/images/team/rohan.jpg",
     linkedin: "https://www.linkedin.com/in/rohan-yelandur/",
@@ -23,8 +23,8 @@ const TEAM_MEMBERS = [
   {
     id: "2",
     name: "Aaron Sulbaran",
-    role: "Ambassador",
-    bio: "Aaron is a 4th Year Electrical and Computer Engineering major with a passion for building cool projects. He is excited to be a part of the Claude Builder Club and help bring AI to the UT Austin community.",
+    role: "Co-president",
+    bio: "Aaron is a 4th year Electrical and Computer Engineering major with a passion for building cool projects. He is excited to be a part of the Claude Builder Club and help bring AI to the UT Austin community.",
     image: "/images/team/aaron.jpeg", // TO ADD PHOTO: Save as /frontend/public/images/team/aaron.jpg, then change to: "/images/team/aaron.jpg"
     linkedin: "https://www.linkedin.com/in/aaron-sulbaran/",
   },
