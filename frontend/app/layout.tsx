@@ -18,7 +18,7 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: "UT Austin Claude Builder Club",
   description:
-    "University of Texas at Austin Claude Builder Club — workshops, hackathons, and demos.",
+    "University of Texas at Austin Claude Builder Club: workshops, hackathons, and demos.",
   icons: {
     icon: "/images/claude_logo.svg",
   },
