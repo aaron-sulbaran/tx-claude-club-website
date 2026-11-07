@@ -41,7 +41,7 @@ export default function HackathonsPage() {
             <li>
               <Link
                 href="/hackathon/2026"
-                className="group flex h-full flex-col overflow-hidden rounded-xl bg-card"
+                className="hover-fade group flex h-full flex-col overflow-hidden rounded-xl bg-card"
               >
                 <div className="flex aspect-[16/9] items-center justify-center bg-heather">
                   <span className="font-display text-3xl italic">Hooked on Claude</span>

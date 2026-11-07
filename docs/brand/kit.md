@@ -51,6 +51,7 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
 | Stone | `#E8E6DC` | Filled cards on paper, progress track | claude.com gray-200, deck cards `#EDECE8` |
 | Line | `#D6D3C7` | Hairlines | Club posts |
 | Gray | `#5E5D59` | Secondary text, keys | claude.com, club posts |
+| Faint | `#87867F` | Hover fade only, never resting text (3.3:1) | anthropic.com fg-4 |
 | Clay | `#D97757` | Fields: hero, end card, progress bars. **Never text on light backgrounds** (2.7:1) | claude.com, Figma frames |
 | Deep clay | `#863311` | Section labels and text links (7.2:1 on ivory) | Sampled from the workshop deck labels |
 | Peach | `#EBC9B7` | Pastel field | claude.com |
@@ -67,7 +68,11 @@ Pastel and clay fields always carry ink text. White text appears only on clay at
 - **Pastel tiles:** one idea per tile. Never a pastel next to a pastel of the same color.
 - **Illustrations:** the hand-drawn set (`frontend/public/images/claude-icons/`), centered on one flat pastel field. At most one clay accent per graphic.
 - **Measure:** about 30 characters for headlines, about 60 for body.
-- **Motion:** gentle fades and typing. Nothing bouncy. Respect reduced motion.
+- **Motion, after anthropic.com** (details in `docs/research/inspiration/anthropic.md`):
+  - Fades are opacity-led. Use ease-out-cubic `cubic-bezier(.33,1,.68,1)`, about 1 to 1.5s for reveals and 0.2s for hovers.
+  - Hovering a card fades its text to `#87867f`. Images never scale.
+  - One signature moment per page at most (the homepage tile wall).
+  - Nothing bouncy. Every effect sits under `prefers-reduced-motion: no-preference`.
 - **Don'ts:**
   - No gradients, glows or purple-blue "AI" imagery.
   - No stock photos.

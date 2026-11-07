@@ -36,6 +36,7 @@
   --color-ivory: #f0eee6;
   --color-card: #faf9f5;
   --color-stone: #e8e6dc;
+  --color-faint: #87867f;
   --color-line: #d6d3c7;
   --color-subtle: #5e5d59;
   --color-clay: #d97757;
@@ -108,6 +109,116 @@
   .animate-slide-up {
     animation: fadeIn 0.2s ease-out;
   }
+}
+
+/* ============================================================
+   Motion, after anthropic.com (docs/research/inspiration/anthropic.md).
+   Opacity-led, ease-out-cubic, nothing bouncy. Every effect is opt-in under
+   prefers-reduced-motion: no-preference, so reduced motion gets the final
+   state with no extra work.
+   ============================================================ */
+
+/* Hero: a plain fade, like the anthropic.com h1 (1.45s). */
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Tile wall (components/home/TileWall.tsx). Positions come in as custom
+   properties per breakpoint; d = desktop, m = mobile. */
+.tile-wall {
+  container-type: size;
+}
+
+.tile-wall-tile {
+  --dx: var(--dxm);
+  --dy: var(--dym);
+  --dist: var(--distm);
+  position: absolute;
+  left: var(--lm);
+  top: var(--tm);
+  width: var(--wm);
+  aspect-ratio: var(--aspect);
+}
+
+@media (min-width: 768px) {
+  .tile-wall-tile {
+    --dx: var(--dxd);
+    --dy: var(--dyd);
+    --dist: var(--distd);
+    left: var(--ld);
+    top: var(--td);
+    width: var(--wd);
+  }
+}
+
+@keyframes tile-drift {
+  from { translate: 0 -4px; }
+  to { translate: 0 4px; }
+}
+
+@keyframes tile-wall-grow {
+  from { clip-path: inset(0 clamp(20px, 5vw, 80px) 32px round 16px); }
+  to { clip-path: inset(0 0 0 round 0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in-hero {
+    animation: hero-fade 1.45s cubic-bezier(0.33, 1, 0.68, 1) both;
+    animation-delay: var(--fade-delay, 0s);
+  }
+
+  .tile-wall[data-phase="idle"] .tile-wall-tile {
+    opacity: 0;
+    transform: translate(calc(var(--dx) * 0.82cqw), calc(var(--dy) * 0.82cqh)) scale(0.2);
+  }
+
+  .tile-wall[data-phase="pop"] .tile-wall-tile {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.82cqw), calc(var(--dy) * 0.82cqh)) scale(0.42);
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.75s cubic-bezier(0.33, 1, 0.68, 1);
+    transition-delay: calc(var(--dist) * 550ms);
+  }
+
+  .tile-wall[data-phase="ring"] .tile-wall-tile,
+  .tile-wall[data-phase="done"] .tile-wall-tile {
+    transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+    transition-delay: calc(var(--dist) * 250ms);
+  }
+
+  .tile-wall[data-phase="done"] .tile-wall-tile {
+    animation: tile-drift 7s ease-in-out infinite alternate;
+    animation-delay: var(--drift-delay);
+  }
+
+  .tile-wall-copy {
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  .tile-wall[data-phase="done"] .tile-wall-copy,
+  .tile-wall-copy:focus-within {
+    opacity: 1;
+  }
+
+  @supports (animation-timeline: view()) {
+    .tile-wall-frame {
+      animation: tile-wall-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+/* Card hover, as on anthropic.com/news: the title and summary fade to the
+   faint gray. Images never scale. */
+.hover-fade :is(h3, p) {
+  transition: color 0.2s ease-out;
+}
+.hover-fade:hover :is(h3, p) {
+  color: var(--color-faint);
 }
 
 @media (prefers-reduced-motion: reduce) {

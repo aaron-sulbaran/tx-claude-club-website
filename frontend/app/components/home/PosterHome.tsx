@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MeetingDetails from "./MeetingDetails";
 import Wordmark from "../Wordmark";
+import TileWall from "./TileWall";
 import { MEMBERSHIP_FORM_URL } from "../../lib/membership";
 
 // Poster: the homepage reads like the club's own Instagram posts. The hero is
@@ -33,7 +34,7 @@ export default function PosterHome() {
           </div>
           <div>
             {/* COPY: Aaron. The lockup mirrors the Figma end card: white wordmark, ink handle. */}
-            <h1 className="text-white">
+            <h1 className="fade-in-hero text-white">
               <span className="hidden lg:block">
                 <Wordmark size={3} handleClassName="text-ink" />
               </span>
@@ -44,7 +45,7 @@ export default function PosterHome() {
                 <Wordmark size={1.55} align="center" handleClassName="text-ink" />
               </span>
             </h1>
-            <div className="mx-auto mt-8 max-w-md rounded-xl lg:mx-0 bg-card p-5">
+            <div className="fade-in-hero mx-auto mt-8 max-w-md rounded-xl bg-card p-5 [--fade-delay:0.2s] lg:mx-0">
               <MeetingDetails />
               <a
                 href={MEMBERSHIP_FORM_URL}
@@ -88,26 +89,9 @@ export default function PosterHome() {
         </ul>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-xl sm:aspect-[21/9]">
-          <Image
-            src="/images/GM1.jpg"
-            alt="Students at a Claude Builder Club general meeting"
-            fill
-            sizes="(max-width: 1152px) 100vw, 1152px"
-            className="object-cover"
-          />
-        </div>
-        <p className="mt-3 text-[15px] text-subtle">
-          A general meeting.{" "}
-          <Link href="/hackathon/2026" className="text-ink underline underline-offset-2">
-            See the spring 2026 hackathon winners
-          </Link>
-          .
-        </p>
-      </section>
+      <TileWall />
 
-      <section className="mt-16 bg-tan md:mt-24">
+      <section className="bg-tan">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-12 sm:flex-row sm:items-center sm:gap-10 sm:px-8 md:py-16">
           <Image
             src="/images/claude-icons/hands.png"

@@ -32,7 +32,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
       href={slide.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-xl bg-card transition-all hover:border-primary/30"
+      className="hover-fade group flex flex-col overflow-hidden rounded-xl bg-card transition-all hover:border-primary/30"
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-ivory">
@@ -40,7 +40,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
           <img
             src={thumbnail}
             alt={`Thumbnail for ${slide.title}`}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-cover"
             loading="lazy"
             onError={() => setImgFailed(true)}
           />
