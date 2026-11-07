@@ -55,13 +55,6 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/tisha-chhatbar/",
   },
   {
-    id: "p3",
-    name: "Vaishnuv Thiagarajan",
-    role: "Previous Ambassador",
-    image: "/images/team/vaishnuv.jpg",
-    linkedin: "https://www.linkedin.com/in/vaishnuv-thiagarajan/",
-  },
-  {
     id: "p4",
     name: "Cesar Monagas Romero",
     role: "Previous Ambassador",
@@ -75,11 +68,18 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
     image: "/images/team/miranda.jpg",
     linkedin: "https://www.linkedin.com/in/miranda-ye/",
   },
+  {
+    id: "p3",
+    name: "Vaishnuv Thiagarajan",
+    role: "Previous Ambassador",
+    image: "/images/team/vaishnuv.jpg",
+    linkedin: "https://www.linkedin.com/in/vaishnuv-thiagarajan/",
+  },
 ];
 
-function TeamCard({ member }: { member: TeamMember }) {
+function TeamCard({ member, className = "" }: { member: TeamMember; className?: string }) {
   return (
-    <div className="group rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-6">
+    <div className={`group rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-6 ${className}`}>
       {/* Profile Image */}
       <div className="mb-4 flex justify-center">
         {member.image ? (
@@ -164,9 +164,18 @@ export default function TeamPage() {
           <h2 className="mb-8 text-center text-xl font-bold tracking-tight text-foreground sm:text-2xl md:text-3xl">
             Previous Ambassadors
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PREVIOUS_AMBASSADORS.map((member) => (
-              <TeamCard key={member.id} member={member} />
+          {/* Two centered rows: 2 on top, 3 below, so an odd count still reads as a pyramid */}
+          <div className="flex flex-col gap-6">
+            {[PREVIOUS_AMBASSADORS.slice(0, 2), PREVIOUS_AMBASSADORS.slice(2)].map((row) => (
+              <div key={row[0].id} className="flex flex-wrap justify-center gap-6">
+                {row.map((member) => (
+                  <TeamCard
+                    key={member.id}
+                    member={member}
+                    className="w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                  />
+                ))}
+              </div>
             ))}
           </div>
         </section>
