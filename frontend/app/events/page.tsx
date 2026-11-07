@@ -2,6 +2,7 @@
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import PageHeader from "../components/PageHeader";
 import { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
@@ -18,58 +19,20 @@ import {
 } from "../lib/calendar";
 
 // Event type colors matching UT brand
+// Event types use the brand kit's pastel fields with ink text, like the
+// club's posts. The first class of each badge doubles as the legend dot.
 const EVENT_TYPE_STYLES: Record<
   EventType,
   { bg: string; border: string; badge: string; label: string }
 > = {
-  meeting: {
-    bg: "bg-violet-50",
-    border: "border-violet-300",
-    badge: "bg-violet-600 text-white",
-    label: "General Meeting",
-  },
-  tabling: {
-    bg: "bg-teal-50",
-    border: "border-teal-300",
-    badge: "bg-teal-600 text-white",
-    label: "Tabling",
-  },
-  hackathon: {
-    bg: "bg-primary/5",
-    border: "border-primary",
-    badge: "bg-primary text-white",
-    label: "Hackathon",
-  },
-  workshop: {
-    bg: "bg-sky-50",
-    border: "border-sky-300",
-    badge: "bg-sky-500 text-white",
-    label: "Workshop",
-  },
-  demo: {
-    bg: "bg-emerald-50",
-    border: "border-emerald-300",
-    badge: "bg-emerald-600 text-white",
-    label: "Demo Day",
-  },
-  social: {
-    bg: "bg-pink-50",
-    border: "border-pink-300",
-    badge: "bg-pink-500 text-white",
-    label: "Social",
-  },
-  speaker: {
-    bg: "bg-amber-50",
-    border: "border-amber-400",
-    badge: "bg-amber-500 text-white",
-    label: "Guest Speaker",
-  },
-  other: {
-    bg: "bg-gray-50",
-    border: "border-gray-300",
-    badge: "bg-gray-500 text-white",
-    label: "Event",
-  },
+  meeting: { bg: "bg-heather", border: "border-heather", badge: "bg-heather text-ink", label: "General meeting" },
+  tabling: { bg: "bg-tan", border: "border-tan", badge: "bg-tan text-ink", label: "Tabling" },
+  hackathon: { bg: "bg-clay", border: "border-clay", badge: "bg-clay text-ink", label: "Hackathon" },
+  workshop: { bg: "bg-cactus", border: "border-cactus", badge: "bg-cactus text-ink", label: "Workshop" },
+  demo: { bg: "bg-peach", border: "border-peach", badge: "bg-peach text-ink", label: "Demo day" },
+  social: { bg: "bg-peach", border: "border-peach", badge: "bg-peach text-ink", label: "Social" },
+  speaker: { bg: "bg-heather", border: "border-heather", badge: "bg-heather text-ink", label: "Guest speaker" },
+  other: { bg: "bg-line", border: "border-line", badge: "bg-line text-ink", label: "Event" },
 };
 
 const MONTHS = [
@@ -200,38 +163,35 @@ export default function EventsPage() {
       <Header />
 
       <main className="flex-1">
-        {/* Page Hero */}
-        <section className="border-b border-muted/20 bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-            Upcoming Events
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
-            Workshops, hackathons, and demos to help you build with Claude.
-          </p>
-        </section>
+        <PageHeader
+          title="Upcoming events"
+          intro="Workshops, hackathons, and demos to help you build with Claude."
+          field="peach"
+          art="grid"
+        />
 
         {/* Loading State */}
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
             <FaSpinner className="h-8 w-8 animate-spin text-primary" />
-            <p className="mt-4 text-foreground/60">Loading events...</p>
+            <p className="mt-4 text-subtle">Loading events</p>
           </div>
         )}
 
         {/* Error State */}
         {!loading && error && (
           <div className="mx-auto max-w-2xl px-8 py-12">
-            <div className="rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
-              <FaExclamationTriangle className="mx-auto h-8 w-8 text-amber-500" />
-              <h3 className="mt-3 font-semibold text-foreground">
-                Unable to load calendar
+            <div className="rounded-[4px] border border-line bg-tan p-6 text-center">
+              <FaExclamationTriangle className="mx-auto h-8 w-8 text-ink" />
+              <h3 className="mt-3 font-semibold text-ink">
+                The calendar didn’t load
               </h3>
-              <p className="mt-2 text-sm text-foreground/70">{error}</p>
+              <p className="mt-2 text-sm text-subtle">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark"
+                className="mt-4 rounded-[4px] bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
               >
-                Try Again
+                Try again
               </button>
             </div>
           </div>
@@ -243,8 +203,8 @@ export default function EventsPage() {
             {/* Event Type Legend - Hidden on mobile, shown on tablet+ */}
             {activeEventTypes.length > 0 && (
               <div className="mb-6 hidden flex-wrap items-center gap-4 sm:flex">
-                <span className="text-sm font-medium text-foreground/60">
-                  Event Types:
+                <span className="text-sm font-medium text-subtle">
+                  Event types:
                 </span>
                 {activeEventTypes.map((type) => {
                   const styles = EVENT_TYPE_STYLES[type];
@@ -253,7 +213,7 @@ export default function EventsPage() {
                       <span
                         className={`h-3 w-3 rounded-full ${styles.badge.split(" ")[0]}`}
                       />
-                      <span className="text-sm text-foreground/70">
+                      <span className="text-sm text-subtle">
                         {styles.label}
                       </span>
                     </div>
@@ -270,24 +230,24 @@ export default function EventsPage() {
                   const nextStyles = EVENT_TYPE_STYLES[nextEvent.type];
                   return (
                     <div
-                      className={`rounded-xl border-l-4 ${nextStyles.border} ${nextStyles.bg} p-4 shadow-sm sm:p-5`}
+                      className={`rounded-[4px] border-l-4 ${nextStyles.border} ${nextStyles.bg} p-4 sm:p-5`}
                     >
                       <div className="mb-2 flex items-center justify-between sm:mb-3">
-                        <span className="text-[10px] font-semibold uppercase tracking-wide text-foreground/50 sm:text-xs">
+                        <span className="text-[10px] font-medium text-subtle sm:text-xs">
                           Next Event
                         </span>
                         <span
-                          className={`rounded px-1.5 py-0.5 text-[9px] font-semibold uppercase sm:px-2 sm:text-[10px] ${nextStyles.badge}`}
+                          className={`rounded px-1.5 py-0.5 text-[9px] font-medium sm:px-2 sm:text-[10px] ${nextStyles.badge}`}
                         >
                           {nextStyles.label}
                         </span>
                       </div>
-                      <h3 className="text-base font-bold text-foreground sm:text-lg">
+                      <h3 className="text-lg text-ink sm:text-xl">
                         {nextEvent.title}
                       </h3>
-                      <div className="mt-2 space-y-1 text-xs text-foreground/70 sm:mt-3 sm:space-y-1.5 sm:text-sm">
+                      <div className="mt-2 space-y-1 text-xs text-subtle sm:mt-3 sm:space-y-1.5 sm:text-sm">
                         <div className="flex items-center gap-2">
-                          <FaCalendarPlus className="h-3 w-3 shrink-0 text-foreground/40 sm:h-3.5 sm:w-3.5" />
+                          <FaCalendarPlus className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
                           <span>
                             {nextEvent.date.toLocaleDateString("en-US", {
                               weekday: "short",
@@ -297,36 +257,36 @@ export default function EventsPage() {
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <FaClock className="h-3 w-3 shrink-0 text-foreground/40 sm:h-3.5 sm:w-3.5" />
+                          <FaClock className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
                           <span>
                             {nextEvent.startTime}
                             {nextEvent.endTime && ` - ${nextEvent.endTime}`}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <FaMapMarkerAlt className="h-3 w-3 shrink-0 text-foreground/40 sm:h-3.5 sm:w-3.5" />
+                          <FaMapMarkerAlt className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
                           <span>{nextEvent.location}</span>
                         </div>
                       </div>
-                      <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-foreground/70 sm:mt-3 sm:line-clamp-none sm:text-sm">
+                      <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-subtle sm:mt-3 sm:line-clamp-none sm:text-sm">
                         {nextEvent.description}
                       </p>
                       <a
                         href={getAddToCalendarUrl(nextEvent)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`mt-3 inline-flex items-center gap-2 rounded-md ${nextStyles.badge} px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:py-2 sm:text-sm`}
+                        className={`mt-3 inline-flex items-center gap-2 rounded-[4px] ${nextStyles.badge} px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:py-2 sm:text-sm`}
                       >
                         <FaCalendarPlus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                        Add to Calendar
+                        Add to calendar
                       </a>
                     </div>
                   );
                 })()}
 
                 {upcomingEvents.length === 0 && (
-                  <div className="rounded-xl border border-muted/30 bg-surface p-6 text-center shadow-sm">
-                    <p className="text-sm text-foreground/60">
+                  <div className="rounded-[4px] border border-line bg-card p-6 text-center">
+                    <p className="text-sm text-subtle">
                       No upcoming events scheduled. Check back soon!
                     </p>
                   </div>
@@ -335,21 +295,21 @@ export default function EventsPage() {
 
               {/* Calendar Grid - Shows SECOND on mobile, spans left 2 columns on desktop */}
               <div className="order-2 lg:order-1 lg:col-span-2 lg:row-span-2">
-                <div className="rounded-xl border border-muted/30 bg-surface p-3 shadow-sm sm:p-5 md:p-8">
+                <div className="rounded-[4px] border border-line bg-card p-3 sm:p-5 md:p-8">
                   {/* Month Navigation */}
                   <div className="mb-4 flex items-center justify-between sm:mb-8">
                     <button
                       onClick={() => navigateMonth(-1)}
-                      className="rounded-md px-2 py-1.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-cream hover:text-foreground sm:px-3 sm:py-2 sm:text-sm"
+                      className="rounded-[4px] px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
                     >
                       ← Prev
                     </button>
-                    <h2 className="text-lg font-bold text-foreground sm:text-2xl md:text-3xl">
+                    <h2 className="text-xl text-ink sm:text-2xl md:text-3xl">
                       {MONTHS[currentMonth]} {currentYear}
                     </h2>
                     <button
                       onClick={() => navigateMonth(1)}
-                      className="rounded-md px-2 py-1.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-cream hover:text-foreground sm:px-3 sm:py-2 sm:text-sm"
+                      className="rounded-[4px] px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
                     >
                       Next →
                     </button>
@@ -360,7 +320,7 @@ export default function EventsPage() {
                     {DAYS.map((day) => (
                       <div
                         key={day}
-                        className="py-1 text-center text-[10px] font-semibold uppercase tracking-wide text-foreground/50 sm:py-2 sm:text-xs md:text-sm"
+                        className="py-1 text-center text-[10px] font-medium text-subtle sm:py-2 sm:text-xs md:text-sm"
                       >
                         <span className="sm:hidden">{day.charAt(0)}</span>
                         <span className="hidden sm:inline">{day}</span>
@@ -386,19 +346,19 @@ export default function EventsPage() {
                       return (
                         <div
                           key={day}
-                          className={`relative h-12 rounded-md border p-1 transition-colors sm:h-20 sm:rounded-lg sm:p-1.5 md:h-28 md:p-2 lg:h-32 ${
+                          className={`relative h-12 rounded-[4px] border p-1 transition-colors sm:h-20 sm:rounded-[4px] sm:p-1.5 md:h-28 md:p-2 lg:h-32 ${
                             hasFlagship
                               ? "border-primary bg-gradient-to-br from-primary/5 to-amber-50"
                               : isCurrentDay
                                 ? "border-primary/50 bg-primary/5"
-                                : "border-transparent hover:border-muted/30 hover:bg-cream/50"
+                                : "border-transparent hover:border-line hover:bg-tan/50"
                           }`}
                         >
                           <span
                             className={`text-[10px] font-medium sm:text-xs md:text-sm ${
                               isCurrentDay
                                 ? "font-bold text-primary"
-                                : "text-foreground/70"
+                                : "text-subtle"
                             }`}
                           >
                             {day}
@@ -422,7 +382,7 @@ export default function EventsPage() {
                                 );
                               })}
                               {dayEvents.length > 3 && (
-                                <span className="text-[8px] text-foreground/50">
+                                <span className="text-[8px] text-subtle">
                                   +{dayEvents.length - 3}
                                 </span>
                               )}
@@ -449,7 +409,7 @@ export default function EventsPage() {
                                 );
                               })}
                               {dayEvents.length > 2 && (
-                                <span className="text-[10px] text-foreground/50">
+                                <span className="text-[10px] text-subtle">
                                   +{dayEvents.length - 2} more
                                 </span>
                               )}
@@ -465,8 +425,8 @@ export default function EventsPage() {
               {/* All Events - Shows THIRD on mobile, bottom-right on desktop */}
               {upcomingEvents.length > 1 && (
                 <div className="order-3 lg:order-3 lg:col-start-3 lg:row-start-2">
-                  <div className="flex max-h-[280px] flex-col rounded-xl border border-muted/30 bg-surface shadow-sm sm:max-h-[350px] lg:max-h-none lg:h-full">
-                    <h3 className="shrink-0 border-b border-muted/20 px-4 py-3 text-sm font-bold text-foreground sm:px-5 sm:py-4 sm:text-base">
+                  <div className="flex max-h-[280px] flex-col rounded-[4px] border border-line bg-card sm:max-h-[350px] lg:max-h-none lg:h-full">
+                    <h3 className="shrink-0 border-b border-line px-4 py-3 text-base text-ink sm:px-5 sm:py-4 sm:text-base">
                       All Events ({upcomingEvents.length})
                     </h3>
                     <div className="flex flex-col overflow-y-auto lg:max-h-[400px]">
@@ -476,7 +436,7 @@ export default function EventsPage() {
                           <button
                             key={event.id}
                             onClick={() => setSelectedEvent(event)}
-                            className={`flex items-start gap-2 border-b border-muted/10 px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-cream/50 sm:gap-3 sm:px-5 sm:py-4`}
+                            className={`flex items-start gap-2 border-b border-line/70 px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-tan/50 sm:gap-3 sm:px-5 sm:py-4`}
                           >
                             {/* Color indicator dot */}
                             <span
@@ -484,11 +444,11 @@ export default function EventsPage() {
                             />
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-2">
-                                <span className="text-sm font-semibold text-foreground sm:text-base">
+                                <span className="text-sm font-semibold text-ink sm:text-base">
                                   {event.title}
                                 </span>
                               </div>
-                              <div className="mt-0.5 text-[11px] text-foreground/60 sm:mt-1 sm:text-xs">
+                              <div className="mt-0.5 text-[11px] text-subtle sm:mt-1 sm:text-xs">
                                 {event.date.toLocaleDateString("en-US", {
                                   month: "short",
                                   day: "numeric",
@@ -517,7 +477,7 @@ export default function EventsPage() {
             onClick={() => setSelectedEvent(null)}
           >
             <div
-              className={`max-h-[85vh] w-full overflow-y-auto rounded-t-2xl bg-surface p-5 shadow-xl animate-slide-up sm:max-h-[90vh] sm:max-w-lg sm:rounded-2xl md:p-8 ${
+              className={`max-h-[85vh] w-full overflow-y-auto rounded-t-[8px] bg-card p-5 animate-slide-up sm:max-h-[90vh] sm:max-w-lg sm:rounded-[6px] md:p-8 ${
                 selectedEvent.isFlagship
                   ? "ring-2 ring-primary ring-offset-2"
                   : ""
@@ -530,32 +490,32 @@ export default function EventsPage() {
               <div className="mb-3 flex items-start justify-between sm:mb-4">
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {selectedEvent.isFlagship && (
-                    <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary sm:py-1 sm:text-xs">
+                    <span className="flex items-center gap-1 rounded-[4px] bg-tan px-2 py-0.5 text-xs font-medium text-ink sm:py-1">
                       <FaStar className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                       Featured
                     </span>
                   )}
                   <span
-                    className={`rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase sm:px-2 sm:py-1 sm:text-xs ${EVENT_TYPE_STYLES[selectedEvent.type].badge}`}
+                    className={`rounded px-1.5 py-0.5 text-[10px] font-medium sm:px-2 sm:py-1 sm:text-xs ${EVENT_TYPE_STYLES[selectedEvent.type].badge}`}
                   >
                     {EVENT_TYPE_STYLES[selectedEvent.type].label}
                   </span>
                 </div>
                 <button
                   onClick={() => setSelectedEvent(null)}
-                  className="rounded-full p-1 text-foreground/50 transition-colors hover:bg-muted/20 hover:text-foreground"
+                  className="rounded-full p-1 text-subtle transition-colors hover:bg-muted/20 hover:text-ink"
                 >
                   ✕
                 </button>
               </div>
 
               <h2
-                className={`text-xl font-bold sm:text-2xl ${selectedEvent.isFlagship ? "text-primary" : "text-foreground"}`}
+                className={`text-2xl sm:text-3xl ${selectedEvent.isFlagship ? "text-primary" : "text-ink"}`}
               >
                 {selectedEvent.title}
               </h2>
 
-              <div className="mt-3 space-y-1.5 text-sm text-foreground/70 sm:mt-4 sm:space-y-2">
+              <div className="mt-3 space-y-1.5 text-sm text-subtle sm:mt-4 sm:space-y-2">
                 <div className="flex items-start gap-2">
                   <FaClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary sm:h-4 sm:w-4" />
                   <span>
@@ -573,7 +533,7 @@ export default function EventsPage() {
                 </div>
               </div>
 
-              <p className="mt-3 whitespace-pre-wrap text-sm text-foreground/80 sm:mt-4 sm:text-base">
+              <p className="mt-3 whitespace-pre-wrap text-sm text-ink sm:mt-4 sm:text-base">
                 {selectedEvent.description}
               </p>
 
@@ -582,18 +542,14 @@ export default function EventsPage() {
                   href={getAddToCalendarUrl(selectedEvent)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold text-white transition-all ${
-                    selectedEvent.isFlagship
-                      ? "bg-primary shadow-md hover:bg-primary-dark hover:shadow-lg"
-                      : "bg-primary hover:bg-primary-dark"
-                  }`}
+                  className="inline-flex items-center justify-center gap-2 rounded-[4px] bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
                 >
                   <FaCalendarPlus className="h-4 w-4" />
-                  Add to Calendar
+                  Add to calendar
                 </a>
                 <button
                   onClick={() => setSelectedEvent(null)}
-                  className="inline-flex items-center justify-center rounded-md border border-muted/30 px-5 py-2.5 text-sm font-medium text-foreground/70 transition-colors hover:bg-cream"
+                  className="inline-flex items-center justify-center rounded-[4px] border border-line px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-tan"
                 >
                   Close
                 </button>

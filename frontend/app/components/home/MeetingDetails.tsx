@@ -6,13 +6,10 @@ const INSTAGRAM_URL = "https://www.instagram.com/texasclaude";
 
 // The next meeting as a short key/value list, modeled on the details card in
 // the club's GM posts. Keys are sentence case on purpose (no mono caps).
-export default function MeetingDetails({ tone }: { tone: "quiet" | "poster" }) {
+export default function MeetingDetails() {
   const meeting = useNextMeeting();
-  const keyClass = tone === "quiet" ? "text-[var(--kit-gray)]" : "text-[var(--kit-ink)]/70";
-  const rowClass =
-    tone === "quiet"
-      ? "grid grid-cols-[5.5rem_1fr] gap-3 border-t border-[var(--kit-line)] py-3 text-[15px]"
-      : "grid grid-cols-[5.5rem_1fr] gap-3 border-t-2 border-[var(--kit-ink)] py-3 text-[15px]";
+  const keyClass = "text-subtle";
+  const rowClass = "grid grid-cols-[5.5rem_1fr] gap-3 border-t-2 border-ink py-3 text-[15px]";
 
   return (
     <div aria-live="polite">
@@ -48,7 +45,7 @@ export default function MeetingDetails({ tone }: { tone: "quiet" | "poster" }) {
         </dl>
       )}
       {meeting.status === "none" && (
-        <p className="border-t border-current/20 py-3 text-[15px]">
+        <p className="border-t-2 border-ink py-3 text-[15px]">
           Nothing on the calendar yet. Dates go up on{" "}
           <a href={INSTAGRAM_URL} className="underline underline-offset-2" target="_blank" rel="noopener noreferrer">
             Instagram

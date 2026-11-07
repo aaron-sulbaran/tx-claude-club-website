@@ -8,16 +8,16 @@ import { MEMBERSHIP_FORM_URL } from "../../lib/membership";
 // poster: one flat pastel field, one hand-drawn illustration, words below.
 
 const PERKS = [
-  { title: "Free Claude", body: "Claude Pro, API credits, and merch.", art: "grid", field: "var(--kit-peach)" },
-  { title: "Hackathons", body: "Build in a day, win prizes.", art: "lightning", field: "var(--kit-heather)" },
-  { title: "Community", body: "Students across majors who build with AI.", art: "flowers", field: "var(--kit-cactus)" },
-  { title: "Workshops", body: "Hands-on sessions for every skill level.", art: "lightbulb", field: "var(--kit-tan)" },
+  { title: "Free Claude", body: "Claude Pro, API credits, and merch.", art: "grid", field: "bg-peach" },
+  { title: "Hackathons", body: "Build in a day, win prizes.", art: "lightning", field: "bg-heather" },
+  { title: "Community", body: "Students across majors who build with AI.", art: "flowers", field: "bg-cactus" },
+  { title: "Workshops", body: "Hands-on sessions for every skill level.", art: "lightbulb", field: "bg-tan" },
 ];
 
 export default function PosterHome() {
   return (
-    <main className="text-[var(--kit-ink)]">
-      <section className="bg-[var(--kit-clay)]">
+    <main className="text-ink">
+      <section className="bg-clay">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 sm:px-8 md:py-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16 lg:py-20">
           <div className="mx-auto w-48 sm:w-60 lg:w-full lg:max-w-[26rem]">
             <Image
@@ -35,19 +35,25 @@ export default function PosterHome() {
             <h1 className="text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
               <span className="font-semibold">Claude</span> Builder Club
             </h1>
-            <p className="mt-2 text-2xl italic" style={{ fontFamily: "var(--font-display)" }}>
+            <p className="mt-2 font-display text-2xl italic">
               @ut austin
             </p>
-            <div className="mt-8 max-w-md rounded-[4px] border-2 border-[var(--kit-ink)] bg-[var(--kit-card)] p-5">
-              <MeetingDetails tone="poster" />
+            <div className="mt-8 max-w-md rounded-[4px] border-2 border-ink bg-card p-5">
+              <MeetingDetails />
               <a
                 href={MEMBERSHIP_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 flex w-full items-center justify-center rounded-[4px] bg-[var(--kit-ink)] px-6 py-3 text-base font-medium text-[var(--kit-ivory)] transition-colors hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--kit-ink)]"
+                className="mt-4 flex w-full items-center justify-center rounded-[4px] bg-ink px-6 py-3 text-base font-medium text-ivory transition-colors hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 Join the club
               </a>
+              <Link
+                href="/events"
+                className="mt-3 block text-center text-[15px] underline underline-offset-4 hover:text-primary"
+              >
+                See all events
+              </Link>
             </div>
           </div>
         </div>
@@ -58,10 +64,7 @@ export default function PosterHome() {
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-6">
           {PERKS.map((perk) => (
             <li key={perk.title}>
-              <div
-                className="flex aspect-[4/5] items-center justify-center rounded-[4px]"
-                style={{ background: perk.field }}
-              >
+              <div className={`flex aspect-[4/5] items-center justify-center rounded-[4px] ${perk.field}`}>
                 <Image
                   src={`/images/claude-icons/${perk.art}.png`}
                   alt=""
@@ -72,7 +75,7 @@ export default function PosterHome() {
                 />
               </div>
               <h3 className="mt-3 text-xl">{perk.title}</h3>
-              <p className="mt-1 text-[15px] text-[var(--kit-gray)]">{perk.body}</p>
+              <p className="mt-1 text-[15px] text-subtle">{perk.body}</p>
             </li>
           ))}
         </ul>
@@ -88,16 +91,16 @@ export default function PosterHome() {
             className="object-cover"
           />
         </div>
-        <p className="mt-3 text-[15px] text-[var(--kit-gray)]">
+        <p className="mt-3 text-[15px] text-subtle">
           A general meeting.{" "}
-          <Link href="/hackathon/2026" className="text-[var(--kit-ink)] underline underline-offset-2">
+          <Link href="/hackathon/2026" className="text-ink underline underline-offset-2">
             See the spring 2026 hackathon winners
           </Link>
           .
         </p>
       </section>
 
-      <section className="mt-16 bg-[var(--kit-tan)] md:mt-24">
+      <section className="mt-16 bg-tan md:mt-24">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-12 sm:flex-row sm:items-center sm:gap-10 sm:px-8 md:py-16">
           <Image
             src="/images/claude-icons/hands.png"

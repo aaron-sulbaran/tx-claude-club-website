@@ -18,36 +18,32 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-surface">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-8 sm:py-2.5 md:px-12">
-        <Link href="/" className="group flex items-center gap-1.5 sm:gap-2">
+    <header className="sticky top-0 z-50 border-b border-ink/15 bg-ivory">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+        <Link href="/" className="group flex items-center gap-2" aria-label="Claude Builder Club at UT Austin, home">
           <Image
             src="/images/claude_logo.svg"
-            alt="Claude logo"
+            alt=""
             width={28}
             height={28}
-            className="h-5 w-5 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-6 sm:w-6 md:h-7 md:w-7"
+            className="h-6 w-6 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-7 sm:w-7"
           />
-          <div className="flex flex-col leading-tight">
-            <span className="font-sans text-xs font-bold tracking-tight text-foreground sm:text-sm md:text-base">
-              University of Texas at Austin
-            </span>
-            <span className="text-[10px] font-semibold tracking-wide text-primary sm:text-xs md:text-sm">
-              Claude Builder Club
-            </span>
-          </div>
+          <span className="font-display text-lg leading-none text-ink sm:text-xl">
+            <span className="font-semibold">Claude</span> Builder Club{" "}
+            <span className="italic text-subtle">@ut austin</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 text-sm font-medium text-foreground/70 md:flex lg:gap-8 lg:text-base">
+        <nav className="hidden items-center gap-6 text-[15px] text-ink md:flex lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="group relative transition-colors hover:text-primary"
+              className="group relative py-1"
             >
               {link.label}
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-300 ease-out group-hover:w-full" />
+              <span className="absolute bottom-0 left-0 h-px w-0 bg-ink transition-all duration-300 ease-out group-hover:w-full" />
             </Link>
           ))}
         </nav>
@@ -55,8 +51,9 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-md text-foreground/70 transition-colors hover:bg-cream hover:text-foreground md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-[4px] text-ink transition-colors hover:bg-tan md:hidden"
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? (
             <FaTimes className="h-5 w-5" />
@@ -73,14 +70,14 @@ export default function Header() {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="border-t border-muted/20 bg-surface px-4 pb-4">
+          <div className="border-t border-ink/15 bg-ivory px-5 pb-4">
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-md px-4 py-3 text-base font-medium text-foreground/70 transition-colors hover:bg-cream hover:text-primary"
+                  className="rounded-[4px] px-3 py-3 text-base text-ink transition-colors hover:bg-tan"
                 >
                   {link.label}
                 </Link>
@@ -90,7 +87,6 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="h-[1.5px] w-full bg-primary" />
     </header>
   );
 }

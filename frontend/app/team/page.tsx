@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import PageHeader from "../components/PageHeader";
 import { FaLinkedin, FaUserCircle } from "react-icons/fa";
 
 // ============================================================
@@ -43,35 +44,35 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
   {
     id: "p1",
     name: "Jessica Zhu",
-    role: "Previous Ambassador",
+    role: "Previous ambassador",
     image: "/images/team/jessica.jpg",
     linkedin: "https://www.linkedin.com/in/jessica-zhu-/",
   },
   {
     id: "p2",
     name: "Tisha Chhatbar",
-    role: "Previous Ambassador",
+    role: "Previous ambassador",
     image: "/images/team/tisha.jpg",
     linkedin: "https://www.linkedin.com/in/tisha-chhatbar/",
   },
   {
     id: "p4",
     name: "Cesar Monagas Romero",
-    role: "Previous Ambassador",
+    role: "Previous ambassador",
     image: "/images/team/cesar.jpg",
     linkedin: "https://www.linkedin.com/in/cesarmonagasromero/",
   },
   {
     id: "p5",
     name: "Miranda Ye",
-    role: "Previous Ambassador",
+    role: "Previous ambassador",
     image: "/images/team/miranda.jpg",
     linkedin: "https://www.linkedin.com/in/miranda-ye/",
   },
   {
     id: "p3",
     name: "Vaishnuv Thiagarajan",
-    role: "Previous Ambassador",
+    role: "Previous ambassador",
     image: "/images/team/vaishnuv.jpg",
     linkedin: "https://www.linkedin.com/in/vaishnuv-thiagarajan/",
   },
@@ -79,32 +80,32 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
 
 function TeamCard({ member, className = "" }: { member: TeamMember; className?: string }) {
   return (
-    <div className={`group rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-6 ${className}`}>
+    <div className={`rounded-[4px] border border-line bg-card p-5 sm:p-6 ${className}`}>
       {/* Profile Image */}
       <div className="mb-4 flex justify-center">
         {member.image ? (
           <img
             src={member.image}
             alt={member.name}
-            className="h-24 w-24 rounded-full object-cover ring-2 ring-muted/20 transition-all group-hover:ring-primary/30 sm:h-32 sm:w-32"
+            className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32"
           />
         ) : (
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-cream ring-2 ring-muted/20 transition-all group-hover:ring-primary/30 sm:h-32 sm:w-32">
-            <FaUserCircle className="h-16 w-16 text-primary/40 sm:h-20 sm:w-20" />
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-tan sm:h-32 sm:w-32">
+            <FaUserCircle className="h-16 w-16 text-ink/30 sm:h-20 sm:w-20" />
           </div>
         )}
       </div>
 
       {/* Info */}
       <div className="text-center">
-        <h3 className="text-base font-bold text-foreground sm:text-lg">
+        <h3 className="text-xl text-ink">
           {member.name}
         </h3>
-        <p className="mt-1 text-xs font-medium text-primary sm:text-sm">
+        <p className="mt-1 text-sm text-primary">
           {member.role}
         </p>
         {member.bio && (
-          <p className="mt-2 text-xs text-foreground/60 sm:mt-3 sm:text-sm">
+          <p className="mt-3 text-[15px] text-subtle">
             {member.bio}
           </p>
         )}
@@ -117,7 +118,7 @@ function TeamCard({ member, className = "" }: { member: TeamMember; className?: 
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/10 text-foreground/50 transition-colors hover:bg-[#0077B5]/10 hover:text-[#0077B5]"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-tan"
             aria-label={`${member.name}'s LinkedIn`}
           >
             <FaLinkedin className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -133,16 +134,13 @@ export default function TeamPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1">
-        {/* Page Hero */}
-        <section className="border-b border-muted/20 bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-            Meet the Team
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
-            The Claude Ambassadors leading the Builder Club at UT Austin
-          </p>
-        </section>
+      <main className="flex-1 text-ink">
+        <PageHeader
+          title="Meet the team"
+          intro="The Claude Ambassadors leading the Builder Club at UT Austin"
+          field="tan"
+          art="hands"
+        />
 
         {/* Team Grid */}
         <section className="mx-auto max-w-3xl px-4 py-10 sm:px-8 sm:py-16">
@@ -154,15 +152,15 @@ export default function TeamPage() {
         </section>
 
         <section className="px-4 pb-10 sm:px-8 sm:pb-16">
-          <p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-foreground/70 sm:text-base md:max-w-4xl md:text-lg">
+          <p className="mx-auto max-w-2xl text-center text-lg leading-relaxed text-subtle">
             This club is by students, for students. If you have any questions, please don&apos;t hesitate to reach out.
           </p>
         </section>
 
         {/* Previous Ambassadors Section */}
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-8 sm:pb-16">
-          <h2 className="mb-8 text-center text-xl font-bold tracking-tight text-foreground sm:text-2xl md:text-3xl">
-            Previous Ambassadors
+          <h2 className="mb-8 text-center text-2xl md:text-3xl">
+            Previous ambassadors
           </h2>
           {/* Two centered rows: 2 on top, 3 below, so an odd count still reads as a pyramid */}
           <div className="flex flex-col gap-6">

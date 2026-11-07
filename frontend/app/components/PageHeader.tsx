@@ -1,0 +1,49 @@
+import Image from "next/image";
+import type { ReactNode } from "react";
+
+// Every inner page opens like one of the club's posts: one flat pastel
+// field, one hand-drawn illustration, the title in Newsreader.
+export type PosterField = "peach" | "heather" | "cactus" | "tan";
+export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning" | "shapes";
+
+const FIELD_CLASS: Record<PosterField, string> = {
+  peach: "bg-peach",
+  heather: "bg-heather",
+  cactus: "bg-cactus",
+  tan: "bg-tan",
+};
+
+export default function PageHeader({
+  title,
+  intro,
+  field,
+  art,
+  children,
+}: {
+  title: string;
+  intro?: ReactNode;
+  field: PosterField;
+  art: PosterArt;
+  children?: ReactNode;
+}) {
+  return (
+    <section className={FIELD_CLASS[field]}>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-10 sm:px-8 sm:py-14 md:py-16">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl md:text-6xl">{title}</h1>
+          {intro && <p className="mt-4 max-w-xl text-base text-ink sm:text-lg">{intro}</p>}
+          {children}
+        </div>
+        <Image
+          src={`/images/claude-icons/${art}.png`}
+          alt=""
+          width={512}
+          height={512}
+          priority
+          sizes="(max-width: 640px) 80px, 176px"
+          className="h-20 w-20 shrink-0 sm:h-36 sm:w-36 md:h-44 md:w-44"
+        />
+      </div>
+    </section>
+  );
+}
