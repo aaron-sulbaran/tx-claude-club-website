@@ -61,3 +61,69 @@ body {
     animation: fadeIn 0.2s ease-out;
   }
 }
+
+/* ============================================================
+   Design lab (dev and Vercel previews only; see lib/design-lab.ts)
+   Unlayered on purpose: these beat Tailwind's layered utilities, so the
+   variants can restyle shared pages without touching baseline markup.
+   ============================================================ */
+
+[data-for] { display: none; }
+html:not([data-design]) [data-for="baseline"],
+html[data-design="baseline"] [data-for="baseline"],
+html[data-design="quiet"] [data-for="quiet"],
+html[data-design="poster"] [data-for="poster"] { display: block; }
+
+/* Club brand kit tokens (club hub reference/brand/kit.md). Clay is a field
+   color only: text on clay is ink, and text links use a deeper clay that
+   passes 4.5:1 on ivory. */
+html[data-design="quiet"],
+html[data-design="poster"] {
+  --background: #f0eee6;
+  --foreground: #141413;
+  --color-primary: #a9492a;
+  --color-primary-dark: #8f3d22;
+  --color-primary-light: #c6613f;
+  --color-muted: #d6d3c7;
+  --color-surface: #faf9f5;
+  --color-cream: #f0eee6;
+  --kit-ink: #141413;
+  --kit-ivory: #f0eee6;
+  --kit-card: #faf9f5;
+  --kit-line: #d6d3c7;
+  --kit-gray: #5e5d59;
+  --kit-clay: #d97757;
+  --kit-tan: #eadfc8;
+  --kit-peach: #ebc9b7;
+  --kit-heather: #cbcadb;
+  --kit-cactus: #bcd1ca;
+}
+
+html[data-design="quiet"] body,
+html[data-design="poster"] body {
+  --font-serif: var(--font-kit-sans);
+  --font-display: var(--font-kit-serif);
+}
+
+html[data-design="quiet"] :is(h1, h2, h3),
+html[data-design="poster"] :is(h1, h2, h3) {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Shared chrome on every page: ink footer (ivory on clay fails contrast),
+   filled buttons in ink. */
+html[data-design="quiet"] footer.bg-primary,
+html[data-design="poster"] footer.bg-primary { background: var(--kit-ink); }
+html[data-design="quiet"] a.bg-primary,
+html[data-design="poster"] a.bg-primary { background: var(--kit-ink); color: var(--kit-ivory); }
+
+/* Quiet: the card kit flattens to hairlines everywhere. */
+html[data-design="quiet"] :is(.shadow-sm, .shadow-md, .shadow-lg) { box-shadow: none; }
+html[data-design="quiet"] .rounded-xl { border-radius: 6px; }
+html[data-design="quiet"] .border-muted\/20 { border-color: var(--kit-line); }
+
+/* Poster: cards become flat paper on the ivory field, squarer corners. */
+html[data-design="poster"] :is(.shadow-sm, .shadow-md, .shadow-lg) { box-shadow: none; }
+html[data-design="poster"] .rounded-xl { border-radius: 4px; }
+html[data-design="poster"] .border-muted\/20 { border-color: var(--kit-ink); }
