@@ -1,0 +1,124 @@
+import Image from "next/image";
+import Link from "next/link";
+import MeetingDetails from "./MeetingDetails";
+import { MEMBERSHIP_FORM_URL } from "../../lib/membership";
+
+// Poster: the homepage reads like the club's own Instagram posts. The hero is
+// the end card (clay field, tower and sun, wordmark), and each perk is a small
+// poster: one flat pastel field, one hand-drawn illustration, words below.
+
+const PERKS = [
+  { title: "Free Claude", body: "Claude Pro, API credits, and merch.", art: "grid", field: "var(--kit-peach)" },
+  { title: "Hackathons", body: "Build in a day, win prizes.", art: "lightning", field: "var(--kit-heather)" },
+  { title: "Community", body: "Students across majors who build with AI.", art: "flowers", field: "var(--kit-cactus)" },
+  { title: "Workshops", body: "Hands-on sessions for every skill level.", art: "lightbulb", field: "var(--kit-tan)" },
+];
+
+export default function PosterHome() {
+  return (
+    <main className="text-[var(--kit-ink)]">
+      <section className="bg-[var(--kit-clay)]">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 sm:px-8 md:py-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16 lg:py-20">
+          <div className="mx-auto w-48 sm:w-60 lg:w-full lg:max-w-[26rem]">
+            <Image
+              src="/images/UT%20CBC%20Logos/CBCLogo_ClaudeSun.png"
+              alt="Claude Builder Club logo: the UT Tower under the Claude sun"
+              width={1080}
+              height={1080}
+              priority
+              sizes="(max-width: 1024px) 240px, 420px"
+              className="h-auto w-full"
+            />
+          </div>
+          <div>
+            {/* COPY: Aaron. The wordmark mirrors the end card in the club's posts. */}
+            <h1 className="text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
+              <span className="font-semibold">Claude</span> Builder Club
+            </h1>
+            <p className="mt-2 text-2xl italic" style={{ fontFamily: "var(--font-display)" }}>
+              @ut austin
+            </p>
+            <div className="mt-8 max-w-md rounded-[4px] border-2 border-[var(--kit-ink)] bg-[var(--kit-card)] p-5">
+              <MeetingDetails tone="poster" />
+              <a
+                href={MEMBERSHIP_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 flex w-full items-center justify-center rounded-[4px] bg-[var(--kit-ink)] px-6 py-3 text-base font-medium text-[var(--kit-ivory)] transition-colors hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--kit-ink)]"
+              >
+                Join the club
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
+        <h2 className="text-3xl md:text-4xl">What you get</h2>
+        <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-6">
+          {PERKS.map((perk) => (
+            <li key={perk.title}>
+              <div
+                className="flex aspect-[4/5] items-center justify-center rounded-[4px]"
+                style={{ background: perk.field }}
+              >
+                <Image
+                  src={`/images/claude-icons/${perk.art}.png`}
+                  alt=""
+                  width={512}
+                  height={512}
+                  sizes="(max-width: 1024px) 30vw, 160px"
+                  className="h-auto w-3/5"
+                />
+              </div>
+              <h3 className="mt-3 text-xl">{perk.title}</h3>
+              <p className="mt-1 text-[15px] text-[var(--kit-gray)]">{perk.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-[4px] sm:aspect-[21/9]">
+          <Image
+            src="/images/GM1.jpg"
+            alt="Students at a Claude Builder Club general meeting"
+            fill
+            sizes="(max-width: 1152px) 100vw, 1152px"
+            className="object-cover"
+          />
+        </div>
+        <p className="mt-3 text-[15px] text-[var(--kit-gray)]">
+          A general meeting.{" "}
+          <Link href="/hackathon/2026" className="text-[var(--kit-ink)] underline underline-offset-2">
+            See the spring 2026 hackathon winners
+          </Link>
+          .
+        </p>
+      </section>
+
+      <section className="mt-16 bg-[var(--kit-tan)] md:mt-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-12 sm:flex-row sm:items-center sm:gap-10 sm:px-8 md:py-16">
+          <Image
+            src="/images/claude-icons/hands.png"
+            alt=""
+            width={512}
+            height={512}
+            sizes="112px"
+            className="h-24 w-24 shrink-0 sm:h-28 sm:w-28"
+          />
+          <div>
+            <h2 className="text-2xl md:text-3xl">Partner with us</h2>
+            <p className="mt-2 max-w-xl">
+              Want to work with the club on an event around Austin? Email{" "}
+              <a href="mailto:claudeattexas@gmail.com" className="underline underline-offset-2">
+                claudeattexas@gmail.com
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
