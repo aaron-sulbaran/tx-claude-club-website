@@ -7,13 +7,15 @@
    Contrast rules that the palette depends on:
    - Clay (#d97757) is a field color only. Text on clay is ink (5.9:1); clay
      text on ivory fails (2.69:1).
-   - Text links and accents use deep clay, --color-primary (4.92:1 on ivory).
-   - Filled buttons and the footer are ink. */
+   - Text links and section labels use deep clay, --color-primary (7.2:1 on
+     ivory), sampled from the labels in Anthropic's own decks.
+   - Filled buttons and the footer are ink.
+   Full kit and sources: docs/brand/kit.md. */
 :root {
   --background: #f0eee6;
   --foreground: #141413;
-  --color-primary: #a9492a;
-  --color-primary-dark: #8f3d22;
+  --color-primary: #863311;
+  --color-primary-dark: #6b2809;
   --color-primary-light: #c6613f;
   --color-muted: #d6d3c7;
   --color-surface: #faf9f5;
@@ -33,6 +35,7 @@
   --color-ink: #141413;
   --color-ivory: #f0eee6;
   --color-card: #faf9f5;
+  --color-stone: #e8e6dc;
   --color-line: #d6d3c7;
   --color-subtle: #5e5d59;
   --color-clay: #d97757;
@@ -48,10 +51,17 @@
 /* In the base layer so Tailwind utilities (font-sans, font-semibold) still
    win on individual headings. */
 @layer base {
+  /* Newsreader standing in for Copernicus Book: light at display sizes,
+     slightly tight tracking, as set in the club's Figma lockup. */
   h1, h2, h3, h4 {
     font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-weight: 350;
   }
 
   html {
@@ -63,6 +73,17 @@
     color: var(--foreground);
     font-family: var(--font-instrument), system-ui, sans-serif;
   }
+}
+
+/* Section label, as in Anthropic's decks ("WHAT TO MAKE"): one short label
+   above a heading or as a key. Never a sentence. */
+@utility label-caps {
+  font-family: var(--font-instrument), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
 }
 
 @keyframes fadeIn {

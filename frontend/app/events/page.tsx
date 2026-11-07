@@ -181,7 +181,7 @@ export default function EventsPage() {
         {/* Error State */}
         {!loading && error && (
           <div className="mx-auto max-w-2xl px-8 py-12">
-            <div className="rounded-[4px] border border-line bg-tan p-6 text-center">
+            <div className="rounded-xl bg-tan p-6 text-center">
               <FaExclamationTriangle className="mx-auto h-8 w-8 text-ink" />
               <h3 className="mt-3 font-semibold text-ink">
                 The calendar didn’t load
@@ -189,7 +189,7 @@ export default function EventsPage() {
               <p className="mt-2 text-sm text-subtle">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-4 rounded-[4px] bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
+                className="mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
               >
                 Try again
               </button>
@@ -230,7 +230,7 @@ export default function EventsPage() {
                   const nextStyles = EVENT_TYPE_STYLES[nextEvent.type];
                   return (
                     <div
-                      className={`rounded-[4px] border-l-4 ${nextStyles.border} ${nextStyles.bg} p-4 sm:p-5`}
+                      className={`rounded-xl ${nextStyles.bg} p-4 sm:p-5`}
                     >
                       <div className="mb-2 flex items-center justify-between sm:mb-3">
                         <span className="text-[10px] font-medium text-subtle sm:text-xs">
@@ -275,7 +275,7 @@ export default function EventsPage() {
                         href={getAddToCalendarUrl(nextEvent)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`mt-3 inline-flex items-center gap-2 rounded-[4px] ${nextStyles.badge} px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:py-2 sm:text-sm`}
+                        className={`mt-3 inline-flex items-center gap-2 rounded-lg ${nextStyles.badge} px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:py-2 sm:text-sm`}
                       >
                         <FaCalendarPlus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                         Add to calendar
@@ -285,7 +285,7 @@ export default function EventsPage() {
                 })()}
 
                 {upcomingEvents.length === 0 && (
-                  <div className="rounded-[4px] border border-line bg-card p-6 text-center">
+                  <div className="rounded-xl bg-card p-6 text-center">
                     <p className="text-sm text-subtle">
                       No upcoming events scheduled. Check back soon!
                     </p>
@@ -295,12 +295,12 @@ export default function EventsPage() {
 
               {/* Calendar Grid - Shows SECOND on mobile, spans left 2 columns on desktop */}
               <div className="order-2 lg:order-1 lg:col-span-2 lg:row-span-2">
-                <div className="rounded-[4px] border border-line bg-card p-3 sm:p-5 md:p-8">
+                <div className="rounded-xl bg-card p-3 sm:p-5 md:p-8">
                   {/* Month Navigation */}
                   <div className="mb-4 flex items-center justify-between sm:mb-8">
                     <button
                       onClick={() => navigateMonth(-1)}
-                      className="rounded-[4px] px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
+                      className="rounded-lg px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
                     >
                       ← Prev
                     </button>
@@ -309,7 +309,7 @@ export default function EventsPage() {
                     </h2>
                     <button
                       onClick={() => navigateMonth(1)}
-                      className="rounded-[4px] px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
+                      className="rounded-lg px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
                     >
                       Next →
                     </button>
@@ -346,7 +346,7 @@ export default function EventsPage() {
                       return (
                         <div
                           key={day}
-                          className={`relative h-12 rounded-[4px] border p-1 transition-colors sm:h-20 sm:rounded-[4px] sm:p-1.5 md:h-28 md:p-2 lg:h-32 ${
+                          className={`relative h-12 rounded-lg border p-1 transition-colors sm:h-20 sm:rounded-lg sm:p-1.5 md:h-28 md:p-2 lg:h-32 ${
                             hasFlagship
                               ? "border-primary bg-gradient-to-br from-primary/5 to-amber-50"
                               : isCurrentDay
@@ -425,7 +425,7 @@ export default function EventsPage() {
               {/* All Events - Shows THIRD on mobile, bottom-right on desktop */}
               {upcomingEvents.length > 1 && (
                 <div className="order-3 lg:order-3 lg:col-start-3 lg:row-start-2">
-                  <div className="flex max-h-[280px] flex-col rounded-[4px] border border-line bg-card sm:max-h-[350px] lg:max-h-none lg:h-full">
+                  <div className="flex max-h-[280px] flex-col rounded-xl bg-card sm:max-h-[350px] lg:max-h-none lg:h-full">
                     <h3 className="shrink-0 border-b border-line px-4 py-3 text-base text-ink sm:px-5 sm:py-4 sm:text-base">
                       All Events ({upcomingEvents.length})
                     </h3>
@@ -490,7 +490,7 @@ export default function EventsPage() {
               <div className="mb-3 flex items-start justify-between sm:mb-4">
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {selectedEvent.isFlagship && (
-                    <span className="flex items-center gap-1 rounded-[4px] bg-tan px-2 py-0.5 text-xs font-medium text-ink sm:py-1">
+                    <span className="flex items-center gap-1 rounded-lg bg-tan px-2 py-0.5 text-xs font-medium text-ink sm:py-1">
                       <FaStar className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                       Featured
                     </span>
@@ -542,14 +542,14 @@ export default function EventsPage() {
                   href={getAddToCalendarUrl(selectedEvent)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-[4px] bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
                 >
                   <FaCalendarPlus className="h-4 w-4" />
                   Add to calendar
                 </a>
                 <button
                   onClick={() => setSelectedEvent(null)}
-                  className="inline-flex items-center justify-center rounded-[4px] border border-line px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-tan"
+                  className="inline-flex items-center justify-center rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-tan"
                 >
                   Close
                 </button>

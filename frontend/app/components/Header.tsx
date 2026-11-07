@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Wordmark from "./Wordmark";
 
 const navLinks = [
   { label: "About", href: "/about" },
@@ -28,9 +29,9 @@ export default function Header() {
             height={28}
             className="h-6 w-6 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-7 sm:w-7"
           />
-          <span className="font-display text-lg leading-none text-ink sm:text-xl">
-            <span className="font-semibold">Claude</span> Builder Club{" "}
-            <span className="italic text-subtle">@ut austin</span>
+          <span className="flex items-baseline gap-2 text-ink">
+            <Wordmark size={0.95} showHandle={false} />
+            <span className="font-display text-[1.05rem] italic text-subtle">@ut austin</span>
           </span>
         </Link>
 
@@ -51,7 +52,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-[4px] text-ink transition-colors hover:bg-tan md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-ink transition-colors hover:bg-tan md:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
         >
@@ -77,7 +78,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-[4px] px-3 py-3 text-base text-ink transition-colors hover:bg-tan"
+                  className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-tan"
                 >
                   {link.label}
                 </Link>

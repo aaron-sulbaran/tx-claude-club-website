@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MeetingDetails from "./MeetingDetails";
+import Wordmark from "../Wordmark";
 import { MEMBERSHIP_FORM_URL } from "../../lib/membership";
 
 // Poster: the homepage reads like the club's own Instagram posts. The hero is
@@ -31,20 +32,25 @@ export default function PosterHome() {
             />
           </div>
           <div>
-            {/* COPY: Aaron. The wordmark mirrors the end card in the club's posts. */}
-            <h1 className="text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-              <span className="font-semibold">Claude</span> Builder Club
+            {/* COPY: Aaron. The lockup mirrors the Figma end card: white wordmark, ink handle. */}
+            <h1 className="text-white">
+              <span className="hidden lg:block">
+                <Wordmark size={3} handleClassName="text-ink" />
+              </span>
+              <span className="hidden sm:block lg:hidden">
+                <Wordmark size={2.4} handleClassName="text-ink" />
+              </span>
+              <span className="block sm:hidden">
+                <Wordmark size={1.55} handleClassName="text-ink" />
+              </span>
             </h1>
-            <p className="mt-2 font-display text-2xl italic">
-              @ut austin
-            </p>
-            <div className="mt-8 max-w-md rounded-[4px] border-2 border-ink bg-card p-5">
+            <div className="mt-8 max-w-md rounded-xl bg-card p-5">
               <MeetingDetails />
               <a
                 href={MEMBERSHIP_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 flex w-full items-center justify-center rounded-[4px] bg-ink px-6 py-3 text-base font-medium text-ivory transition-colors hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                className="mt-4 flex w-full items-center justify-center rounded-lg bg-ink px-6 py-3 text-base font-medium text-ivory transition-colors hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 Join the club
               </a>
@@ -60,11 +66,12 @@ export default function PosterHome() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
-        <h2 className="text-3xl md:text-4xl">What you get</h2>
+        <p className="label-caps text-primary">Membership</p>
+        <h2 className="mt-2 text-3xl md:text-4xl">What you get</h2>
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-6">
           {PERKS.map((perk) => (
             <li key={perk.title}>
-              <div className={`flex aspect-[4/5] items-center justify-center rounded-[4px] ${perk.field}`}>
+              <div className={`flex aspect-[4/5] items-center justify-center rounded-xl ${perk.field}`}>
                 <Image
                   src={`/images/claude-icons/${perk.art}.png`}
                   alt=""
@@ -82,7 +89,7 @@ export default function PosterHome() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-[4px] sm:aspect-[21/9]">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl sm:aspect-[21/9]">
           <Image
             src="/images/GM1.jpg"
             alt="Students at a Claude Builder Club general meeting"

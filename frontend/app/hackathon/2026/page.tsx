@@ -120,6 +120,7 @@ export default function Hackathon2026Page() {
 
       <main className="flex-1 text-ink">
         <PageHeader
+          eyebrow="Hackathons"
           title="Hooked on Claude"
           intro="Our first hackathon. Nine hours, 6.5 hours of building, and some of the most creative Claude-powered projects we've ever seen."
           field="heather"
@@ -128,7 +129,7 @@ export default function Hackathon2026Page() {
           <p className="mt-3 text-ink/80">Spring 2026, April 4 at UT Austin</p>
         </PageHeader>
 
-        <section className="border-b-2 border-ink">
+        <section className="border-b border-line">
           <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-y-8 px-5 py-10 sm:grid-cols-4 sm:px-8">
             {stats.map((stat) => (
               <div key={stat.label} className="flex flex-col-reverse">
@@ -146,7 +147,7 @@ export default function Hackathon2026Page() {
           </p>
         </div>
 
-        <div className="mt-8 divide-y-2 divide-ink border-y-2 border-ink">
+        <div className="mt-8 divide-y divide-line border-y border-line">
           {winners.map((winner, i) => (
             <WinnerSection key={winner.project} winner={winner} index={i} />
           ))}

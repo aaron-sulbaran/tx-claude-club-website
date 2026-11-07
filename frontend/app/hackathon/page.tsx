@@ -25,14 +25,14 @@ export default function HackathonsPage() {
             </p>
             <Link
               href="/events"
-              className="mt-6 inline-flex items-center rounded-[4px] bg-ink px-6 py-3 font-medium text-ivory transition-colors hover:bg-black"
+              className="mt-6 inline-flex items-center rounded-lg bg-ink px-6 py-3 font-medium text-ivory transition-colors hover:bg-black"
             >
               See upcoming events
             </Link>
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-6xl gap-8 border-t-2 border-ink px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+        <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
           <div>
             <h2 className="text-2xl md:text-3xl">Past hackathons</h2>
             <p className="mt-2 text-subtle">The projects, winners, and work from our previous events.</p>
@@ -41,12 +41,12 @@ export default function HackathonsPage() {
             <li>
               <Link
                 href="/hackathon/2026"
-                className="group flex h-full flex-col overflow-hidden rounded-[4px] border-2 border-ink bg-card"
+                className="group flex h-full flex-col overflow-hidden rounded-xl bg-card"
               >
                 <div className="flex aspect-[16/9] items-center justify-center bg-heather">
                   <span className="font-display text-3xl italic">Hooked on Claude</span>
                 </div>
-                <div className="flex flex-1 flex-col border-t-2 border-ink p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <p className="text-sm text-subtle">Spring 2026, April 4 at UT Austin</p>
                   <p className="mt-2 flex-1 text-[15px] leading-relaxed">
                     Our first hackathon. About 100 attendees, 5 award categories, 6.5 hours of

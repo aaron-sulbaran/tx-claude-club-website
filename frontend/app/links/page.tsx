@@ -113,9 +113,9 @@ function LinkCard({ link }: { link: LinkItem }) {
       href={link.url}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="group flex items-center gap-4 rounded-[4px] border-2 border-ink bg-card p-4 transition-colors hover:bg-tan sm:p-5"
+      className="group flex items-center gap-4 rounded-xl bg-card p-4 transition-colors hover:bg-tan sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[4px] bg-peach sm:h-14 sm:w-14">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-peach sm:h-14 sm:w-14">
         <Icon className="h-5 w-5 text-ink sm:h-6 sm:w-6" />
       </div>
       <div className="min-w-0 flex-1">
@@ -158,7 +158,7 @@ export default function LinksPage() {
               ))}
             </div>
           ) : (
-            <div className="rounded-[4px] border border-line bg-card p-8 text-center">
+            <div className="rounded-xl bg-card p-8 text-center">
               <FaUsers className="mx-auto h-12 w-12 text-ink/20" />
               <p className="mt-4 text-subtle">
                 Links coming soon! Check back later.

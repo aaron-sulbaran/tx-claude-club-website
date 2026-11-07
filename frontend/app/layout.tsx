@@ -3,12 +3,14 @@ import { Newsreader, Instrument_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-// Club brand kit faces (reference/brand/kit.md in the club hub): Newsreader
-// for display, Instrument Sans for body and UI.
+// Brand kit faces (docs/brand/kit.md): Newsreader stands in for Copernicus,
+// Instrument Sans for Anthropic Sans. The opsz axis lets display sizes use
+// Newsreader's sharper display cut.
 const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
   style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
 const instrumentSans = Instrument_Sans({

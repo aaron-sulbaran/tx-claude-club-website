@@ -1,15 +1,11 @@
 import Link from "next/link";
+import Wordmark from "./Wordmark";
 
 export default function Footer() {
   return (
     <footer className="bg-ink text-ivory">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="font-display text-2xl">
-            <span className="font-semibold">Claude</span> Builder Club
-          </p>
-          <p className="mt-1 font-display text-lg italic text-ivory/80">@ut austin</p>
-        </div>
+        <Wordmark size={1.35} handleClassName="text-ivory/80" />
 
         <div className="flex flex-col gap-3 text-sm md:items-end">
           <div className="flex flex-wrap gap-x-5 gap-y-2">

@@ -80,7 +80,7 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
 
 function TeamCard({ member, className = "" }: { member: TeamMember; className?: string }) {
   return (
-    <div className={`rounded-[4px] border border-line bg-card p-5 sm:p-6 ${className}`}>
+    <div className={`rounded-xl bg-card p-5 sm:p-6 ${className}`}>
       {/* Profile Image */}
       <div className="mb-4 flex justify-center">
         {member.image ? (

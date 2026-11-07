@@ -16,7 +16,7 @@ import { fetchSlides, SlideEntry, getThumbnailUrl } from "../lib/slides";
 function TopicBadge({ topic }: { topic: string }) {
   if (!topic) return null;
   return (
-    <span className="inline-block rounded-[4px] bg-tan px-2 py-0.5 text-xs font-medium text-ink">
+    <span className="inline-block rounded-lg bg-tan px-2 py-0.5 text-xs font-medium text-ink">
       {topic}
     </span>
   );
@@ -32,7 +32,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
       href={slide.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-[4px] border border-line bg-card transition-all hover:border-primary/30"
+      className="group flex flex-col overflow-hidden rounded-xl bg-card transition-all hover:border-primary/30"
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-ivory">
@@ -50,7 +50,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-        <div className="absolute right-2 top-2 rounded-[4px] bg-card/90 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="absolute right-2 top-2 rounded-lg bg-card/90 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
           <FaExternalLinkAlt className="h-3 w-3 text-primary" />
         </div>
       </div>
@@ -152,7 +152,7 @@ export default function SlidesPage() {
         {/* Error State */}
         {!loading && error && (
           <div className="mx-auto max-w-2xl px-8 py-12">
-            <div className="rounded-[4px] border border-line bg-tan p-6 text-center">
+            <div className="rounded-xl bg-tan p-6 text-center">
               <FaExclamationTriangle className="mx-auto h-8 w-8 text-ink" />
               <h3 className="mt-3 font-semibold text-ink">
                 The slides didn’t load
@@ -160,7 +160,7 @@ export default function SlidesPage() {
               <p className="mt-2 text-sm text-subtle">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-4 rounded-[4px] bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
+                className="mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
               >
                 Try again
               </button>
@@ -183,7 +183,7 @@ export default function SlidesPage() {
                       placeholder="Search slides..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full rounded-[4px] border border-line bg-card py-2 pl-9 pr-3 text-sm text-ink placeholder:text-ink/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      className="w-full rounded-lg border border-line bg-card py-2 pl-9 pr-3 text-sm text-ink placeholder:text-ink/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
 
@@ -215,7 +215,7 @@ export default function SlidesPage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-[4px] border border-line bg-card p-8 text-center">
+                  <div className="rounded-xl bg-card p-8 text-center">
                     <p className="text-subtle">
                       No slides match your search. Try a different filter.
                     </p>
@@ -223,7 +223,7 @@ export default function SlidesPage() {
                 )}
               </>
             ) : (
-              <div className="rounded-[4px] border border-line bg-card p-8 text-center">
+              <div className="rounded-xl bg-card p-8 text-center">
                 <FaSlideshare className="mx-auto h-12 w-12 text-ink/20" />
                 <p className="mt-4 text-subtle">
                   No slides yet! Check back after our next meeting.

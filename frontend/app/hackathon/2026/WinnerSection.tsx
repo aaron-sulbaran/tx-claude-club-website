@@ -122,7 +122,7 @@ export function WinnerSection({
                 href={winner.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-[4px] bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
+                className="inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
               >
                 <FaPlay className="h-2.5 w-2.5" />
                 Watch demo
@@ -133,7 +133,7 @@ export function WinnerSection({
                 href={winner.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-[4px] border-2 border-ink px-5 py-2 text-sm font-medium text-ink transition-colors hover:bg-tan"
+                className="inline-flex items-center gap-2 rounded-lg border border-ink px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-tan"
               >
                 <FaGithub className="h-3.5 w-3.5" />
                 GitHub

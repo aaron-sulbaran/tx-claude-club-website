@@ -55,7 +55,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-6xl gap-8 border-t-2 border-ink px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+        <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
           <h2 className="text-2xl md:text-3xl">What we do</h2>
           <dl className="grid gap-x-12 sm:grid-cols-2">
             {WHAT_WE_DO.map((item) => (
@@ -67,7 +67,7 @@ export default function AboutPage() {
           </dl>
         </section>
 
-        <section className="mx-auto grid max-w-6xl gap-8 border-t-2 border-ink px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+        <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
           <h2 className="text-2xl md:text-3xl">Backed by Anthropic</h2>
           <p className="max-w-2xl text-lg leading-relaxed">
             As an official Claude Builder Club, we&apos;re proud to be supported by Anthropic, the
@@ -90,7 +90,7 @@ export default function AboutPage() {
                 href={MEMBERSHIP_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-[4px] bg-ink px-6 py-3 font-medium text-ivory transition-colors hover:bg-black"
+                className="inline-flex items-center rounded-lg bg-ink px-6 py-3 font-medium text-ivory transition-colors hover:bg-black"
               >
                 Join the club
               </a>
