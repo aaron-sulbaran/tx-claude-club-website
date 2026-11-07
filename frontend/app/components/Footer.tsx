@@ -1,14 +1,27 @@
 import Link from "next/link";
-import Wordmark from "./Wordmark";
+
+// The tower with rays from the club Figma banner (UT-CBC-Design-Logos, 1:120)
+// rises out of the ink bar and is cut through the clock, so the clock reads
+// as a half circle on the horizon. The clock's center sits at 65.3% of the
+// drawing's height (y 255.8 of 392).
+const TOWER_VISIBLE_FRACTION = 255.8 / 392;
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-ivory">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8 md:flex-row md:items-end md:justify-between">
-        <Wordmark size={1.35} handleClassName="text-ivory/80" />
+    <footer>
+      <div className="flex justify-center overflow-hidden bg-clay pt-8 sm:pt-10" aria-hidden>
+        <div
+          className="relative w-[9.5rem] overflow-hidden sm:w-[12rem]"
+          style={{ aspectRatio: `308 / ${392 * TOWER_VISIBLE_FRACTION}` }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/brand/tower-rays.svg" alt="" className="absolute left-0 top-0 h-auto w-full" />
+        </div>
+      </div>
 
-        <div className="flex flex-col gap-3 text-sm md:items-end">
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
+      <div className="bg-ink text-ivory">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-5 py-6 text-center text-sm sm:flex-row sm:justify-between sm:px-8 sm:text-left">
+          <nav aria-label="Club links" className="flex gap-x-5">
             <a
               href="https://www.instagram.com/texasclaude"
               target="_blank"
@@ -23,15 +36,20 @@ export default function Footer() {
             <Link href="/links" className="underline-offset-4 hover:underline">
               All links
             </Link>
-          </div>
-          <div className="flex items-center gap-2 text-ivory/80">
-            <span>Backed by</span>
-            <a href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer" aria-label="Anthropic">
+          </nav>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-ivory/60">
+            <a
+              href="https://www.anthropic.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-ivory"
+            >
+              Backed by
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/Anthropic_Logo.svg" alt="Anthropic" className="h-3 w-auto brightness-0 invert" />
+              <img src="/images/Anthropic_Logo.svg" alt="Anthropic" className="h-2 w-auto brightness-0 invert opacity-70" />
             </a>
+            <span>&copy; {new Date().getFullYear()} Texas Claude Builder Club</span>
           </div>
-          <p className="text-ivory/60">&copy; {new Date().getFullYear()} Texas Claude Builder Club</p>
         </div>
       </div>
     </footer>

@@ -37,14 +37,14 @@ export default function PosterHome() {
               <span className="hidden lg:block">
                 <Wordmark size={3} handleClassName="text-ink" />
               </span>
-              <span className="hidden sm:block lg:hidden">
-                <Wordmark size={2.4} handleClassName="text-ink" />
+              <span className="hidden justify-center sm:flex lg:hidden">
+                <Wordmark size={2.4} align="center" handleClassName="text-ink" />
               </span>
-              <span className="block sm:hidden">
-                <Wordmark size={1.55} handleClassName="text-ink" />
+              <span className="flex justify-center sm:hidden">
+                <Wordmark size={1.55} align="center" handleClassName="text-ink" />
               </span>
             </h1>
-            <div className="mt-8 max-w-md rounded-xl bg-card p-5">
+            <div className="mx-auto mt-8 max-w-md rounded-xl lg:mx-0 bg-card p-5">
               <MeetingDetails />
               <a
                 href={MEMBERSHIP_FORM_URL}

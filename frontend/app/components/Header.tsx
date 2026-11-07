@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Wordmark from "./Wordmark";
@@ -22,15 +21,13 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-ink/15 bg-ivory">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
         <Link href="/" className="group flex items-center gap-2" aria-label="Claude Builder Club at UT Austin, home">
-          <Image
-            src="/images/claude_logo.svg"
-            alt=""
-            width={28}
-            height={28}
-            className="h-6 w-6 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-7 sm:w-7"
-          />
           <span className="flex items-baseline gap-2 text-ink">
-            <Wordmark size={0.95} showHandle={false} />
+            <Wordmark
+              size={0.95}
+              showHandle={false}
+              showSpark
+              sparkClassName="transition-transform duration-300 ease-out group-hover:rotate-12"
+            />
             <span className="font-display text-[1.05rem] italic text-subtle">@ut austin</span>
           </span>
         </Link>
