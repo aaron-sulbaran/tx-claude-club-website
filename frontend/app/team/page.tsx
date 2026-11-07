@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { FaLinkedin, FaEnvelope, FaUserCircle } from "react-icons/fa";
+import { FaLinkedin, FaUserCircle } from "react-icons/fa";
 
 // ============================================================
 // TEAM DATA - Update with actual team member information
@@ -14,39 +14,19 @@ import { FaLinkedin, FaEnvelope, FaUserCircle } from "react-icons/fa";
 const TEAM_MEMBERS = [
   {
     id: "1",
-    name: "Aaron Sulbaran",
-    role: "Ambassador",
-    bio: "Aaron is a 3rd Year Electrical and Computer Engineering major with a passion for building cool projects. He is excited to be a part of the Claude Builder Club and help bring AI to the UT Austin community.",
-    image: "/images/team/aaron.jpeg", // TO ADD PHOTO: Save as /frontend/public/images/team/aaron.jpg, then change to: "/images/team/aaron.jpg"
-    linkedin: "https://www.linkedin.com/in/aaron/",
-    email: "aaronsulbaran@utexas.edu",
+    name: "Rohan Yelandur",
+    role: "Co-president",
+    bio: "Rohan is a 3rd year Computer Science major who loves competing in hackathons. He's excited to help students grow with Claude.",
+    image: "/images/team/rohan.jpg",
+    linkedin: "https://www.linkedin.com/in/rohan-yelandur/",
   },
   {
     id: "2",
-    name: "Jessica Zhu",
-    role: "Ambassador",
-    bio: "Jessica is a Junior Design and Informatics major passionate about the intersection of design and AI. She's excited to help make Claude accessible to the UT Austin community.",
-    image: "/images/team/jessica.jpg",
-    linkedin: "https://www.linkedin.com/in/jessica-zhu-/",
-    email: "jessicazhu@utexas.edu",
-  },
-  {
-    id: "3",
-    name: "Rohan Yelandur",
-    role: "Ambassador",
-    bio: "Rohan is a 2nd year Coputer Science major who loves competing in hackathons. He's excited to help students grow with Claude.",
-    image: "/images/team/rohan.jpg",
-    linkedin: "https://www.linkedin.com/in/rohan-yelandur/",
-    email: "rohan.yelandur@utexas.edu",
-  },
-  {
-    id: "4",
-    name: "Tisha Chhatbar",
-    role: "Ambassador",
-    bio: "Tisha is a Sophomore Business major eager to explore how AI can transform industries. She's thrilled to bring new ideas and energy to the Claude Builder Club.",
-    image: "/images/team/tisha.jpg",
-    linkedin: "https://www.linkedin.com/in/tisha-chhatbar/",
-    email: "tac3865@utexas.edu",
+    name: "Aaron Sulbaran",
+    role: "Co-president",
+    bio: "Aaron is a 4th year Electrical and Computer Engineering major with a passion for building cool projects. He is excited to be a part of the Claude Builder Club and help bring AI to the UT Austin community.",
+    image: "/images/team/aaron.jpeg", // TO ADD PHOTO: Save as /frontend/public/images/team/aaron.jpg, then change to: "/images/team/aaron.jpg"
+    linkedin: "https://www.linkedin.com/in/aaron-sulbaran/",
   },
 ];
 
@@ -57,36 +37,49 @@ interface TeamMember {
   bio?: string;
   image: string | null;
   linkedin?: string;
-  email?: string;
 }
 
 const PREVIOUS_AMBASSADORS: TeamMember[] = [
   {
     id: "p1",
-    name: "Vaishnuv Thiagarajan",
+    name: "Jessica Zhu",
     role: "Previous Ambassador",
-    image: "/images/team/vaishnuv.jpg",
-    linkedin: "https://www.linkedin.com/in/vaishnuv-thiagarajan/",
+    image: "/images/team/jessica.jpg",
+    linkedin: "https://www.linkedin.com/in/jessica-zhu-/",
   },
   {
     id: "p2",
+    name: "Tisha Chhatbar",
+    role: "Previous Ambassador",
+    image: "/images/team/tisha.jpg",
+    linkedin: "https://www.linkedin.com/in/tisha-chhatbar/",
+  },
+  {
+    id: "p4",
     name: "Cesar Monagas Romero",
     role: "Previous Ambassador",
     image: "/images/team/cesar.jpg",
     linkedin: "https://www.linkedin.com/in/cesarmonagasromero/",
   },
   {
-    id: "p3",
+    id: "p5",
     name: "Miranda Ye",
     role: "Previous Ambassador",
     image: "/images/team/miranda.jpg",
     linkedin: "https://www.linkedin.com/in/miranda-ye/",
   },
+  {
+    id: "p3",
+    name: "Vaishnuv Thiagarajan",
+    role: "Previous Ambassador",
+    image: "/images/team/vaishnuv.jpg",
+    linkedin: "https://www.linkedin.com/in/vaishnuv-thiagarajan/",
+  },
 ];
 
-function TeamCard({ member }: { member: TeamMember }) {
+function TeamCard({ member, className = "" }: { member: TeamMember; className?: string }) {
   return (
-    <div className="group rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-6">
+    <div className={`group rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-6 ${className}`}>
       {/* Profile Image */}
       <div className="mb-4 flex justify-center">
         {member.image ? (
@@ -130,15 +123,6 @@ function TeamCard({ member }: { member: TeamMember }) {
             <FaLinkedin className="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
         )}
-        {member.email && (
-          <a
-            href={`mailto:${member.email}`}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/10 text-foreground/50 transition-colors hover:bg-primary/10 hover:text-primary"
-            aria-label={`Email ${member.name}`}
-          >
-            <FaEnvelope className="h-4 w-4 sm:h-5 sm:w-5" />
-          </a>
-        )}
       </div>
     </div>
   );
@@ -161,8 +145,8 @@ export default function TeamPage() {
         </section>
 
         {/* Team Grid */}
-        <section className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="mx-auto max-w-3xl px-4 py-10 sm:px-8 sm:py-16">
+          <div className="grid gap-6 sm:grid-cols-2">
             {TEAM_MEMBERS.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -180,9 +164,18 @@ export default function TeamPage() {
           <h2 className="mb-8 text-center text-xl font-bold tracking-tight text-foreground sm:text-2xl md:text-3xl">
             Previous Ambassadors
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PREVIOUS_AMBASSADORS.map((member) => (
-              <TeamCard key={member.id} member={member} />
+          {/* Two centered rows: 2 on top, 3 below, so an odd count still reads as a pyramid */}
+          <div className="flex flex-col gap-6">
+            {[PREVIOUS_AMBASSADORS.slice(0, 2), PREVIOUS_AMBASSADORS.slice(2)].map((row) => (
+              <div key={row[0].id} className="flex flex-wrap justify-center gap-6">
+                {row.map((member) => (
+                  <TeamCard
+                    key={member.id}
+                    member={member}
+                    className="w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                  />
+                ))}
+              </div>
             ))}
           </div>
         </section>

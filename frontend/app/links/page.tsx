@@ -16,6 +16,7 @@ import {
   FaLink,
 } from "react-icons/fa";
 import { IconType } from "react-icons";
+import { LEADERSHIP_APPLICATION_URL } from "../lib/leadership";
 
 // ============================================================
 // LINKS CONFIGURATION
@@ -36,7 +37,15 @@ interface LinkItem {
 }
 
 const LINKS: LinkItem[] = [
-  
+  {
+    id: "leadership-application",
+    title: "Leadership applications open",
+    description: "Apply to join the officer team",
+    url: LEADERSHIP_APPLICATION_URL,
+    icon: FaUsers,
+    visible: true,
+    category: "form",
+  },
   {
     id: "membership-form",
     title: "Membership Sign-Up",

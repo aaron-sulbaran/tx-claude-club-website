@@ -28,7 +28,7 @@ export default function Form() {
       {/* Cards below form */}
       <div className="mx-auto mt-10 max-w-6xl sm:mt-12">
         <h2 className="text-xl font-semibold text-foreground sm:text-2xl">
-          What's in it for you?
+          What&apos;s in it for you?
         </h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-6 sm:gap-4 md:grid-cols-4">
           {cards.map((item) => (
