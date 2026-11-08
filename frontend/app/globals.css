@@ -65,6 +65,20 @@
     font-weight: 350;
   }
 
+  /* Serif everywhere (design review 2026-11-08): small titles go to 500 so
+     they still read as headings next to sans body text. */
+  h3, h4 {
+    font-weight: 500;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -76,15 +90,13 @@
   }
 }
 
-/* Section label, as in Anthropic's decks ("WHAT TO MAKE"): one short label
-   above a heading or as a key. Never a sentence. */
-@utility label-caps {
+/* Section label: one short label above a heading or as a key, in sentence
+   case (the taste ledger rules out tracked caps labels). Never a sentence. */
+@utility section-label {
   font-family: var(--font-instrument), system-ui, sans-serif;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
   line-height: 1.3;
-  text-transform: uppercase;
 }
 
 @keyframes fadeIn {

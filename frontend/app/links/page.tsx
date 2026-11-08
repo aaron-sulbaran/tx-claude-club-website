@@ -119,7 +119,7 @@ function LinkCard({ link }: { link: LinkItem }) {
         <Icon className="h-5 w-5 text-ink sm:h-6 sm:w-6" />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="font-sans text-base font-medium text-ink">
+        <h3 className="text-lg text-ink">
           {link.title}
         </h3>
         {link.description && (

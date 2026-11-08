@@ -8,7 +8,7 @@ const INSTAGRAM_URL = "https://www.instagram.com/texasclaude";
 // the club's GM posts. Keys are sentence case on purpose (no mono caps).
 export default function MeetingDetails() {
   const meeting = useNextMeeting();
-  const keyClass = "label-caps self-center text-subtle";
+  const keyClass = "section-label self-center text-subtle";
   const rowClass = "grid grid-cols-[5.5rem_1fr] gap-3 border-t border-line py-3 text-[15px]";
 
   return (

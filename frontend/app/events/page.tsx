@@ -66,7 +66,7 @@ function AddToCalendar({ event, tone = "ink" }: { event: CalendarEvent; tone?: "
 function NextUp({ event }: { event: CalendarEvent }) {
   return (
     <section aria-labelledby="next-up" className="border-b border-line pb-12 md:pb-16">
-      <p id="next-up" className="label-caps text-primary">
+      <p id="next-up" className="section-label text-primary">
         Next up
       </p>
       <div className="mt-4 grid gap-6 md:grid-cols-[11rem_1fr] md:gap-12">
@@ -83,13 +83,13 @@ function NextUp({ event }: { event: CalendarEvent }) {
           <dl className="mt-4 grid grid-cols-[5.5rem_1fr] gap-y-2 text-[15px]">
             {formatTime(event) && (
               <>
-                <dt className="label-caps self-center text-subtle">Time</dt>
+                <dt className="section-label self-center text-subtle">Time</dt>
                 <dd>{formatTime(event)}</dd>
               </>
             )}
             {event.location && (
               <>
-                <dt className="label-caps self-center text-subtle">Place</dt>
+                <dt className="section-label self-center text-subtle">Place</dt>
                 <dd>{event.location}</dd>
               </>
             )}
@@ -126,9 +126,9 @@ function EventRow({ event, upcoming }: { event: CalendarEvent; upcoming: boolean
             <TypeLabel type={event.type} />
           </span>
         </span>
-        <span className="col-start-1 line-clamp-2 text-base font-medium text-ink md:col-auto md:line-clamp-1 md:text-[15px]">
+        <span className="col-start-1 line-clamp-2 font-display text-[1.0625rem] font-medium text-ink md:col-auto md:line-clamp-1">
           {event.title}
-          {event.isFlagship && <span className="label-caps ml-2 align-middle text-primary">Flagship</span>}
+          {event.isFlagship && <span className="section-label ml-2 align-middle text-primary">Flagship</span>}
         </span>
         <span className="hidden truncate text-[15px] text-subtle md:block">{event.location}</span>
         <span className="hidden text-[15px] text-subtle md:block">
@@ -149,13 +149,13 @@ function EventRow({ event, upcoming }: { event: CalendarEvent; upcoming: boolean
               <dl className="grid grid-cols-[5.5rem_1fr] gap-y-2 text-[15px]">
                 {formatTime(event) && (
                   <>
-                    <dt className="label-caps self-center text-subtle">Time</dt>
+                    <dt className="section-label self-center text-subtle">Time</dt>
                     <dd>{formatTime(event)}</dd>
                   </>
                 )}
                 {event.location && (
                   <>
-                    <dt className="label-caps self-center text-subtle">Place</dt>
+                    <dt className="section-label self-center text-subtle">Place</dt>
                     <dd>{event.location}</dd>
                   </>
                 )}
@@ -270,13 +270,13 @@ export default function EventsPage() {
                   </div>
                 </div>
 
-                <p className="label-caps mt-6 border-b border-line pb-3 text-subtle">
+                <p className="section-label mt-6 border-b border-line pb-3 text-subtle">
                   {countLabel(listed.length, tab)}
                 </p>
 
                 <div className="mt-2 hidden grid-cols-[9rem_minmax(0,1.6fr)_minmax(0,1.2fr)_9.5rem_1.5rem] gap-x-6 py-2 md:grid">
                   {["Date", "Event", "Place", "Type"].map((heading) => (
-                    <span key={heading} className="label-caps text-subtle">
+                    <span key={heading} className="section-label text-subtle">
                       {heading}
                     </span>
                   ))}

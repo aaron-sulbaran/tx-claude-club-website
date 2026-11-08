@@ -58,7 +58,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
       {/* Content */}
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-sm font-semibold text-ink line-clamp-2 sm:text-base">
+          <h3 className="line-clamp-2 text-lg text-ink">
             {slide.title}
           </h3>
         </div>
@@ -154,7 +154,7 @@ export default function SlidesPage() {
           <div className="mx-auto max-w-2xl px-8 py-12">
             <div className="rounded-xl bg-tan p-6 text-center">
               <FaExclamationTriangle className="mx-auto h-8 w-8 text-ink" />
-              <h3 className="mt-3 font-semibold text-ink">
+              <h3 className="mt-3 text-lg text-ink">
                 The slides didn’t load
               </h3>
               <p className="mt-2 text-sm text-subtle">{error}</p>

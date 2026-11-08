@@ -1,24 +1,45 @@
+import Image from "next/image";
+import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
 import { MEMBERSHIP_FORM_URL } from "../lib/membership";
 
+// One section per benefit, in the same order as the homepage tiles, which
+// link here by id. Hackathons also has its own archive at /hackathon.
+// COPY: Aaron. One or two sentences each, on purpose.
 const WHAT_WE_DO = [
   {
-    title: "Workshops",
-    body: "Hands-on sessions teaching practical AI skills, from prompt engineering to building full applications with Claude.",
+    id: "free-claude",
+    title: "Free Claude",
+    art: "grid",
+    field: "bg-peach",
+    body: "Come to our general meetings to unlock the benefits Anthropic backs us with: Claude Pro, API credits to build real projects, and club merch as it comes in.",
+    link: { label: "See upcoming meetings", href: "/events" },
   },
   {
-    title: "Hackathons",
-    body: "Compete in exciting build challenges, collaborate with peers, and create innovative AI-powered projects.",
-  },
-  {
+    id: "community",
     title: "Community",
-    body: "Join a network of like-minded students passionate about AI, share ideas, and build lasting connections.",
+    art: "flowers",
+    field: "bg-cactus",
+    body: "Whether you've been coding for years or just started using AI, there's a place for you here. We're building a community of builders across every major at UT Austin.",
+    link: { label: "Join the club", href: MEMBERSHIP_FORM_URL },
   },
   {
-    title: "Resources",
-    body: "Access to Claude Pro subscriptions, API credits, exclusive tutorials, and the latest AI development tools.",
+    id: "hackathons",
+    title: "Hackathons",
+    art: "lightning",
+    field: "bg-heather",
+    body: "One-day build sprints where teams ship something real with Claude and compete for prizes. Our spring 2026 hackathon drew about 100 students.",
+    link: { label: "See past hackathons", href: "/hackathon" },
+  },
+  {
+    id: "workshops",
+    title: "Workshops",
+    art: "lightbulb",
+    field: "bg-tan",
+    body: "Hands-on sessions where you build alongside us, from your first prompt to shipping an agent. Missed one? Slides from past workshops are on the Slides page.",
+    link: { label: "Browse past slides", href: "/slides" },
   },
 ];
 
@@ -55,16 +76,52 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+        <section className="mx-auto max-w-6xl border-t border-line px-5 py-14 sm:px-8 md:py-20">
           <h2 className="text-2xl md:text-3xl">What we do</h2>
-          <dl className="grid gap-x-12 sm:grid-cols-2">
-            {WHAT_WE_DO.map((item) => (
-              <div key={item.title} className="border-t border-line py-5 first:border-t-0 sm:[&:nth-child(2)]:border-t-0">
-                <dt className="font-display text-xl">{item.title}</dt>
-                <dd className="mt-2 text-subtle">{item.body}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="mt-8 divide-y divide-line">
+            {WHAT_WE_DO.map((item) => {
+              const external = item.link.href.startsWith("http");
+              return (
+                <article
+                  key={item.id}
+                  id={item.id}
+                  className="grid scroll-mt-32 gap-5 py-8 first:pt-0 sm:grid-cols-[8rem_1fr] sm:gap-8 md:grid-cols-[14rem_1fr] md:gap-16"
+                >
+                  <div className={`flex aspect-square w-24 items-center justify-center rounded-xl sm:w-full md:w-40 ${item.field}`}>
+                    <Image
+                      src={`/images/claude-icons/${item.art}.png`}
+                      alt=""
+                      width={512}
+                      height={512}
+                      sizes="160px"
+                      className="h-auto w-3/5"
+                    />
+                  </div>
+                  <div className="max-w-xl self-center">
+                    <h3 className="text-2xl md:text-3xl">{item.title}</h3>
+                    <p className="mt-3 text-lg leading-relaxed text-subtle">{item.body}</p>
+                    {external ? (
+                      <a
+                        href={item.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-block text-primary underline underline-offset-4 hover:text-primary-dark"
+                      >
+                        {item.link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.link.href}
+                        className="mt-4 inline-block text-primary underline underline-offset-4 hover:text-primary-dark"
+                      >
+                        {item.link.label}
+                      </Link>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </section>
 
         <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">

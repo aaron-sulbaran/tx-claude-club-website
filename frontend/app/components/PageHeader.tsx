@@ -33,7 +33,7 @@ export default function PageHeader({
     <section className={FIELD_CLASS[field]}>
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-10 sm:px-8 sm:py-14 md:py-16">
         <div className="max-w-2xl">
-          {eyebrow && <p className="label-caps mb-3 text-primary">{eyebrow}</p>}
+          {eyebrow && <p className="section-label mb-3 text-primary">{eyebrow}</p>}
           <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl md:text-6xl">{title}</h1>
           {intro && <p className="mt-4 max-w-xl text-base text-ink sm:text-lg">{intro}</p>}
           {children}

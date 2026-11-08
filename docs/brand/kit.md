@@ -22,9 +22,14 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
 | Display: page titles, headlines, wordmark text | **Newsreader** | Weight 350 at 40 px and up, 400 below. Tracking -0.02em. Leading 1.05 to 1.1. Sentence case | Copernicus Book |
 | Display italic: "@ut austin", pull quotes | **Newsreader Italic** | Weight 350 to 400, no tracking | Copernicus Book Italic |
 | Body and UI | **Instrument Sans** | 400 body, 500 buttons and emphasis. 15 to 18 px body | Anthropic Sans or Styrene |
-| Section labels and data keys | **Instrument Sans** caps | 500, 12 to 13 px, tracking 0.08em, deep clay or gray | The deck's section labels ("WHAT TO MAKE") |
+| Section labels and data keys | **Instrument Sans** | 500, 14 px, **sentence case**, deep clay or gray | The deck's section labels, minus the caps (taste ledger: no tracked caps labels) |
 
-- Use the labels the way the decks do: one short label above a heading or as a key in a details card. Never a sentence in caps.
+- **Serif everywhere (decided 2026-11-08, design review):**
+  - Every heading and title is Newsreader, from page titles down to card and event titles.
+  - Titles under about 28 px use weight 500 so they still read as headings.
+  - Instrument Sans is for body, UI and labels only.
+  - Anthropic's website uses bold sans titles instead. We follow the Figma lockup, and keep one display family so a section never shows three type styles.
+- Use labels the way the decks do: one short label above a heading, or as a key in a details card. Never a sentence.
 - **Google Slides and Docs:** when editing an Anthropic template, keep its Poppins and Lora; Anthropic picked them. For club-made decks, use Newsreader and Instrument Sans if Slides offers them under "More fonts" (unverified). If it doesn't, Lora is the fallback serif and Poppins the fallback sans.
 - **Newsreader vs Lora:** Newsreader stays the serif because, side by side, it's the closer match to Copernicus. Its wedge serifs and italic nearly match. Lora is softer and more calligraphic.
 
@@ -40,6 +45,10 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
   - Hand-drawn tower and sun with a white wordmark, on clay: `1:313`.
   - Exported PNGs are in the hub's `reference/brand/logos/`.
 - **Club logo:** the hand-drawn tower plus the Claude spark as the sun (`CBCLogo_ClaudeSun.png`).
+- **Navbar lockup** (2026-11-08):
+  - The spark, then "Claude Builder Club" in Newsreader, with "The University of Texas at Austin" in Instrument Sans underneath.
+  - The @ handle is for posts and video, not the navbar.
+  - No hamburger menu: on phones the links get their own row.
 
 ## Color
 

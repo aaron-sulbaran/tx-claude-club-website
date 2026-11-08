@@ -129,7 +129,7 @@ export default function TileWall() {
 
         <div className="tile-wall-copy absolute inset-x-[8%] top-1/2 -translate-y-1/2 text-center md:inset-x-[30%]">
           {/* COPY: Aaron. Facts from the spring 2026 hackathon page. */}
-          <p className="label-caps text-primary">Spring 2026</p>
+          <p className="section-label text-primary">Spring 2026</p>
           <h2 className="mt-3 text-3xl leading-[1.08] md:text-5xl">About 100 students built with Claude in one day</h2>
           <Link
             href="/hackathon/2026"
