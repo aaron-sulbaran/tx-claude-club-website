@@ -19,6 +19,7 @@ import {
 import { IconType } from "react-icons";
 import { LEADERSHIP_APPLICATION_URL } from "../lib/leadership";
 import { MEMBERSHIP_FORM_URL } from "../lib/membership";
+import LeadershipRumble from "./rumble/LeadershipRumble";
 
 // ============================================================
 // LINKS CONFIGURATION
@@ -153,9 +154,15 @@ export default function LinksPage() {
         <section className="mx-auto max-w-2xl px-4 py-8 sm:px-8 sm:py-12">
           {visibleLinks.length > 0 ? (
             <div className="flex flex-col gap-3 sm:gap-4">
-              {visibleLinks.map((link) => (
-                <LinkCard key={link.id} link={link} />
-              ))}
+              {visibleLinks.map((link) =>
+                link.id === "leadership-application" ? (
+                  <LeadershipRumble key={link.id}>
+                    <LinkCard link={link} />
+                  </LeadershipRumble>
+                ) : (
+                  <LinkCard key={link.id} link={link} />
+                )
+              )}
             </div>
           ) : (
             <div className="rounded-xl bg-card p-8 text-center">

@@ -1,0 +1,58 @@
+/* Leadership link cue on /links. Transform and box-shadow only, so nothing
+   reflows. Remove this folder after applications close (Fri 2026-11-13). */
+
+.wrap {
+  position: relative;
+  border-radius: 0.75rem;
+}
+
+/* A few quick small turns, then rest; two cycles read as "tap me". */
+@keyframes rumble {
+  0%, 34%, 100% { transform: none; }
+  5% { transform: translateX(-3px) rotate(-1.2deg); }
+  10% { transform: translateX(3px) rotate(1.2deg); }
+  15% { transform: translateX(-2px) rotate(-0.8deg); }
+  20% { transform: translateX(2px) rotate(0.8deg); }
+  26% { transform: translateX(-1px) rotate(-0.3deg); }
+}
+
+@keyframes ring {
+  0% { box-shadow: 0 0 0 0 rgb(217 119 87 / 0); }
+  15% { box-shadow: 0 0 0 4px rgb(217 119 87 / 0.55); }
+  100% { box-shadow: 0 0 0 4px rgb(217 119 87 / 0); }
+}
+
+@keyframes hint-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.wrap[data-mode="rumble"] {
+  animation:
+    rumble 1.1s ease-in-out 2,
+    ring 2.6s ease-out 1 forwards;
+}
+
+/* Reduced motion: a quiet tint ring that stays, no movement. */
+.wrap[data-mode="static"] {
+  box-shadow: 0 0 0 3px rgb(217 119 87 / 0.45);
+}
+
+.hint {
+  position: absolute;
+  top: -0.7rem;
+  right: 1rem;
+  z-index: 1;
+  border-radius: 9999px;
+  background: #141413;
+  color: #faf9f5;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.wrap[data-mode="rumble"] .hint {
+  animation: hint-in 0.3s ease-out both;
+}
