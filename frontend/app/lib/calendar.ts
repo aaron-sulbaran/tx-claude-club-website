@@ -163,8 +163,11 @@ export async function fetchCalendarEvents(): Promise<{
   }
 
   // Fetch events from now onwards (or past month for testing)
-  const timeMin = new Date();
-  timeMin.setMonth(timeMin.getMonth() - 1); // Show events from past month too
+  // From the start of the school year (August 1), so the Past tab on the
+  // events page covers the whole year.
+  const now = new Date();
+  const schoolYearStart = now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1;
+  const timeMin = new Date(schoolYearStart, 7, 1);
 
   const timeMax = new Date();
   timeMax.setMonth(timeMax.getMonth() + 6); // Show events up to 6 months ahead
@@ -175,7 +178,7 @@ export async function fetchCalendarEvents(): Promise<{
     timeMax: timeMax.toISOString(),
     singleEvents: "true",
     orderBy: "startTime",
-    maxResults: "50",
+    maxResults: "100",
   });
 
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${params}`;

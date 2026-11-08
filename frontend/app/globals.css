@@ -212,6 +212,33 @@
   }
 }
 
+/* Events rows open in place, as on anthropic.com/news: height eases with
+   cubic-bezier(.215,.61,.355,1) and the details fade in after it starts.
+   Closed panels are visibility: hidden, so their links leave the tab order. */
+.event-row-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+    visibility 0s linear 0.3s;
+}
+.event-row-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.35s cubic-bezier(0.215, 0.61, 0.355, 1),
+    visibility 0s;
+}
+.event-row-details {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+.event-row-panel[data-open="true"] .event-row-details {
+  opacity: 1;
+  transition: opacity 0.3s ease-out 0.15s;
+}
+
 /* Card hover, as on anthropic.com/news: the title and summary fade to the
    faint gray. Images never scale. */
 .hover-fade :is(h3, p) {

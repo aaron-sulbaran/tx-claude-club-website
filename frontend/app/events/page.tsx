@@ -1,562 +1,322 @@
 "use client";
 
+import { useEffect, useId, useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
-import { useState, useEffect } from "react";
-import {
-  FaMapMarkerAlt,
-  FaClock,
-  FaCalendarPlus,
-  FaStar,
-  FaSpinner,
-  FaExclamationTriangle,
-} from "react-icons/fa";
-import {
-  fetchCalendarEvents,
-  CalendarEvent,
-  EventType,
-} from "../lib/calendar";
+import { fetchCalendarEvents, type CalendarEvent, type EventType } from "../lib/calendar";
+import { EVENTS_TABS, addToCalendarUrl, countLabel, eventsForTab, isUpcoming, type EventsTab } from "./event-filters";
 
-// Event type colors matching UT brand
-// Event types use the brand kit's pastel fields with ink text, like the
-// club's posts. The first class of each badge doubles as the legend dot.
-const EVENT_TYPE_STYLES: Record<
-  EventType,
-  { bg: string; border: string; badge: string; label: string }
-> = {
-  meeting: { bg: "bg-heather", border: "border-heather", badge: "bg-heather text-ink", label: "General meeting" },
-  tabling: { bg: "bg-tan", border: "border-tan", badge: "bg-tan text-ink", label: "Tabling" },
-  hackathon: { bg: "bg-clay", border: "border-clay", badge: "bg-clay text-ink", label: "Hackathon" },
-  workshop: { bg: "bg-cactus", border: "border-cactus", badge: "bg-cactus text-ink", label: "Workshop" },
-  demo: { bg: "bg-peach", border: "border-peach", badge: "bg-peach text-ink", label: "Demo day" },
-  social: { bg: "bg-peach", border: "border-peach", badge: "bg-peach text-ink", label: "Social" },
-  speaker: { bg: "bg-heather", border: "border-heather", badge: "bg-heather text-ink", label: "Guest speaker" },
-  other: { bg: "bg-line", border: "border-line", badge: "bg-line text-ink", label: "Event" },
+// Laid out like the archive on anthropic.com/news: a featured "next up"
+// item, then ruled rows (no cards) under an Upcoming / Past / All switch.
+// Rows open in place. See docs/research/inspiration/anthropic.md.
+
+const INSTAGRAM_URL = "https://www.instagram.com/texasclaude";
+
+// Event types use the brand kit's pastel fields; the label carries the
+// meaning, the swatch only echoes it.
+const EVENT_TYPES: Record<EventType, { label: string; swatch: string }> = {
+  meeting: { label: "General meeting", swatch: "bg-heather" },
+  tabling: { label: "Tabling", swatch: "bg-tan" },
+  hackathon: { label: "Hackathon", swatch: "bg-clay" },
+  workshop: { label: "Workshop", swatch: "bg-cactus" },
+  demo: { label: "Demo day", swatch: "bg-peach" },
+  social: { label: "Social", swatch: "bg-peach" },
+  speaker: { label: "Guest speaker", swatch: "bg-heather" },
+  other: { label: "Event", swatch: "bg-line" },
 };
 
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-function getDaysInMonth(year: number, month: number): number {
-  return new Date(year, month + 1, 0).getDate();
+function formatDay(date: Date) {
+  return date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 }
 
-function getFirstDayOfMonth(year: number, month: number): number {
-  return new Date(year, month, 1).getDay();
+function formatTime(event: CalendarEvent) {
+  if (!event.startTime) return "";
+  return event.endTime ? `${event.startTime} to ${event.endTime}` : event.startTime;
 }
 
-function isSameDay(d1: Date, d2: Date): boolean {
+function TypeLabel({ type }: { type: EventType }) {
+  const { label, swatch } = EVENT_TYPES[type];
   return (
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate()
+    <span className="inline-flex items-center gap-2">
+      <span className={`h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-ink/15 ${swatch}`} aria-hidden />
+      {label}
+    </span>
   );
 }
 
-function isToday(date: Date): boolean {
-  return isSameDay(date, new Date());
+function AddToCalendar({ event, tone = "ink" }: { event: CalendarEvent; tone?: "ink" | "quiet" }) {
+  return (
+    <a
+      href={addToCalendarUrl(event)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={
+        tone === "ink"
+          ? "inline-flex h-11 items-center rounded-lg bg-ink px-5 text-[15px] font-medium text-ivory transition-shadow duration-200 hover:shadow-[0_0_0_1px_var(--color-ink)] hover:bg-black"
+          : "inline-flex h-9 items-center rounded-lg border border-line bg-card px-4 text-sm font-medium text-ink transition-shadow duration-200 hover:shadow-[0_0_0_1px_var(--color-line)]"
+      }
+    >
+      Add to calendar
+    </a>
+  );
 }
+
+function NextUp({ event }: { event: CalendarEvent }) {
+  return (
+    <section aria-labelledby="next-up" className="border-b border-line pb-12 md:pb-16">
+      <p id="next-up" className="label-caps text-primary">
+        Next up
+      </p>
+      <div className="mt-4 grid gap-6 md:grid-cols-[11rem_1fr] md:gap-12">
+        <p className="font-display text-ink">
+          <span className="block text-6xl leading-none md:text-7xl">{event.date.getDate()}</span>
+          <span className="mt-2 block text-xl">{event.date.toLocaleDateString("en-US", { month: "long" })}</span>
+          <span className="block text-xl text-subtle">{event.date.toLocaleDateString("en-US", { weekday: "long" })}</span>
+        </p>
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl">{event.title}</h2>
+          <p className="mt-3 text-[15px] text-subtle">
+            <TypeLabel type={event.type} />
+          </p>
+          <dl className="mt-4 grid grid-cols-[5.5rem_1fr] gap-y-2 text-[15px]">
+            {formatTime(event) && (
+              <>
+                <dt className="label-caps self-center text-subtle">Time</dt>
+                <dd>{formatTime(event)}</dd>
+              </>
+            )}
+            {event.location && (
+              <>
+                <dt className="label-caps self-center text-subtle">Place</dt>
+                <dd>{event.location}</dd>
+              </>
+            )}
+          </dl>
+          {event.description && (
+            <p className="mt-4 line-clamp-4 whitespace-pre-wrap text-[15px] leading-relaxed text-subtle">
+              {event.description}
+            </p>
+          )}
+          <div className="mt-6">
+            <AddToCalendar event={event} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EventRow({ event, upcoming }: { event: CalendarEvent; upcoming: boolean }) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  return (
+    <li className="border-t border-line">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="-mx-3 grid w-[calc(100%+1.5rem)] grid-cols-[1fr_1.5rem] items-center gap-x-6 gap-y-1 rounded-lg px-3 py-4 text-left transition-colors duration-200 hover:bg-[#f5f4ed] md:grid-cols-[9rem_minmax(0,1.6fr)_minmax(0,1.2fr)_9.5rem_1.5rem] md:py-3.5"
+      >
+        <span className="col-start-1 flex flex-wrap gap-x-3 text-sm text-subtle md:col-auto md:text-[15px] md:text-ink">
+          {formatDay(event.date)}
+          <span className="text-subtle md:hidden">
+            <TypeLabel type={event.type} />
+          </span>
+        </span>
+        <span className="col-start-1 line-clamp-2 text-base font-medium text-ink md:col-auto md:line-clamp-1 md:text-[15px]">
+          {event.title}
+          {event.isFlagship && <span className="label-caps ml-2 align-middle text-primary">Flagship</span>}
+        </span>
+        <span className="hidden truncate text-[15px] text-subtle md:block">{event.location}</span>
+        <span className="hidden text-[15px] text-subtle md:block">
+          <TypeLabel type={event.type} />
+        </span>
+        <FaChevronDown
+          aria-hidden
+          className={`col-start-2 row-span-2 row-start-1 h-3 w-3 justify-self-end text-subtle transition-transform duration-150 ease-out md:col-auto md:row-span-1 md:row-auto ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      <div id={panelId} className="event-row-panel" data-open={open}>
+        <div className="overflow-hidden">
+          <div className="event-row-details grid gap-4 pb-6 pt-1 md:grid-cols-[9rem_1fr] md:gap-6">
+            <div className="hidden md:block" />
+            <div className="max-w-2xl">
+              <dl className="grid grid-cols-[5.5rem_1fr] gap-y-2 text-[15px]">
+                {formatTime(event) && (
+                  <>
+                    <dt className="label-caps self-center text-subtle">Time</dt>
+                    <dd>{formatTime(event)}</dd>
+                  </>
+                )}
+                {event.location && (
+                  <>
+                    <dt className="label-caps self-center text-subtle">Place</dt>
+                    <dd>{event.location}</dd>
+                  </>
+                )}
+              </dl>
+              {event.description && (
+                <p className="mt-3 whitespace-pre-wrap text-[15px] leading-relaxed text-subtle">{event.description}</p>
+              )}
+              {upcoming && (
+                <div className="mt-4">
+                  <AddToCalendar event={event} tone="quiet" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+type LoadState =
+  | { status: "loading" }
+  | { status: "error"; message: string }
+  | { status: "ready"; events: CalendarEvent[] };
 
 export default function EventsPage() {
-  const today = new Date();
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
-    null
-  );
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [load, setLoad] = useState<LoadState>({ status: "loading" });
+  const [tab, setTab] = useState<EventsTab>("upcoming");
 
-  // Fetch events on mount
   useEffect(() => {
-    async function loadEvents() {
-      setLoading(true);
-      const { events: fetchedEvents, error: fetchError } =
-        await fetchCalendarEvents();
-
-      if (fetchError) {
-        setError(fetchError);
-      } else {
-        setEvents(fetchedEvents);
-        setError(null);
-      }
-      setLoading(false);
-    }
-
-    loadEvents();
+    let active = true;
+    fetchCalendarEvents().then(({ events, error }) => {
+      if (!active) return;
+      setLoad(error ? { status: "error", message: error } : { status: "ready", events });
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const daysInMonth = getDaysInMonth(currentYear, currentMonth);
-  const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
-
-  // Filter events for current month view
-  const eventsThisMonth = events.filter(
-    (event) =>
-      event.date.getMonth() === currentMonth &&
-      event.date.getFullYear() === currentYear
-  );
-
-  // Get all upcoming events (for sidebar)
-  const upcomingEvents = events
-    .filter((event) => event.date >= new Date(today.setHours(0, 0, 0, 0)))
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
-
-  const navigateMonth = (direction: number) => {
-    let newMonth = currentMonth + direction;
-    let newYear = currentYear;
-
-    if (newMonth > 11) {
-      newMonth = 0;
-      newYear++;
-    } else if (newMonth < 0) {
-      newMonth = 11;
-      newYear--;
-    }
-
-    setCurrentMonth(newMonth);
-    setCurrentYear(newYear);
-  };
-
-  const getEventsForDay = (day: number) => {
-    return eventsThisMonth.filter((event) => event.date.getDate() === day);
-  };
-
-  // Get unique event types for the legend (only from current events)
-  const activeEventTypes = [...new Set(events.map((event) => event.type))];
-
-  // Generate Google Calendar add URL
-  const getAddToCalendarUrl = (event: CalendarEvent) => {
-    const startDate = event.date.toISOString().replace(/-|:|\.\d+/g, "");
-    const endDate = new Date(event.date);
-    endDate.setHours(endDate.getHours() + 2); // Default 2 hour duration
-    const endDateStr = endDate.toISOString().replace(/-|:|\.\d+/g, "");
-
-    const params = new URLSearchParams({
-      action: "TEMPLATE",
-      text: event.title,
-      dates: `${startDate}/${endDateStr}`,
-      details: event.description,
-      location: event.location,
-    });
-
-    return `https://calendar.google.com/calendar/render?${params}`;
-  };
+  const now = new Date();
+  const events = load.status === "ready" ? load.events : [];
+  const upcoming = eventsForTab(events, "upcoming", now);
+  const [nextEvent, ...laterEvents] = upcoming;
+  // The next event already has the featured spot, so the Upcoming list starts after it.
+  const listed = tab === "upcoming" ? laterEvents : eventsForTab(events, tab, now);
+  const pastCount = events.length - upcoming.length;
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 text-ink">
         <PageHeader
-          title="Upcoming events"
+          title="Events"
           intro="Workshops, hackathons, and demos to help you build with Claude."
           field="peach"
           art="grid"
         />
 
-        {/* Loading State */}
-        {loading && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <FaSpinner className="h-8 w-8 animate-spin text-primary" />
-            <p className="mt-4 text-subtle">Loading events</p>
-          </div>
-        )}
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 md:py-16">
+          {load.status === "loading" && (
+            <p className="py-10 text-subtle" aria-live="polite">
+              Checking the club calendar
+            </p>
+          )}
 
-        {/* Error State */}
-        {!loading && error && (
-          <div className="mx-auto max-w-2xl px-8 py-12">
-            <div className="rounded-xl bg-tan p-6 text-center">
-              <FaExclamationTriangle className="mx-auto h-8 w-8 text-ink" />
-              <h3 className="mt-3 font-semibold text-ink">
-                The calendar didn’t load
-              </h3>
-              <p className="mt-2 text-sm text-subtle">{error}</p>
+          {load.status === "error" && (
+            <div className="rounded-xl bg-tan p-6">
+              <h2 className="text-2xl">The calendar didn&apos;t load</h2>
+              <p className="mt-2 text-[15px] text-subtle">
+                Try again in a moment. Dates also go up on{" "}
+                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+                  Instagram
+                </a>
+                .
+              </p>
               <button
+                type="button"
                 onClick={() => window.location.reload()}
-                className="mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-ivory hover:bg-black"
+                className="mt-4 inline-flex h-9 items-center rounded-lg bg-ink px-4 text-sm font-medium text-ivory hover:bg-black"
               >
                 Try again
               </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Calendar Section */}
-        {!loading && !error && (
-          <section className="mx-auto max-w-7xl px-4 py-6 sm:py-10 md:px-8 lg:px-12">
-            {/* Event Type Legend - Hidden on mobile, shown on tablet+ */}
-            {activeEventTypes.length > 0 && (
-              <div className="mb-6 hidden flex-wrap items-center gap-4 sm:flex">
-                <span className="text-sm font-medium text-subtle">
-                  Event types:
-                </span>
-                {activeEventTypes.map((type) => {
-                  const styles = EVENT_TYPE_STYLES[type];
-                  return (
-                    <div key={type} className="flex items-center gap-2">
-                      <span
-                        className={`h-3 w-3 rounded-full ${styles.badge.split(" ")[0]}`}
-                      />
-                      <span className="text-sm text-subtle">
-                        {styles.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+          {load.status === "ready" && (
+            <>
+              {nextEvent && <NextUp event={nextEvent} />}
 
-            <div className="grid items-start gap-6 sm:gap-8 lg:grid-cols-3 lg:grid-rows-[auto_1fr]">
-              {/* Next Event - Shows FIRST on mobile, top-right on desktop */}
-              <div className="order-1 lg:order-2 lg:col-start-3 lg:row-start-1">
-                {upcomingEvents.length > 0 && (() => {
-                  const nextEvent = upcomingEvents[0];
-                  const nextStyles = EVENT_TYPE_STYLES[nextEvent.type];
-                  return (
-                    <div
-                      className={`rounded-xl ${nextStyles.bg} p-4 sm:p-5`}
-                    >
-                      <div className="mb-2 flex items-center justify-between sm:mb-3">
-                        <span className="text-[10px] font-medium text-subtle sm:text-xs">
-                          Next Event
-                        </span>
-                        <span
-                          className={`rounded px-1.5 py-0.5 text-[9px] font-medium sm:px-2 sm:text-[10px] ${nextStyles.badge}`}
-                        >
-                          {nextStyles.label}
-                        </span>
-                      </div>
-                      <h3 className="text-lg text-ink sm:text-xl">
-                        {nextEvent.title}
-                      </h3>
-                      <div className="mt-2 space-y-1 text-xs text-subtle sm:mt-3 sm:space-y-1.5 sm:text-sm">
-                        <div className="flex items-center gap-2">
-                          <FaCalendarPlus className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
-                          <span>
-                            {nextEvent.date.toLocaleDateString("en-US", {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FaClock className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
-                          <span>
-                            {nextEvent.startTime}
-                            {nextEvent.endTime && ` - ${nextEvent.endTime}`}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FaMapMarkerAlt className="h-3 w-3 shrink-0 text-ink/40 sm:h-3.5 sm:w-3.5" />
-                          <span>{nextEvent.location}</span>
-                        </div>
-                      </div>
-                      <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-subtle sm:mt-3 sm:line-clamp-none sm:text-sm">
-                        {nextEvent.description}
-                      </p>
-                      <a
-                        href={getAddToCalendarUrl(nextEvent)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`mt-3 inline-flex items-center gap-2 rounded-lg ${nextStyles.badge} px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:py-2 sm:text-sm`}
+              <section aria-labelledby="all-events" className={nextEvent ? "pt-12 md:pt-16" : ""}>
+                <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <h2 id="all-events" className="text-3xl md:text-4xl">
+                    {tab === "upcoming" && nextEvent ? "After that" : tab === "past" ? "Past events" : "All events"}
+                  </h2>
+                  <div role="tablist" aria-label="Which events" className="flex rounded-lg bg-stone p-1">
+                    {EVENTS_TABS.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={tab === option.id}
+                        onClick={() => setTab(option.id)}
+                        className={`h-8 rounded-md px-4 text-sm font-medium transition-colors duration-200 ${
+                          tab === option.id ? "bg-ink text-ivory" : "text-subtle hover:text-ink"
+                        }`}
                       >
-                        <FaCalendarPlus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                        Add to calendar
-                      </a>
-                    </div>
-                  );
-                })()}
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-                {upcomingEvents.length === 0 && (
-                  <div className="rounded-xl bg-card p-6 text-center">
-                    <p className="text-sm text-subtle">
-                      No upcoming events scheduled. Check back soon!
+                <p className="label-caps mt-6 border-b border-line pb-3 text-subtle">
+                  {countLabel(listed.length, tab)}
+                </p>
+
+                <div className="mt-2 hidden grid-cols-[9rem_minmax(0,1.6fr)_minmax(0,1.2fr)_9.5rem_1.5rem] gap-x-6 py-2 md:grid">
+                  {["Date", "Event", "Place", "Type"].map((heading) => (
+                    <span key={heading} className="label-caps text-subtle">
+                      {heading}
+                    </span>
+                  ))}
+                </div>
+
+                {listed.length > 0 ? (
+                  <ul className="border-b border-line">
+                    {listed.map((event) => (
+                      <EventRow key={event.id} event={event} upcoming={isUpcoming(event, now)} />
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="border-t border-line py-10">
+                    <p className="max-w-xl text-lg">
+                      {tab === "past"
+                        ? "No past events this school year yet."
+                        : nextEvent
+                          ? "Nothing else on the calendar yet."
+                          : "Nothing on the calendar yet."}{" "}
+                      Dates go up on{" "}
+                      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+                        Instagram
+                      </a>{" "}
+                      first.
                     </p>
+                    {tab === "upcoming" && pastCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setTab("past")}
+                        className="mt-4 text-[15px] text-primary underline underline-offset-4 hover:text-primary-dark"
+                      >
+                        See past events
+                      </button>
+                    )}
                   </div>
                 )}
-              </div>
-
-              {/* Calendar Grid - Shows SECOND on mobile, spans left 2 columns on desktop */}
-              <div className="order-2 lg:order-1 lg:col-span-2 lg:row-span-2">
-                <div className="rounded-xl bg-card p-3 sm:p-5 md:p-8">
-                  {/* Month Navigation */}
-                  <div className="mb-4 flex items-center justify-between sm:mb-8">
-                    <button
-                      onClick={() => navigateMonth(-1)}
-                      className="rounded-lg px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
-                    >
-                      ← Prev
-                    </button>
-                    <h2 className="text-xl text-ink sm:text-2xl md:text-3xl">
-                      {MONTHS[currentMonth]} {currentYear}
-                    </h2>
-                    <button
-                      onClick={() => navigateMonth(1)}
-                      className="rounded-lg px-2 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-tan hover:text-ink sm:px-3 sm:py-2 sm:text-sm"
-                    >
-                      Next →
-                    </button>
-                  </div>
-
-                  {/* Day Headers */}
-                  <div className="mb-2 grid grid-cols-7 gap-1 sm:mb-3 sm:gap-2">
-                    {DAYS.map((day) => (
-                      <div
-                        key={day}
-                        className="py-1 text-center text-[10px] font-medium text-subtle sm:py-2 sm:text-xs md:text-sm"
-                      >
-                        <span className="sm:hidden">{day.charAt(0)}</span>
-                        <span className="hidden sm:inline">{day}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Calendar Days */}
-                  <div className="grid grid-cols-7 gap-1 sm:gap-2">
-                    {/* Empty cells for days before the 1st */}
-                    {Array.from({ length: firstDay }).map((_, index) => (
-                      <div key={`empty-${index}`} className="h-12 sm:h-20 md:h-28 lg:h-32" />
-                    ))}
-
-                    {/* Days of the month */}
-                    {Array.from({ length: daysInMonth }).map((_, index) => {
-                      const day = index + 1;
-                      const dayDate = new Date(currentYear, currentMonth, day);
-                      const dayEvents = getEventsForDay(day);
-                      const isCurrentDay = isToday(dayDate);
-                      const hasFlagship = dayEvents.some((e) => e.isFlagship);
-
-                      return (
-                        <div
-                          key={day}
-                          className={`relative h-12 rounded-lg border p-1 transition-colors sm:h-20 sm:rounded-lg sm:p-1.5 md:h-28 md:p-2 lg:h-32 ${
-                            hasFlagship
-                              ? "border-primary bg-gradient-to-br from-primary/5 to-amber-50"
-                              : isCurrentDay
-                                ? "border-primary/50 bg-primary/5"
-                                : "border-transparent hover:border-line hover:bg-tan/50"
-                          }`}
-                        >
-                          <span
-                            className={`text-[10px] font-medium sm:text-xs md:text-sm ${
-                              isCurrentDay
-                                ? "font-bold text-primary"
-                                : "text-subtle"
-                            }`}
-                          >
-                            {day}
-                          </span>
-
-                          {/* Event indicators - Dots on mobile, full titles on larger screens */}
-                          <div className="mt-0.5 flex flex-col gap-0.5 sm:mt-1">
-                            {/* Mobile: Show dots only */}
-                            <div className="flex flex-wrap gap-1 sm:hidden">
-                              {dayEvents.slice(0, 3).map((event) => {
-                                const styles = EVENT_TYPE_STYLES[event.type];
-                                return (
-                                  <button
-                                    key={event.id}
-                                    onClick={() => setSelectedEvent(event)}
-                                    className={`h-2 w-2 rounded-full ${styles.badge.split(" ")[0]} ${
-                                      event.isFlagship ? "ring-1 ring-primary" : ""
-                                    }`}
-                                    aria-label={event.title}
-                                  />
-                                );
-                              })}
-                              {dayEvents.length > 3 && (
-                                <span className="text-[8px] text-subtle">
-                                  +{dayEvents.length - 3}
-                                </span>
-                              )}
-                            </div>
-                            {/* Desktop: Show full event titles */}
-                            <div className="hidden sm:flex sm:flex-col sm:gap-0.5">
-                              {dayEvents.slice(0, 2).map((event) => {
-                                const styles = EVENT_TYPE_STYLES[event.type];
-                                return (
-                                  <button
-                                    key={event.id}
-                                    onClick={() => setSelectedEvent(event)}
-                                    className={`w-full truncate rounded px-1 py-0.5 text-left text-[10px] font-medium transition-all md:text-xs ${styles.bg} ${styles.border} border ${
-                                      event.isFlagship
-                                        ? "ring-1 ring-primary/50 hover:ring-2 hover:ring-primary"
-                                        : "hover:opacity-80"
-                                    }`}
-                                  >
-                                    {event.isFlagship && (
-                                      <FaStar className="mr-0.5 inline h-2 w-2 text-primary" />
-                                    )}
-                                    {event.title}
-                                  </button>
-                                );
-                              })}
-                              {dayEvents.length > 2 && (
-                                <span className="text-[10px] text-subtle">
-                                  +{dayEvents.length - 2} more
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* All Events - Shows THIRD on mobile, bottom-right on desktop */}
-              {upcomingEvents.length > 1 && (
-                <div className="order-3 lg:order-3 lg:col-start-3 lg:row-start-2">
-                  <div className="flex max-h-[280px] flex-col rounded-xl bg-card sm:max-h-[350px] lg:max-h-none lg:h-full">
-                    <h3 className="shrink-0 border-b border-line px-4 py-3 text-base text-ink sm:px-5 sm:py-4 sm:text-base">
-                      All Events ({upcomingEvents.length})
-                    </h3>
-                    <div className="flex flex-col overflow-y-auto lg:max-h-[400px]">
-                      {upcomingEvents.slice(1).map((event) => {
-                        const styles = EVENT_TYPE_STYLES[event.type];
-                        return (
-                          <button
-                            key={event.id}
-                            onClick={() => setSelectedEvent(event)}
-                            className={`flex items-start gap-2 border-b border-line/70 px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-tan/50 sm:gap-3 sm:px-5 sm:py-4`}
-                          >
-                            {/* Color indicator dot */}
-                            <span
-                              className={`mt-1 h-2 w-2 shrink-0 rounded-full sm:mt-1.5 sm:h-2.5 sm:w-2.5 ${styles.badge.split(" ")[0]}`}
-                            />
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-start justify-between gap-2">
-                                <span className="text-sm font-semibold text-ink sm:text-base">
-                                  {event.title}
-                                </span>
-                              </div>
-                              <div className="mt-0.5 text-[11px] text-subtle sm:mt-1 sm:text-xs">
-                                {event.date.toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                })}{" "}
-                                · {event.startTime}
-                              </div>
-                              <div className="mt-0.5 text-[11px] text-primary/70 sm:text-xs">
-                                {event.location}
-                              </div>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
-        {/* Selected Event Detail Modal/Panel */}
-        {selectedEvent && (
-          <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/50 p-0 animate-fade-in sm:items-center sm:p-4"
-            onClick={() => setSelectedEvent(null)}
-          >
-            <div
-              className={`max-h-[85vh] w-full overflow-y-auto rounded-t-[8px] bg-card p-5 animate-slide-up sm:max-h-[90vh] sm:max-w-lg sm:rounded-[6px] md:p-8 ${
-                selectedEvent.isFlagship
-                  ? "ring-2 ring-primary ring-offset-2"
-                  : ""
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Mobile drag indicator */}
-              <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-muted/40 sm:hidden" />
-
-              <div className="mb-3 flex items-start justify-between sm:mb-4">
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  {selectedEvent.isFlagship && (
-                    <span className="flex items-center gap-1 rounded-lg bg-tan px-2 py-0.5 text-xs font-medium text-ink sm:py-1">
-                      <FaStar className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                      Featured
-                    </span>
-                  )}
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-[10px] font-medium sm:px-2 sm:py-1 sm:text-xs ${EVENT_TYPE_STYLES[selectedEvent.type].badge}`}
-                  >
-                    {EVENT_TYPE_STYLES[selectedEvent.type].label}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setSelectedEvent(null)}
-                  className="rounded-full p-1 text-subtle transition-colors hover:bg-muted/20 hover:text-ink"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <h2
-                className={`text-2xl sm:text-3xl ${selectedEvent.isFlagship ? "text-primary" : "text-ink"}`}
-              >
-                {selectedEvent.title}
-              </h2>
-
-              <div className="mt-3 space-y-1.5 text-sm text-subtle sm:mt-4 sm:space-y-2">
-                <div className="flex items-start gap-2">
-                  <FaClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary sm:h-4 sm:w-4" />
-                  <span>
-                    {selectedEvent.date.toLocaleDateString("en-US", {
-                      weekday: "short",
-                      month: "short",
-                      day: "numeric",
-                    })} · {selectedEvent.startTime}
-                    {selectedEvent.endTime && ` - ${selectedEvent.endTime}`}
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <FaMapMarkerAlt className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary sm:h-4 sm:w-4" />
-                  <span>{selectedEvent.location}</span>
-                </div>
-              </div>
-
-              <p className="mt-3 whitespace-pre-wrap text-sm text-ink sm:mt-4 sm:text-base">
-                {selectedEvent.description}
-              </p>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={getAddToCalendarUrl(selectedEvent)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
-                >
-                  <FaCalendarPlus className="h-4 w-4" />
-                  Add to calendar
-                </a>
-                <button
-                  onClick={() => setSelectedEvent(null)}
-                  className="inline-flex items-center justify-center rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-tan"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+              </section>
+            </>
+          )}
+        </div>
       </main>
 
       <Footer />

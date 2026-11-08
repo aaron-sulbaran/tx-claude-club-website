@@ -12,6 +12,7 @@ The raw outputs (tokens, the generated Tailwind file, screenshots, downloaded CS
 | 2026 Public Benefit Report intro: the frame grows to full bleed on scroll, a canvas tile wall pops in from the centre, zooms out, flies to a ring around the title, and the copy fades in last | DOM tile wall built from club photos, illustrations and hackathon project images. It pops in clustered, flies out to a ring, then the copy fades in. The frame grows with a CSS scroll-driven animation | `components/home/TileWall.tsx`, `globals.css` (`.tile-wall*`) |
 | /news card hover: title and summary fade to `#87867f` over 0.2s ease-out; images never scale | `.hover-fade` on the Slides and Hackathon cards; removed the thumbnail zoom | `globals.css`, `slides/page.tsx`, `hackathon/page.tsx` |
 | Sparse dark footer | Slim ink bar under the Figma tower | `components/Footer.tsx` |
+| /news archive: ruled rows, mono count, segmented control, rows expand in place (height 0.35s `cubic-bezier(.215,.61,.355,1)`, details fade in 0.3s after 0.15s) | Events page: "Next up" feature, then Upcoming / Past / All rows with date, event, place and type; rows open in place | `events/page.tsx`, `events/event-filters.ts`, `globals.css` (`.event-row-*`) |
 
 ## Public Benefit Report intro, as built by Anthropic
 
@@ -80,11 +81,5 @@ Component `MissionHomepageSizzle`.
 
 ## /news patterns not used yet (candidates)
 
-- **Archive table for Events:**
-  - Columns: event, place, type, date.
-  - A mono count line ("12 events") and an Upcoming / Past / All segmented control.
-  - 54px rows with 1px `#dedcd1` top rules, no cards.
-  - Rows expand in place, with a 0.35s height ease.
-  - On mobile, rows collapse to date and type, then the title.
 - **"Latest" trio:** the featured item in the centre six columns, with side stacks of three columns each. A fit for "next event" plus recent ones.
 - **Slides:** the 16:9 tile is meta row, then thumbnail (4px radius, 5% inset hairline), then title, then a summary clamped to 4 lines. Tiles sit on top rules, not cards.
