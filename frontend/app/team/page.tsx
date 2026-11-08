@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
 import { FaLinkedin, FaUserCircle } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 // ============================================================
 // TEAM DATA - Update with actual team member information
@@ -16,7 +17,7 @@ const TEAM_MEMBERS = [
   {
     id: "1",
     name: "Rohan Yelandur",
-    role: "Co-president",
+    role: "Co-President & Ambassador",
     bio: "Rohan is a 3rd year Computer Science major who loves competing in hackathons. He's excited to help students grow with Claude.",
     image: "/images/team/rohan.jpg",
     linkedin: "https://www.linkedin.com/in/rohan-yelandur/",
@@ -24,10 +25,11 @@ const TEAM_MEMBERS = [
   {
     id: "2",
     name: "Aaron Sulbaran",
-    role: "Co-president",
+    role: "Co-President & Ambassador",
     bio: "Aaron is a 4th year Electrical and Computer Engineering major with a passion for building cool projects. He is excited to be a part of the Claude Builder Club and help bring AI to the UT Austin community.",
     image: "/images/team/aaron.jpeg", // TO ADD PHOTO: Save as /frontend/public/images/team/aaron.jpg, then change to: "/images/team/aaron.jpg"
     linkedin: "https://www.linkedin.com/in/aaron-sulbaran/",
+    x: "https://x.com/imaaronsulbaran",
   },
 ];
 
@@ -38,6 +40,7 @@ interface TeamMember {
   bio?: string;
   image: string | null;
   linkedin?: string;
+  x?: string;
 }
 
 const PREVIOUS_AMBASSADORS: TeamMember[] = [
@@ -80,7 +83,7 @@ const PREVIOUS_AMBASSADORS: TeamMember[] = [
 
 function TeamCard({ member, className = "" }: { member: TeamMember; className?: string }) {
   return (
-    <div className={`rounded-xl bg-card p-5 sm:p-6 ${className}`}>
+    <div className={`flex h-full flex-col rounded-xl bg-card p-5 sm:p-6 ${className}`}>
       {/* Profile Image */}
       <div className="mb-4 flex justify-center">
         {member.image ? (
@@ -96,8 +99,9 @@ function TeamCard({ member, className = "" }: { member: TeamMember; className?: 
         )}
       </div>
 
-      {/* Info */}
-      <div className="text-center">
+      {/* Info grows to fill the card, so the social row sits at the same
+          height on every card in a row, whatever the bio length. */}
+      <div className="flex-1 text-center">
         <h3 className="text-xl text-ink">
           {member.name}
         </h3>
@@ -112,7 +116,7 @@ function TeamCard({ member, className = "" }: { member: TeamMember; className?: 
       </div>
 
       {/* Social Links */}
-      <div className="mt-4 flex justify-center gap-3">
+      <div className="mt-5 flex justify-center gap-3">
         {member.linkedin && (
           <a
             href={member.linkedin}
@@ -122,6 +126,17 @@ function TeamCard({ member, className = "" }: { member: TeamMember; className?: 
             aria-label={`${member.name}'s LinkedIn`}
           >
             <FaLinkedin className="h-4 w-4 sm:h-5 sm:w-5" />
+          </a>
+        )}
+        {member.x && (
+          <a
+            href={member.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-tan"
+            aria-label={`${member.name} on X`}
+          >
+            <FaXTwitter className="h-4 w-4" />
           </a>
         )}
       </div>
