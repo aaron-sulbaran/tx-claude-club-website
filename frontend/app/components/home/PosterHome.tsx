@@ -3,6 +3,7 @@ import Link from "next/link";
 import MeetingDetails from "./MeetingDetails";
 import Wordmark from "../Wordmark";
 import TileWall from "./TileWall";
+import IntroOverlay from "./IntroOverlay";
 import { MEMBERSHIP_FORM_URL } from "../../lib/membership";
 
 // Poster: the homepage reads like the club's own Instagram posts. The hero is
@@ -21,30 +22,31 @@ const PERKS = [
 export default function PosterHome() {
   return (
     <main className="text-ink">
+      <IntroOverlay />
       <section className="bg-clay">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 sm:px-8 md:py-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16 lg:py-20">
-          <div className="mx-auto w-48 sm:w-60 lg:w-full lg:max-w-[26rem]">
+          <div className="mx-auto w-48 sm:w-60 lg:w-full lg:max-w-[26rem]" data-intro-target>
             <Image
-              src="/images/UT%20CBC%20Logos/CBCLogo_ClaudeSun.png"
+              src="/images/brand/tower-sun.png"
               alt="Claude Builder Club logo: the UT Tower under the Claude sun"
               width={1080}
               height={1080}
               priority
               sizes="(max-width: 1024px) 240px, 420px"
-              className="h-auto w-full"
+              className="intro-tower h-auto w-full"
             />
           </div>
           <div>
             {/* COPY: Aaron. The lockup mirrors the Figma end card: white wordmark, ink handle. */}
             <h1 className="fade-in-hero text-white">
               <span className="hidden lg:block">
-                <Wordmark size={3} handleClassName="text-ink" />
+                <Wordmark size={3} handleClassName="text-ink" handle="at the University of Texas at Austin" handleScale={0.62} />
               </span>
               <span className="hidden justify-center sm:flex lg:hidden">
-                <Wordmark size={2.4} align="center" handleClassName="text-ink" />
+                <Wordmark size={2.4} align="center" handleClassName="text-ink" handle="at the University of Texas at Austin" handleScale={0.62} />
               </span>
               <span className="flex justify-center sm:hidden">
-                <Wordmark size={1.55} align="center" handleClassName="text-ink" />
+                <Wordmark size={1.55} align="center" handleClassName="text-ink" handle="at the University of Texas at Austin" handleScale={0.62} />
               </span>
             </h1>
             <div className="fade-in-hero mx-auto mt-8 max-w-md rounded-xl bg-card p-5 [--fade-delay:0.2s] lg:mx-0">

@@ -1,7 +1,7 @@
 // The club lockup from the Figma file (UT-CBC-Design-Logos), used in the hero
 // and footer: the official Claude wordmark SVG, then "Builder Club" in the
-// display face, with "@ut austin" in display italic underneath, as on the
-// club's posts. The navbar uses its own plainer lockup (components/Header.tsx).
+// display face, with a display-italic line underneath. The navbar shows the
+// name only and spells out the university in sans (components/Header.tsx).
 // See docs/brand/kit.md.
 //
 // Sizes are in em of the root, so `size` (rem) scales the whole lockup.
@@ -18,13 +18,19 @@ const WORDMARK_BASELINE_INSET = (41.85 - 41.34) / 41.85;
 export default function Wordmark({
   size,
   showHandle = true,
+  handle = "@ut austin",
+  handleScale = 1.05,
   align = "start",
   handleClassName = "",
   className = "",
 }: {
-  /** Height of the Claude wordmark in rem. */
-  size: number;
+  /** Height of the Claude wordmark in rem. Omit to size it with a text-* class on className. */
+  size?: number;
   showHandle?: boolean;
+  /** The line under the name. The @ handle is for posts and video; pages spell the school out. */
+  handle?: string;
+  /** Handle size relative to the wordmark height. */
+  handleScale?: number;
   /** "center" matches the square Figma lockup (1:225). */
   align?: "start" | "center";
   handleClassName?: string;
@@ -33,7 +39,7 @@ export default function Wordmark({
   return (
     <span
       className={`inline-flex flex-col ${align === "center" ? "items-center" : "items-start"} ${className}`}
-      style={{ fontSize: `${size}rem` }}
+      style={size ? { fontSize: `${size}rem` } : undefined}
     >
       <span className="inline-flex items-baseline whitespace-nowrap" style={{ gap: "0.3em" }}>
         <span
@@ -59,9 +65,9 @@ export default function Wordmark({
       {showHandle && (
         <span
           className={`font-display italic leading-none ${handleClassName}`}
-          style={{ fontSize: "1.05em", fontWeight: 350, marginTop: `${0.45 / 1.05}em` }}
+          style={{ fontSize: `${handleScale}em`, fontWeight: 350, marginTop: `${0.45 / handleScale}em` }}
         >
-          @ut austin
+          {handle}
         </span>
       )}
     </span>

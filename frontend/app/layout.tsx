@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, Instrument_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { INTRO_PREPAINT_SCRIPT } from "./lib/intro";
 
 // Brand kit faces (docs/brand/kit.md): Newsreader stands in for Copernicus,
 // Instrument Sans for Anthropic Sans. The opsz axis lets display sizes use
@@ -33,7 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: the intro script sets html[data-intro] before React hydrates.
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_PREPAINT_SCRIPT }} />
+      </head>
       <body className={`${newsreader.variable} ${instrumentSans.variable} antialiased`}>
         {children}
         <Analytics />

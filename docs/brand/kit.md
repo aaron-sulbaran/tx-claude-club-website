@@ -46,9 +46,13 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
   - Exported PNGs are in the hub's `reference/brand/logos/`.
 - **Club logo:** the hand-drawn tower plus the Claude spark as the sun (`CBCLogo_ClaudeSun.png`).
 - **Navbar lockup** (2026-11-08):
-  - The spark, then "Claude Builder Club" in Newsreader, with "The University of Texas at Austin" in Instrument Sans underneath.
-  - The @ handle is for posts and video, not the navbar.
+  - The spark, then the name ("Claude" as the official bold wordmark plus "Builder Club" in Newsreader), with "The University of Texas at Austin" in Instrument Sans underneath.
   - No hamburger menu: on phones the links get their own row.
+- **The @ut austin handle** is for stories and video only.
+  - Pages spell the school out: the hero reads "at the University of Texas at Austin" in display italic.
+- **Homepage intro** (first visit per browser tab):
+  - The clay screen and the Claude spark, then the spark flies onto the sun of the tower logo, then the page reveals.
+  - About 2s. Skipped on refresh and with reduced motion.
 
 ## Color
 

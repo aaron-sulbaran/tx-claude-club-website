@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Wordmark from "./Wordmark";
 
 const navLinks = [
   { label: "About", href: "/about" },
@@ -12,8 +13,9 @@ const navLinks = [
   { label: "Links", href: "/links" },
 ];
 
-// The lockup is the club name in the display serif with the university
-// spelled out underneath in the body sans: two styles, each with one job.
+// The lockup is the club name (official Claude wordmark plus "Builder Club" in
+// the display serif) with the university spelled out underneath in the body
+// sans: two styles, each with one job.
 // No hamburger: on phones the links move to their own row under the lockup.
 export default function Header() {
   const pathname = usePathname();
@@ -45,10 +47,9 @@ export default function Header() {
             alt=""
             className="h-7 w-7 shrink-0 transition-transform duration-300 ease-out group-hover:rotate-12 sm:h-8 sm:w-8"
           />
-          <span className="flex flex-col">
-            <span className="font-display text-[1.25rem] leading-[1.1] tracking-[-0.02em] text-ink sm:text-[1.375rem]">
-              Claude Builder Club
-            </span>
+          <span className="flex flex-col gap-1">
+            {/* The official Claude wordmark sets "Claude" bold, as in the hero and the Figma lockups. */}
+            <Wordmark showHandle={false} className="text-[1rem] text-ink sm:text-[1.1rem]" />
             <span className="text-[0.8125rem] leading-tight text-subtle">The University of Texas at Austin</span>
           </span>
         </Link>

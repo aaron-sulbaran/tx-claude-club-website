@@ -251,6 +251,54 @@
   transition: opacity 0.3s ease-out 0.15s;
 }
 
+/* First-visit intro (components/home/IntroOverlay.tsx, lib/intro.ts). The
+   overlay only exists while html[data-intro] is "play" or "reveal". */
+.intro-overlay {
+  display: none;
+}
+html[data-intro="play"] .intro-overlay,
+html[data-intro="reveal"] .intro-overlay {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #d97757;
+}
+.intro-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34vmin;
+  height: 34vmin;
+  margin: -17vmin 0 0 -17vmin;
+  opacity: 0;
+  background: #fff;
+  mask: url(/images/claude_logo.svg) center / contain no-repeat;
+  -webkit-mask: url(/images/claude_logo.svg) center / contain no-repeat;
+}
+
+@keyframes tower-rise {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Hold the hero back while the spark flies, then let the tower rise from
+   the bottom (the sun is revealed last, under the landed spark) and the
+   lockup and card fade in. */
+html[data-intro="play"] .intro-tower {
+  clip-path: inset(100% 0 0 0);
+}
+html[data-intro="reveal"] .intro-tower {
+  animation: tower-rise 0.7s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+html[data-intro="play"] .fade-in-hero {
+  opacity: 0;
+  animation: none;
+}
+html[data-intro="reveal"] .fade-in-hero {
+  animation-delay: calc(var(--fade-delay, 0s) + 0.25s);
+}
+
 /* Card hover, as on anthropic.com/news: the title and summary fade to the
    faint gray. Images never scale. */
 .hover-fade :is(h3, p) {
