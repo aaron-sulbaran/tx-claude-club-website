@@ -82,7 +82,7 @@ export default function AboutPage() {
               <h2 className="text-3xl md:text-4xl">Ready to join?</h2>
               <p className="mt-3 max-w-xl text-lg">
                 Whether you&apos;re an AI enthusiast or just getting started, there&apos;s a place for
-                you in the Claude Builder Club.
+                you in the Texas Claude Builder Club.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">

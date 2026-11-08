@@ -20,16 +20,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/15 bg-ivory">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
-        <Link href="/" className="group flex items-center gap-2" aria-label="Claude Builder Club at UT Austin, home">
-          <span className="flex items-baseline gap-2 text-ink">
-            <Wordmark
-              size={0.95}
-              showHandle={false}
-              showSpark
-              sparkClassName="transition-transform duration-300 ease-out group-hover:rotate-12"
-            />
-            <span className="font-display text-[1.05rem] italic text-subtle">@ut austin</span>
-          </span>
+        <Link href="/" className="group flex items-center" aria-label="Claude Builder Club at UT Austin, home">
+          <Wordmark
+            layout="inline"
+            showSpark
+            className="text-[0.8rem] text-ink min-[400px]:text-[0.85rem] sm:text-[0.95rem]"
+            sparkClassName="transition-transform duration-300 ease-out group-hover:rotate-12"
+          />
         </Link>
 
         {/* Desktop Navigation */}
