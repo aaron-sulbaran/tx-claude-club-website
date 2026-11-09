@@ -50,6 +50,10 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
   - No hamburger menu: on phones the links get their own row.
 - **The @ut austin handle** is for stories and video only.
   - Pages spell the school out: the hero reads "at the University of Texas at Austin" in display italic.
+- **Hooked on Claude mark** (spring 2026 hackathon, decided 2026-11-08):
+  - The hook 'em hand with the fingers spread into horns, in ink, holding up the clay spark. Clean silhouette, no knuckle lines, one thumb line cut out of the shape.
+  - Sits on heather (keeps color variety next to the clay hero and footer). File: `frontend/public/hackathon/2026/hooked-on-claude-hookem.svg`; source and the other variations in the Figma file, page "Hooked on Claude: hook 'em hand".
+  - Never graft features onto the Claude spark (the spark with horns was rejected); something else carries the idea.
 - **Homepage intro** (first visit per browser tab):
   - The clay screen and the Claude spark, then the spark flies onto the sun of the tower logo, then the page reveals.
   - About 2s. Skipped on refresh and with reduced motion.
