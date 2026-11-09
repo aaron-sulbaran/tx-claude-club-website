@@ -4,7 +4,18 @@ import type { ReactNode } from "react";
 // Every inner page opens like one of the club's posts: one flat pastel
 // field, one hand-drawn illustration, the title in Newsreader.
 export type PosterField = "peach" | "heather" | "cactus" | "tan";
-export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning" | "shapes";
+export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning" | "shapes" | "hook";
+
+// The hand-drawn set is square PNGs; "hook" is the Hooked on Claude event mark (tall SVG).
+const ART: Record<PosterArt, { src: string; width: number; height: number }> = {
+  flowers: { src: "/images/claude-icons/flowers.png", width: 512, height: 512 },
+  grid: { src: "/images/claude-icons/grid.png", width: 512, height: 512 },
+  hands: { src: "/images/claude-icons/hands.png", width: 512, height: 512 },
+  lightbulb: { src: "/images/claude-icons/lightbulb.png", width: 512, height: 512 },
+  lightning: { src: "/images/claude-icons/lightning.png", width: 512, height: 512 },
+  shapes: { src: "/images/claude-icons/shapes.png", width: 512, height: 512 },
+  hook: { src: "/hackathon/2026/hooked-on-claude-mark.svg", width: 218, height: 360 },
+};
 
 const FIELD_CLASS: Record<PosterField, string> = {
   peach: "bg-peach",
@@ -39,13 +50,13 @@ export default function PageHeader({
           {children}
         </div>
         <Image
-          src={`/images/claude-icons/${art}.png`}
+          src={ART[art].src}
           alt=""
-          width={512}
-          height={512}
+          width={ART[art].width}
+          height={ART[art].height}
           priority
           sizes="(max-width: 640px) 80px, 176px"
-          className="h-20 w-20 shrink-0 sm:h-36 sm:w-36 md:h-44 md:w-44"
+          className="h-20 w-auto shrink-0 sm:h-36 md:h-44"
         />
       </div>
     </section>

@@ -43,8 +43,23 @@ export default function HackathonsPage() {
                 href="/hackathon/2026"
                 className="hover-fade group flex h-full flex-col overflow-hidden rounded-xl bg-card"
               >
-                <div className="flex aspect-[16/9] items-center justify-center bg-heather">
-                  <span className="font-display text-3xl italic">Hooked on Claude</span>
+                {/* Event lockup from the club Figma file (page "Hooked on Claude (Spring 2026)"):
+                    the hook-and-spark mark, then the name in display italic. Proportions follow
+                    the Figma frame: type at 0.39 of the mark height, gap at 0.16. */}
+                <div className="flex aspect-[16/9] items-center justify-center gap-5 bg-heather">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/hackathon/2026/hooked-on-claude-mark.svg"
+                    alt=""
+                    width={218}
+                    height={360}
+                    className="h-[6.5rem] w-auto sm:h-[7.5rem]"
+                  />
+                  <span className="font-display text-[2.5rem] leading-[0.92] tracking-[-0.02em] italic sm:text-[2.875rem]">
+                    Hooked on
+                    <br />
+                    Claude
+                  </span>
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <p className="text-sm text-subtle">Spring 2026, April 4 at UT Austin</p>

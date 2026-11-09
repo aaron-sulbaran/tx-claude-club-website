@@ -124,7 +124,7 @@ export default function Hackathon2026Page() {
           title="Hooked on Claude"
           intro="Our first hackathon. Nine hours, 6.5 hours of building, and some of the most creative Claude-powered projects we've ever seen."
           field="heather"
-          art="lightning"
+          art="hook"
         >
           <p className="mt-3 text-ink/80">Spring 2026, April 4 at UT Austin</p>
         </PageHeader>
