@@ -4,9 +4,9 @@ import type { ReactNode } from "react";
 // Every inner page opens like one of the club's posts: one flat pastel
 // field, one hand-drawn illustration, the title in Newsreader.
 export type PosterField = "peach" | "heather" | "cactus" | "tan";
-export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning" | "shapes" | "hook";
+export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning" | "shapes" | "horns";
 
-// The hand-drawn set is square PNGs; "hook" is the Hooked on Claude event mark (tall SVG).
+// The hand-drawn set is square PNGs; "horns" is the Hooked on Claude event mark (wide SVG).
 const ART: Record<PosterArt, { src: string; width: number; height: number }> = {
   flowers: { src: "/images/claude-icons/flowers.png", width: 512, height: 512 },
   grid: { src: "/images/claude-icons/grid.png", width: 512, height: 512 },
@@ -14,7 +14,7 @@ const ART: Record<PosterArt, { src: string; width: number; height: number }> = {
   lightbulb: { src: "/images/claude-icons/lightbulb.png", width: 512, height: 512 },
   lightning: { src: "/images/claude-icons/lightning.png", width: 512, height: 512 },
   shapes: { src: "/images/claude-icons/shapes.png", width: 512, height: 512 },
-  hook: { src: "/hackathon/2026/hooked-on-claude-mark.svg", width: 218, height: 360 },
+  horns: { src: "/hackathon/2026/hooked-on-claude-horns.svg", width: 312, height: 212 },
 };
 
 const FIELD_CLASS: Record<PosterField, string> = {

@@ -43,17 +43,17 @@ export default function HackathonsPage() {
                 href="/hackathon/2026"
                 className="hover-fade group flex h-full flex-col overflow-hidden rounded-xl bg-card"
               >
-                {/* Event lockup from the club Figma file (page "Hooked on Claude (Spring 2026)"):
-                    the hook-and-spark mark, then the name in display italic. Proportions follow
-                    the Figma frame: type at 0.39 of the mark height, gap at 0.16. */}
-                <div className="flex aspect-[16/9] items-center justify-center gap-5 bg-heather">
+                {/* Event lockup from the club Figma file (page "Hooked on Claude: horns options",
+                    option 3): the Claude spark with longhorns for Hook 'em Horns, then the name in
+                    display italic. The mark is about three quarters the height of the two lines. */}
+                <div className="flex aspect-[16/9] items-center justify-center gap-5 bg-heather sm:gap-6">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/hackathon/2026/hooked-on-claude-mark.svg"
+                    src="/hackathon/2026/hooked-on-claude-horns.svg"
                     alt=""
-                    width={218}
-                    height={360}
-                    className="h-[6.5rem] w-auto sm:h-[7.5rem]"
+                    width={312}
+                    height={212}
+                    className="h-[3.5rem] w-auto sm:h-[4rem]"
                   />
                   <span className="font-display text-[2.5rem] leading-[0.92] tracking-[-0.02em] italic sm:text-[2.875rem]">
                     Hooked on
