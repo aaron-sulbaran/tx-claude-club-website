@@ -125,7 +125,27 @@ export default function AboutPage() {
         </section>
 
         <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
-          <h2 className="text-2xl md:text-3xl">Backed by Anthropic</h2>
+          {/* The official Anthropic wordmark, drawn as a mask so it takes the ink color.
+              Its capitals are sized to the serif's x-height, so the logo sits under
+              "Backed by" without outweighing it. */}
+          <h2 className="text-2xl md:text-3xl">
+            Backed by
+            <span
+              role="img"
+              aria-label="Anthropic"
+              className="mt-[0.45em] block bg-current"
+              style={{
+                maskImage: "url(/images/Anthropic_Logo.svg)",
+                WebkitMaskImage: "url(/images/Anthropic_Logo.svg)",
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                height: "0.5em",
+                aspectRatio: "1024.2 / 115",
+              }}
+            />
+          </h2>
           <p className="max-w-2xl text-lg leading-relaxed">
             As an official Claude Builder Club, we&apos;re proud to be supported by Anthropic, the
             creators of Claude. This partnership gives our members exclusive access to resources,
