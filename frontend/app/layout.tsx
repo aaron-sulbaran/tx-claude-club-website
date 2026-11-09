@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Playfair_Display } from "next/font/google";
+import { Newsreader, Instrument_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { INTRO_PREPAINT_SCRIPT } from "./lib/intro";
 
-const sourceSerif = Source_Serif_4({
-  variable: "--font-serif",
+// Brand kit faces (docs/brand/kit.md): Newsreader stands in for Copernicus,
+// Instrument Sans for Anthropic Sans. The opsz axis lets display sizes use
+// Newsreader's sharper display cut.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-display",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -30,8 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${sourceSerif.variable} ${playfairDisplay.variable} antialiased`}>
+    // suppressHydrationWarning: the intro script sets html[data-intro] before React hydrates.
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_PREPAINT_SCRIPT }} />
+      </head>
+      <body className={`${newsreader.variable} ${instrumentSans.variable} antialiased`}>
         {children}
         <Analytics />
       </body>

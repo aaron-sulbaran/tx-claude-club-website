@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import PageHeader from "../components/PageHeader";
 import {
   FaInstagram,
   FaSlack,
@@ -17,6 +18,8 @@ import {
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { LEADERSHIP_APPLICATION_URL } from "../lib/leadership";
+import { MEMBERSHIP_FORM_URL } from "../lib/membership";
+import LeadershipRumble from "./rumble/LeadershipRumble";
 
 // ============================================================
 // LINKS CONFIGURATION
@@ -48,16 +51,16 @@ const LINKS: LinkItem[] = [
   },
   {
     id: "membership-form",
-    title: "Membership Sign-Up",
+    title: "Membership sign-up",
     description: "Join the Claude Builder Club",
-    url: "https://www.jotform.com/253555944387168",
+    url: MEMBERSHIP_FORM_URL,
     icon: FaFileAlt,
     visible: true,
     category: "form",
   },
   {
     id: "events",
-    title: "Upcoming Events",
+    title: "Upcoming events",
     description: "See what's happening",
     url: "/events",
     icon: FaCalendarAlt,
@@ -75,7 +78,7 @@ const LINKS: LinkItem[] = [
   },
   {
     id: "email",
-    title: "Contact Us",
+    title: "Contact us",
     description: "Reach out via email",
     url: "mailto:claudeattexas@gmail.com",
     icon: FaEnvelope,
@@ -111,22 +114,22 @@ function LinkCard({ link }: { link: LinkItem }) {
       href={link.url}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="group flex items-center gap-4 rounded-xl border border-muted/20 bg-surface p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md sm:p-5"
+      className="group flex items-center gap-4 rounded-xl bg-card p-4 transition-colors hover:bg-tan sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20 sm:h-14 sm:w-14">
-        <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-peach sm:h-14 sm:w-14">
+        <Icon className="h-5 w-5 text-ink sm:h-6 sm:w-6" />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="text-sm font-semibold text-foreground sm:text-base">
+        <h3 className="text-lg text-ink">
           {link.title}
         </h3>
         {link.description && (
-          <p className="mt-0.5 truncate text-xs text-foreground/60 sm:text-sm">
+          <p className="mt-0.5 truncate text-sm text-subtle">
             {link.description}
           </p>
         )}
       </div>
-      <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-foreground/30 transition-colors group-hover:text-primary sm:h-4 sm:w-4" />
+      <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-ink/60 sm:h-4 sm:w-4" />
     </a>
   );
 }
@@ -139,29 +142,32 @@ export default function LinksPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1">
-        {/* Page Hero */}
-        <section className="border-b border-muted/20 bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-            Links
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
-            Quick access to all our resources, forms, and social media
-          </p>
-        </section>
+      <main className="flex-1 text-ink">
+        <PageHeader
+          title="Links"
+          intro="Quick access to all our resources, forms, and social media"
+          field="peach"
+          art="shapes"
+        />
 
         {/* Links Grid */}
         <section className="mx-auto max-w-2xl px-4 py-8 sm:px-8 sm:py-12">
           {visibleLinks.length > 0 ? (
             <div className="flex flex-col gap-3 sm:gap-4">
-              {visibleLinks.map((link) => (
-                <LinkCard key={link.id} link={link} />
-              ))}
+              {visibleLinks.map((link) =>
+                link.id === "leadership-application" ? (
+                  <LeadershipRumble key={link.id}>
+                    <LinkCard link={link} />
+                  </LeadershipRumble>
+                ) : (
+                  <LinkCard key={link.id} link={link} />
+                )
+              )}
             </div>
           ) : (
-            <div className="rounded-xl border border-muted/20 bg-surface p-8 text-center">
-              <FaUsers className="mx-auto h-12 w-12 text-foreground/20" />
-              <p className="mt-4 text-foreground/60">
+            <div className="rounded-xl bg-card p-8 text-center">
+              <FaUsers className="mx-auto h-12 w-12 text-ink/20" />
+              <p className="mt-4 text-subtle">
                 Links coming soon! Check back later.
               </p>
             </div>

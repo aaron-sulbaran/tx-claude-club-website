@@ -1,12 +1,10 @@
-"use client";
-
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Image from "next/image";
 import { FaGithub, FaPlay, FaLinkedin } from "react-icons/fa";
 
 export type TeamMember = {
   name: string;
-  /** LinkedIn profile URL — if set the name becomes a clickable link */
+  /** LinkedIn profile URL; if set, the name becomes a clickable link */
   linkedin?: string;
 };
 
@@ -18,7 +16,7 @@ export type WinnerData = {
   description: string;
   /** Path relative to /public, e.g. "/hackathon/2026/side-quest/photo.jpg" */
   image?: string;
-  /** External demo link — YouTube, Loom, or Google Drive */
+  /** External demo link: YouTube, Loom, or Google Drive */
   demoUrl?: string;
   /** GitHub repo URL */
   github?: string;
@@ -33,54 +31,20 @@ export function WinnerSection({
   winner: WinnerData;
   index: number;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
   const isReversed = index % 2 === 1;
-  const num = String(index + 1).padStart(2, "0");
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.08 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section
-      ref={ref}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(40px)",
-        transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
-        transitionDelay: "0.05s",
-      }}
-      className={`relative flex flex-col md:min-h-[80vh] ${
+      className={`relative flex flex-col md:min-h-[70vh] ${
         isReversed ? "md:flex-row-reverse" : "md:flex-row"
       }`}
     >
       {/* ---- Media panel ---- */}
       <div className="relative min-h-[280px] w-full overflow-hidden sm:min-h-[360px] md:min-h-0 md:w-[58%]">
-        {/* Index number */}
-        <span
-          className="absolute left-6 top-6 z-10 select-none font-mono text-xs font-bold tracking-[0.3em] text-white/40"
-          aria-hidden
-        >
-          {num}
-        </span>
-
         {winner.image ? (
           <Image
             src={winner.image}
-            alt={`${winner.project} — team or product photo`}
+            alt={`${winner.project}: team or product photo`}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 58vw"
@@ -99,28 +63,11 @@ export function WinnerSection({
             </div>
           </div>
         )}
-
-        {/* Gradient scrim for badge legibility */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
-
-        {/* Award badge */}
-        <div
-          className={`absolute bottom-6 z-10 flex items-center gap-2 rounded-full bg-black/50 px-4 py-2 backdrop-blur-md ${
-            isReversed ? "left-6" : "right-6"
-          }`}
-        >
-          <span className="text-[var(--color-primary-light)] [&>svg]:h-3.5 [&>svg]:w-3.5">
-            {winner.icon}
-          </span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/80">
-            {winner.track}
-          </span>
-        </div>
       </div>
 
       {/* ---- Text panel ---- */}
       <div
-        className={`flex w-full flex-col justify-center bg-[var(--color-surface)] md:w-[42%] ${
+        className={`flex w-full flex-col justify-center bg-card md:w-[42%] ${
           isReversed ? "md:items-end" : "md:items-start"
         }`}
       >
@@ -129,27 +76,24 @@ export function WinnerSection({
             isReversed ? "md:text-right" : "md:text-left"
           }`}
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--color-primary)]/70">
-            {winner.track}
-          </p>
+          <p className="text-primary">{winner.track}</p>
 
-          <h3 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-[var(--color-foreground)] sm:text-4xl md:text-5xl">
+          <h3 className="mt-3 text-3xl leading-tight text-ink sm:text-4xl md:text-5xl">
             {winner.project}
           </h3>
 
-          <p className={`mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm tracking-wide text-[var(--color-foreground)]/45 ${isReversed ? "md:justify-end" : "md:justify-start"}`}>
-            {winner.team.map((member, i) => (
+          <p className={`mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px] text-subtle ${isReversed ? "md:justify-end" : "md:justify-start"}`}>
+            {winner.team.map((member) => (
               <span key={member.name} className="inline-flex items-center gap-1">
-                {i > 0 && <span aria-hidden>·</span>}
                 {member.linkedin ? (
                   <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[var(--color-foreground)]/55 underline-offset-2 transition-colors hover:text-[var(--color-primary)] hover:underline"
+                    className="inline-flex items-center gap-1 text-ink underline decoration-line underline-offset-2 hover:decoration-ink"
                   >
                     {member.name}
-                    <FaLinkedin className="h-3 w-3 opacity-60" />
+                    <FaLinkedin className="h-3 w-3 opacity-60" aria-hidden />
                   </a>
                 ) : (
                   <span>{member.name}</span>
@@ -159,12 +103,12 @@ export function WinnerSection({
           </p>
 
           <div
-            className={`mt-7 h-px w-10 bg-[var(--color-primary)]/40 ${
+            className={`mt-7 h-0.5 w-10 bg-ink ${
               isReversed ? "md:ml-auto" : "mr-auto"
             }`}
           />
 
-          <p className="mt-6 text-sm leading-[1.75] text-[var(--color-foreground)]/65 sm:text-[15px]">
+          <p className="mt-6 text-base leading-[1.7] text-ink">
             {winner.description}
           </p>
 
@@ -178,10 +122,10 @@ export function WinnerSection({
                 href={winner.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[var(--color-primary-dark)] hover:shadow-md active:scale-[0.97]"
+                className="inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-black"
               >
                 <FaPlay className="h-2.5 w-2.5" />
-                Watch Demo
+                Watch demo
               </a>
             )}
             {winner.github && (
@@ -189,7 +133,7 @@ export function WinnerSection({
                 href={winner.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-foreground)]/15 px-5 py-2.5 text-sm font-semibold text-[var(--color-foreground)]/60 transition-all hover:border-[var(--color-foreground)]/30 hover:text-[var(--color-foreground)] active:scale-[0.97]"
+                className="inline-flex items-center gap-2 rounded-lg border border-ink px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-tan"
               >
                 <FaGithub className="h-3.5 w-3.5" />
                 GitHub

@@ -1,154 +1,178 @@
+import Image from "next/image";
+import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { FaLightbulb, FaUsers, FaRocket, FaGraduationCap, FaScroll } from "react-icons/fa";
+import PageHeader from "../components/PageHeader";
+import { MEMBERSHIP_FORM_URL } from "../lib/membership";
+
+// One section per benefit, in the same order as the homepage tiles, which
+// link here by id. Hackathons also has its own archive at /hackathon.
+// COPY: Aaron. One or two sentences each, on purpose.
+const WHAT_WE_DO = [
+  {
+    id: "free-claude",
+    title: "Free Claude",
+    art: "grid",
+    field: "bg-peach",
+    body: "Come to our general meetings to unlock the benefits Anthropic backs us with: Claude Pro, API credits to build real projects, and club merch as it comes in.",
+    link: { label: "See upcoming meetings", href: "/events" },
+  },
+  {
+    id: "community",
+    title: "Community",
+    art: "flowers",
+    field: "bg-cactus",
+    body: "Whether you've been coding for years or just started using AI, there's a place for you here. We're building a community of builders across every major at UT Austin.",
+    link: { label: "Join the club", href: MEMBERSHIP_FORM_URL },
+  },
+  {
+    id: "hackathons",
+    title: "Hackathons",
+    art: "lightning",
+    field: "bg-heather",
+    body: "One-day build sprints where teams ship something real with Claude and compete for prizes. Our spring 2026 hackathon drew about 100 students.",
+    link: { label: "See past hackathons", href: "/hackathon" },
+  },
+  {
+    id: "workshops",
+    title: "Workshops",
+    art: "lightbulb",
+    field: "bg-tan",
+    body: "Hands-on sessions where you build alongside us, from your first prompt to shipping an agent. Missed one? Slides from past workshops are on the Slides page.",
+    link: { label: "Browse past slides", href: "/slides" },
+  },
+];
 
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1 bg-cream">
-        {/* Page Hero */}
-        <section className="bg-surface px-4 py-10 text-center sm:px-8 sm:py-16 md:py-20">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-            About the Claude Builder Club
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
-            Empowering UT Austin students to build the future with AI
+      <main className="flex-1 text-ink">
+        <PageHeader
+          title="About the Claude Builder Club"
+          intro="Empowering UT Austin students to build the future with AI"
+          field="cactus"
+          art="flowers"
+        />
+
+        <section className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+          <h2 className="text-2xl md:text-3xl">Our mission</h2>
+          <div className="max-w-2xl">
+            <p className="text-lg leading-relaxed">
+              The Claude Builder Club at UT Austin is dedicated to fostering a community of students
+              passionate about artificial intelligence. We provide hands-on experience with
+              cutting-edge AI tools, connect students with industry opportunities, and create a
+              space for innovation and collaboration.
+            </p>
+            <a
+              href="https://www.anthropic.com/constitution"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-primary underline underline-offset-4 hover:text-primary-dark"
+            >
+              Read Anthropic&apos;s constitution for Claude
+            </a>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl border-t border-line px-5 py-14 sm:px-8 md:py-20">
+          <h2 className="text-2xl md:text-3xl">What we do</h2>
+          <div className="mt-8 divide-y divide-line">
+            {WHAT_WE_DO.map((item) => {
+              const external = item.link.href.startsWith("http");
+              return (
+                <article
+                  key={item.id}
+                  id={item.id}
+                  className="grid scroll-mt-32 gap-5 py-8 first:pt-0 sm:grid-cols-[8rem_1fr] sm:gap-8 md:grid-cols-[14rem_1fr] md:gap-16"
+                >
+                  <div className={`flex aspect-square w-24 items-center justify-center rounded-xl sm:w-full md:w-40 ${item.field}`}>
+                    <Image
+                      src={`/images/claude-icons/${item.art}.png`}
+                      alt=""
+                      width={512}
+                      height={512}
+                      sizes="160px"
+                      className="h-auto w-3/5"
+                    />
+                  </div>
+                  <div className="max-w-xl self-center">
+                    <h3 className="text-2xl md:text-3xl">{item.title}</h3>
+                    <p className="mt-3 text-lg leading-relaxed text-subtle">{item.body}</p>
+                    {external ? (
+                      <a
+                        href={item.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-block text-primary underline underline-offset-4 hover:text-primary-dark"
+                      >
+                        {item.link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.link.href}
+                        className="mt-4 inline-block text-primary underline underline-offset-4 hover:text-primary-dark"
+                      >
+                        {item.link.label}
+                      </Link>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mx-auto grid max-w-6xl gap-8 border-t border-line px-5 py-14 sm:px-8 md:grid-cols-[14rem_1fr] md:gap-16 md:py-20">
+          {/* The official Anthropic wordmark, drawn as a mask so it takes the ink color.
+              Its capitals are sized to the serif's x-height, so the logo sits under
+              "Backed by" without outweighing it. */}
+          <h2 className="text-2xl md:text-3xl">
+            Backed by
+            <span
+              role="img"
+              aria-label="Anthropic"
+              className="mt-[0.45em] block bg-current"
+              style={{
+                maskImage: "url(/images/Anthropic_Logo.svg)",
+                WebkitMaskImage: "url(/images/Anthropic_Logo.svg)",
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                height: "0.5em",
+                aspectRatio: "1024.2 / 115",
+              }}
+            />
+          </h2>
+          <p className="max-w-2xl text-lg leading-relaxed">
+            As an official Claude Builder Club, we&apos;re proud to be supported by Anthropic, the
+            creators of Claude. This partnership gives our members exclusive access to resources,
+            tools, and opportunities to learn directly from industry leaders.
           </p>
         </section>
 
-        {/* Mission Section */}
-        <section className="px-4 py-10 sm:px-8 sm:py-16">
-          <div className="mx-auto max-w-4xl">
-            <div className="flex items-center justify-center gap-3">
-              <h2 className="text-center text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-                Our Mission
-              </h2>
+        <section className="bg-clay">
+          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-14 sm:px-8 md:flex-row md:items-center md:justify-between md:py-16">
+            <div>
+              <h2 className="text-3xl md:text-4xl">Ready to join?</h2>
+              <p className="mt-3 max-w-xl text-lg">
+                Whether you&apos;re an AI enthusiast or just getting started, there&apos;s a place for
+                you in the Texas Claude Builder Club.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
-                href="https://www.anthropic.com/constitution"
+                href={MEMBERSHIP_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
-                title="Anthropic's Constitution"
+                className="inline-flex items-center rounded-lg bg-ink px-6 py-3 font-medium text-ivory transition-colors hover:bg-black"
               >
-                <FaScroll className="h-4 w-4" />
+                Join the club
               </a>
-            </div>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-foreground/70 sm:mt-6 sm:text-base md:text-lg">
-              The Claude Builder Club at UT Austin is dedicated to fostering a community of
-              students passionate about artificial intelligence. We provide hands-on experience
-              with cutting-edge AI tools, connect students with industry opportunities, and
-              create a space for innovation and collaboration.
-            </p>
-          </div>
-        </section>
-
-        {/* What We Do Section */}
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-8 sm:py-16">
-          <h2 className="text-center text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-            What We Do
-          </h2>
-          <div className="mt-8 grid gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Card 1 */}
-            <div className="rounded-xl border border-muted/20 bg-surface p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 sm:mb-4">
-                <FaLightbulb className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-base font-semibold text-foreground sm:text-lg">
-                Workshops
-              </h3>
-              <p className="mt-2 text-xs text-foreground/70 sm:text-sm">
-                Hands-on sessions teaching practical AI skills, from prompt engineering
-                to building full applications with Claude.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="rounded-xl border border-muted/20 bg-surface p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 sm:mb-4">
-                <FaRocket className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-base font-semibold text-foreground sm:text-lg">
-                Hackathons
-              </h3>
-              <p className="mt-2 text-xs text-foreground/70 sm:text-sm">
-                Compete in exciting build challenges, collaborate with peers, and create
-                innovative AI-powered projects.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="rounded-xl border border-muted/20 bg-surface p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 sm:mb-4">
-                <FaUsers className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-base font-semibold text-foreground sm:text-lg">
-                Community
-              </h3>
-              <p className="mt-2 text-xs text-foreground/70 sm:text-sm">
-                Join a network of like-minded students passionate about AI, share ideas,
-                and build lasting connections.
-              </p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="rounded-xl border border-muted/20 bg-surface p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 sm:mb-4">
-                <FaGraduationCap className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-base font-semibold text-foreground sm:text-lg">
-                Resources
-              </h3>
-              <p className="mt-2 text-xs text-foreground/70 sm:text-sm">
-                Get access to Claude Pro subscriptions, API credits, exclusive tutorials,
-                and the latest AI development tools.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Backed by Anthropic Section */}
-        <section className="px-4 py-10 sm:px-8 sm:py-16">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs font-medium uppercase tracking-wider text-foreground/50 sm:text-sm">
-              Official Partner
-            </p>
-            <h2 className="mt-2 text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-              Backed by Anthropic
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:text-base">
-              As an official Claude Builder Club, we&apos;re proud to be supported by Anthropic,
-              the creators of Claude. This partnership gives our members exclusive access to
-              resources, tools, and opportunities to learn directly from industry leaders.
-            </p>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="px-4 py-10 sm:px-8 sm:py-16">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-              Ready to Join?
-            </h2>
-            <p className="mt-3 text-sm text-foreground/70 sm:mt-4 sm:text-base">
-              Whether you&apos;re an AI enthusiast or just getting started, there&apos;s a place
-              for you in the Claude Builder Club.
-            </p>
-            <div className="mt-6 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4">
-              <a
-                href="/events"
-                className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark sm:px-8 sm:py-3 sm:text-base"
-              >
-                View Upcoming Events
-              </a>
-              <a
-                href="https://www.jotform.com/253555944387168"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md border-2 border-primary px-6 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white sm:px-8 sm:py-3 sm:text-base"
-              >
-                Sign Up Now
+              <a href="/events" className="underline underline-offset-4">
+                See upcoming events
               </a>
             </div>
           </div>
