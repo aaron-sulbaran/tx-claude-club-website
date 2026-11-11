@@ -21,16 +21,18 @@ export default function Header() {
   const pathname = usePathname();
   const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
+  // Each link pads to a ~45 px tap target (py-3) and gives the extra back (-my-2), so the rows
+  // keep the height py-1 gave them; the underline sits at bottom-2 to stay under the text.
   const links = navLinks.map((link) => (
     <Link
       key={link.href}
       href={link.href}
       aria-current={isCurrent(link.href) ? "page" : undefined}
-      className="group relative shrink-0 py-1 text-ink"
+      className="group relative -my-2 shrink-0 py-3 text-ink"
     >
       {link.label}
       <span
-        className={`absolute bottom-0 left-0 h-px bg-ink transition-all duration-300 ease-out group-hover:w-full ${
+        className={`absolute bottom-2 left-0 h-px bg-ink transition-all duration-300 ease-out group-hover:w-full ${
           isCurrent(link.href) ? "w-full" : "w-0"
         }`}
       />

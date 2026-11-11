@@ -14,7 +14,7 @@ const WHAT_WE_DO = [
     title: "Free Claude",
     art: "grid",
     field: "bg-peach",
-    body: "Come to our general meetings to unlock the benefits Anthropic backs us with: Claude Pro, API credits to build real projects, and club merch as it comes in.",
+    body: "Come to a general meeting and Anthropic gives you Claude Pro and API credits for your own projects. Club merch goes out when we have it.",
     link: { label: "See upcoming meetings", href: "/events" },
   },
   {
@@ -22,7 +22,7 @@ const WHAT_WE_DO = [
     title: "Community",
     art: "flowers",
     field: "bg-cactus",
-    body: "Whether you've been coding for years or just started using AI, there's a place for you here. We're building a community of builders across every major at UT Austin.",
+    body: "Members come from every major at UT Austin, and every experience level is welcome.",
     link: { label: "Join the club", href: MEMBERSHIP_FORM_URL },
   },
   {
@@ -51,7 +51,7 @@ export default function AboutPage() {
       <main className="flex-1 text-ink">
         <PageHeader
           title="About the Claude Builder Club"
-          intro="Empowering UT Austin students to build the future with AI"
+          intro="Workshops, hackathons, and free Claude for UT Austin students"
           field="cactus"
           art="flowers"
         />
@@ -60,10 +60,10 @@ export default function AboutPage() {
           <h2 className="text-2xl md:text-3xl">Our mission</h2>
           <div className="max-w-2xl">
             <p className="text-lg leading-relaxed">
-              The Claude Builder Club at UT Austin is dedicated to fostering a community of students
-              passionate about artificial intelligence. We provide hands-on experience with
-              cutting-edge AI tools, connect students with industry opportunities, and create a
-              space for innovation and collaboration.
+              {/* COPY: Aaron. Drafted from facts already on the site; replace freely. */}
+              We&apos;re an official Claude Builder Club, run by UT Austin students and backed by
+              Anthropic. Each month we hold general meetings with hands-on workshops and demos, and
+              we run hackathons where teams build something real with Claude in a single day.
             </p>
             <a
               href="https://www.anthropic.com/constitution"
@@ -153,13 +153,13 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <section className="bg-clay">
+        <section className="bg-tan">
           <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-14 sm:px-8 md:flex-row md:items-center md:justify-between md:py-16">
             <div>
               <h2 className="text-3xl md:text-4xl">Ready to join?</h2>
               <p className="mt-3 max-w-xl text-lg">
-                Whether you&apos;re an AI enthusiast or just getting started, there&apos;s a place for
-                you in the Texas Claude Builder Club.
+                Sign up to hear about every meeting, or come to the next one first. The Texas Claude
+                Builder Club is open to every UT Austin student.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">

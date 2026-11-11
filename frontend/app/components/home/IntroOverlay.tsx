@@ -18,7 +18,6 @@ import { useEffect, useRef } from "react";
 // a square 0.309 of the image wide, centered at (0.763, 0.210).
 const SUN = { cx: 0.763, cy: 0.21, size: 0.309 };
 
-const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
 const EASE_IN_OUT_QUART = "cubic-bezier(0.77, 0, 0.175, 1)";
 
 export default function IntroOverlay() {
@@ -36,14 +35,10 @@ export default function IntroOverlay() {
 
     async function run() {
       if (!overlay || !spark) return;
-      // 1. The spark arrives in the middle of the clay screen.
-      await spark.animate(
-        [
-          { opacity: 0, transform: "scale(0.55) rotate(-50deg)" },
-          { opacity: 1, transform: "scale(1) rotate(0deg)" },
-        ],
-        { duration: 450, easing: EASE_OUT_CUBIC, fill: "forwards" }
-      ).finished;
+      // 1. The spark arrives in the middle of the clay screen. That is a CSS
+      //    animation (intro-spark-in in globals.css) that started on first paint,
+      //    before hydration; wait for whatever is left of it, then hold 100 ms.
+      await Promise.all(spark.getAnimations().map((a) => a.finished));
       await wait(100);
       if (cancelled) return;
 
@@ -72,12 +67,13 @@ export default function IntroOverlay() {
       //    rest of the hero fades in (CSS keyed on data-intro="reveal").
       root.dataset.intro = "reveal";
       overlay.style.pointerEvents = "none";
-      overlay.animate([{ backgroundColor: "rgb(217 119 87)" }, { backgroundColor: "rgb(217 119 87 / 0)" }], {
-        duration: 450,
-        easing: "ease-out",
-        fill: "forwards",
-      });
-      await wait(650);
+      const overlayFade = overlay.animate(
+        [{ backgroundColor: "rgb(217 119 87)" }, { backgroundColor: "rgb(217 119 87 / 0)" }],
+        { duration: 450, easing: "ease-out", fill: "forwards" }
+      );
+      // Keyed to the clay finishing its fade, then a 200 ms hold (650 ms in all, as before).
+      await overlayFade.finished;
+      await wait(200);
       await spark.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, easing: "ease-out", fill: "forwards" })
         .finished;
       if (cancelled) return;

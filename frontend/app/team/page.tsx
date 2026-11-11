@@ -168,7 +168,11 @@ export default function TeamPage() {
 
         <section className="px-4 pb-10 sm:px-8 sm:pb-16">
           <p className="mx-auto max-w-2xl text-center text-lg leading-relaxed text-subtle">
-            This club is by students, for students. If you have any questions, please don&apos;t hesitate to reach out.
+            Questions about the club? Email us at{" "}
+            <a href="mailto:claudeattexas@gmail.com" className="text-primary underline underline-offset-4">
+              claudeattexas@gmail.com
+            </a>
+            .
           </p>
         </section>
 

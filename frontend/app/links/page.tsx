@@ -116,9 +116,9 @@ function LinkCard({ link }: { link: LinkItem }) {
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="group flex items-center gap-4 rounded-xl bg-card p-4 transition-colors hover:bg-tan sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-peach sm:h-14 sm:w-14">
-        <Icon className="h-5 w-5 text-ink sm:h-6 sm:w-6" />
-      </div>
+      {/* The icon helps scanning; the old peach tile around it did not (it was the only icon
+          tile left on the site). */}
+      <Icon className="h-5 w-5 shrink-0 text-ink" aria-hidden />
       <div className="min-w-0 flex-1">
         <h3 className="text-lg text-ink">
           {link.title}

@@ -26,14 +26,14 @@ export default function Footer() {
               href="https://www.instagram.com/texasclaude"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline-offset-4 hover:underline"
+              className="-my-3 py-3 underline-offset-4 hover:underline"
             >
               Instagram
             </a>
-            <a href="mailto:claudeattexas@gmail.com" className="underline-offset-4 hover:underline">
+            <a href="mailto:claudeattexas@gmail.com" className="-my-3 py-3 underline-offset-4 hover:underline">
               Email
             </a>
-            <Link href="/links" className="underline-offset-4 hover:underline">
+            <Link href="/links" className="-my-3 py-3 underline-offset-4 hover:underline">
               All links
             </Link>
           </nav>
@@ -42,7 +42,7 @@ export default function Footer() {
               href="https://www.anthropic.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-ivory"
+              className="-my-3 flex items-center gap-1.5 py-3 hover:text-ivory"
             >
               Backed by
               {/* eslint-disable-next-line @next/next/no-img-element */}

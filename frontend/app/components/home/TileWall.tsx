@@ -133,7 +133,7 @@ export default function TileWall() {
           <h2 className="mt-3 text-3xl leading-[1.08] md:text-5xl">About 100 students built with Claude in one day</h2>
           <Link
             href="/hackathon/2026"
-            className="mt-5 inline-block text-[15px] underline underline-offset-4 hover:text-primary"
+            className="mt-3 inline-block py-2 text-[15px] underline underline-offset-4 hover:text-primary"
           >
             See the winners
           </Link>

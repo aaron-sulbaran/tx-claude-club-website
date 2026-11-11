@@ -48,6 +48,7 @@ Anthropic's real faces (Copernicus or Anthropic Serif, Styrene or Anthropic Sans
 - **Navbar lockup** (2026-11-08):
   - The spark, then the name ("Claude" as the official bold wordmark plus "Builder Club" in Newsreader), with "The University of Texas at Austin" in Instrument Sans underneath.
   - No hamburger menu: on phones the links get their own row.
+- **The italic second line is part of the lockup, not an accent word.** The design-review ledger lint's "no italic accent word" rule is exempted on the homepage hero (`data-ledger-ignore="no-italic-accent-word"`, 2026-11-11): the Figma lockup sets that line in Copernicus Book Italic, and a designer's frames outrank the cross-project rule.
 - **The @ut austin handle** is for stories and video only.
   - Pages spell the school out: the hero reads "at the University of Texas at Austin" in display italic.
 - **Hooked on Claude mark** (spring 2026 hackathon, decided 2026-11-08):

@@ -35,19 +35,19 @@ export function WinnerSection({
 
   return (
     <section
-      className={`relative flex flex-col md:min-h-[70vh] ${
-        isReversed ? "md:flex-row-reverse" : "md:flex-row"
+      className={`relative flex flex-col lg:min-h-[70vh] ${
+        isReversed ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >
-      {/* ---- Media panel ---- */}
-      <div className="relative min-h-[280px] w-full overflow-hidden sm:min-h-[360px] md:min-h-0 md:w-[58%]">
+      {/* ---- Media panel: full 16:9 thumbnail when stacked (below lg), so baked-in titles are never cropped ---- */}
+      <div className="relative aspect-video w-full overflow-hidden lg:aspect-auto lg:w-[58%]">
         {winner.image ? (
           <Image
             src={winner.image}
             alt={`${winner.project}: team or product photo`}
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 58vw"
+            sizes="(max-width: 1023px) 100vw, 58vw"
           />
         ) : (
           <div
@@ -67,22 +67,22 @@ export function WinnerSection({
 
       {/* ---- Text panel ---- */}
       <div
-        className={`flex w-full flex-col justify-center bg-card md:w-[42%] ${
-          isReversed ? "md:items-end" : "md:items-start"
+        className={`flex w-full flex-col justify-center bg-card lg:w-[42%] ${
+          isReversed ? "lg:items-end" : "lg:items-start"
         }`}
       >
         <div
-          className={`mx-auto w-full max-w-sm px-6 py-10 sm:px-8 sm:py-12 md:mx-0 md:max-w-none md:px-14 md:py-16 ${
-            isReversed ? "md:text-right" : "md:text-left"
+          className={`mx-auto w-full max-w-sm px-6 py-10 sm:px-8 sm:py-12 lg:mx-0 lg:max-w-none lg:px-14 lg:py-16 ${
+            isReversed ? "lg:text-right" : "lg:text-left"
           }`}
         >
           <p className="text-primary">{winner.track}</p>
 
-          <h3 className="mt-3 text-3xl leading-tight text-ink sm:text-4xl md:text-5xl">
+          <h3 className="mt-3 text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
             {winner.project}
           </h3>
 
-          <p className={`mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px] text-subtle ${isReversed ? "md:justify-end" : "md:justify-start"}`}>
+          <p className={`mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px] text-subtle ${isReversed ? "lg:justify-end" : "lg:justify-start"}`}>
             {winner.team.map((member) => (
               <span key={member.name} className="inline-flex items-center gap-1">
                 {member.linkedin ? (
@@ -90,7 +90,7 @@ export function WinnerSection({
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-ink underline decoration-line underline-offset-2 hover:decoration-ink"
+                    className="-my-1.5 inline-flex items-center gap-1 py-1.5 text-ink underline decoration-line underline-offset-2 hover:decoration-ink"
                   >
                     {member.name}
                     <FaLinkedin className="h-3 w-3 opacity-60" aria-hidden />
@@ -104,7 +104,7 @@ export function WinnerSection({
 
           <div
             className={`mt-7 h-0.5 w-10 bg-ink ${
-              isReversed ? "md:ml-auto" : "mr-auto"
+              isReversed ? "lg:ml-auto" : "mr-auto"
             }`}
           />
 
@@ -114,7 +114,7 @@ export function WinnerSection({
 
           <div
             className={`mt-9 flex flex-wrap gap-3 ${
-              isReversed ? "md:justify-end" : "md:justify-start"
+              isReversed ? "lg:justify-end" : "lg:justify-start"
             }`}
           >
             {winner.demoUrl && (
