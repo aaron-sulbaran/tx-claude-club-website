@@ -37,7 +37,9 @@ export default function HackathonsPage() {
             <h2 className="text-2xl md:text-3xl">Past hackathons</h2>
             <p className="mt-2 text-subtle">The projects, winners, and work from our previous events.</p>
           </div>
-          <ul className="grid gap-5 sm:grid-cols-2">
+          {/* Two cards per row only from lg: at md the section is already two columns, and a
+              half-width card there (about 200 px at 768) clipped the lockup. */}
+          <ul className="grid gap-5 lg:grid-cols-2">
             <li>
               <Link
                 href="/hackathon/2026"
@@ -47,20 +49,24 @@ export default function HackathonsPage() {
                     option 1C): the hook 'em hand with the fingers spread into horns, holding up the
                     Claude spark, then the name in display italic. The mark stands about one and a
                     half times the height of the two lines, as in the Figma frame. */}
-                <div className="flex aspect-[16/9] items-center justify-center gap-5 bg-heather sm:gap-6">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/hackathon/2026/hooked-on-claude-hookem.svg"
-                    alt=""
-                    width={330}
-                    height={398}
-                    className="h-[6.75rem] w-auto sm:h-[7.75rem]"
-                  />
-                  <span className="font-display text-[2.5rem] leading-[0.92] tracking-[-0.02em] italic sm:text-[2.875rem]">
-                    Hooked on
-                    <br />
-                    Claude
-                  </span>
+                {/* Sized in container units (cqw) so the lockup keeps the Figma proportions at
+                    any card width. */}
+                <div className="@container bg-heather">
+                  <div className="flex aspect-[16/9] items-center justify-center gap-[5.5cqw]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/hackathon/2026/hooked-on-claude-hookem.svg"
+                      alt=""
+                      width={330}
+                      height={398}
+                      className="h-[31cqw] w-auto"
+                    />
+                    <span className="font-display text-[11.5cqw] leading-[0.92] tracking-[-0.02em] italic">
+                      Hooked on
+                      <br />
+                      Claude
+                    </span>
+                  </div>
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <p className="text-sm text-subtle">Spring 2026, April 4 at UT Austin</p>

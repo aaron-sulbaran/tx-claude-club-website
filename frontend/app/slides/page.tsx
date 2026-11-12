@@ -62,7 +62,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
             {slide.title}
           </h3>
         </div>
-        <p className="mt-1 text-xs text-subtle sm:text-sm">
+        <p className="mt-1 text-sm text-subtle">
           {slide.date.toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -70,7 +70,7 @@ function SlideCard({ slide }: { slide: SlideEntry }) {
           })}
         </p>
         {slide.description && (
-          <p className="mt-2 text-xs text-subtle line-clamp-2 sm:text-sm">
+          <p className="mt-2 text-sm text-subtle line-clamp-2">
             {slide.description}
           </p>
         )}
@@ -174,17 +174,23 @@ export default function SlidesPage() {
             {slides.length > 0 ? (
               <>
                 {/* Filters */}
-                <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-center sm:gap-4">
-                  {/* Search */}
-                  <div className="relative flex-1 sm:max-w-xs">
-                    <FaSearch className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink/40" />
+                <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end sm:gap-4">
+                  {/* Search: a visible label, since a placeholder alone vanishes on input */}
+                  <div className="flex-1 sm:max-w-xs">
+                    <label htmlFor="slide-search" className="mb-1.5 block text-sm text-subtle">
+                      Search slides
+                    </label>
+                    <div className="relative">
+                    <FaSearch className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink/40" aria-hidden />
                     <input
-                      type="text"
-                      placeholder="Search slides..."
+                      id="slide-search"
+                      type="search"
+                      placeholder="Title or description"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full rounded-lg border border-line bg-card py-2 pl-9 pr-3 text-sm text-ink placeholder:text-ink/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      className="h-10 w-full rounded-lg border border-line bg-card pl-9 pr-3 text-sm text-ink placeholder:text-ink/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     />
+                    </div>
                   </div>
 
                   {/* Topic chips */}
@@ -194,7 +200,7 @@ export default function SlidesPage() {
                         <button
                           key={topic}
                           onClick={() => setSelectedTopic(topic)}
-                          className={`rounded-full px-3 py-1 text-xs font-medium transition-colors sm:text-sm ${
+                          className={`inline-flex min-h-10 items-center rounded-full px-4 text-sm font-medium transition-colors ${
                             selectedTopic === topic
                               ? "bg-ink text-ivory"
                               : "border border-line bg-card text-ink hover:bg-tan"

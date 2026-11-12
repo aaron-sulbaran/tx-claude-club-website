@@ -10,7 +10,9 @@ export type PosterArt = "flowers" | "grid" | "hands" | "lightbulb" | "lightning"
 const ART: Record<PosterArt, { src: string; width: number; height: number }> = {
   flowers: { src: "/images/claude-icons/flowers.png", width: 512, height: 512 },
   grid: { src: "/images/claude-icons/grid.png", width: 512, height: 512 },
-  hands: { src: "/images/claude-icons/hands.png", width: 512, height: 512 },
+  // hands-line: the hands art with its clay square knocked out and the cord in clay, so it
+  // sits bare on the field like the rest of the set (the original stays for the homepage tiles).
+  hands: { src: "/images/claude-icons/hands-line.png", width: 512, height: 512 },
   lightbulb: { src: "/images/claude-icons/lightbulb.png", width: 512, height: 512 },
   lightning: { src: "/images/claude-icons/lightning.png", width: 512, height: 512 },
   shapes: { src: "/images/claude-icons/shapes.png", width: 512, height: 512 },

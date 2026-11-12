@@ -38,7 +38,9 @@ export default function PosterHome() {
           </div>
           <div>
             {/* COPY: Aaron. The lockup mirrors the Figma end card: white wordmark, ink handle. */}
-            <h1 className="fade-in-hero text-white">
+            {/* data-ledger-ignore: the italic second line is the Figma lockup's own line, not an
+                accent word in a sentence (docs/brand/kit.md, "The wordmark"). */}
+            <h1 className="fade-in-hero text-white" data-ledger-ignore="no-italic-accent-word">
               <span className="hidden lg:block">
                 <Wordmark size={3} handleClassName="text-ink" handle="at the University of Texas at Austin" handleScale={0.62} />
               </span>
@@ -61,7 +63,7 @@ export default function PosterHome() {
               </a>
               <Link
                 href="/events"
-                className="mt-3 block text-center text-[15px] underline underline-offset-4 hover:text-primary"
+                className="mt-1 block py-2 text-center text-[15px] underline underline-offset-4 hover:text-primary"
               >
                 See all events
               </Link>

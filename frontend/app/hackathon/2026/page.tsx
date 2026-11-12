@@ -153,12 +153,11 @@ export default function Hackathon2026Page() {
           ))}
         </div>
 
-        <section className="bg-clay">
+        <section className="bg-tan">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
             <h2 className="text-3xl leading-snug md:text-5xl">To everyone who built with us, thank you.</h2>
             <p className="mt-5 max-w-lg text-lg">
-              We&apos;ll be back. Stay tuned at <span className="font-semibold">txclaude.org</span>{" "}
-              and{" "}
+              We&apos;ll be back. Follow{" "}
               <a
                 href="https://www.instagram.com/texasclaude"
                 target="_blank"
@@ -167,7 +166,7 @@ export default function Hackathon2026Page() {
               >
                 @texasclaude
               </a>{" "}
-              on Instagram.
+              on Instagram for the next one.
             </p>
           </div>
         </section>
