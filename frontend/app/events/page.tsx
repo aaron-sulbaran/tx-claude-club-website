@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -43,6 +43,51 @@ function TypeLabel({ type }: { type: EventType }) {
       <span className={`h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-ink/15 ${swatch}`} aria-hidden />
       {label}
     </span>
+  );
+}
+
+const CLAMP = { 4: "line-clamp-4", 6: "line-clamp-6" } as const;
+
+// Long descriptions start clamped; the toggle only appears when the text
+// actually overflows the clamp at the current width.
+function Description({ text, lines, className = "" }: { text: string; lines: keyof typeof CLAMP; className?: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+  const id = useId();
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || expanded) return;
+    const measure = () => setOverflows(el.scrollHeight > el.clientHeight + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [text, expanded]);
+
+  return (
+    <div className={className}>
+      <p
+        ref={ref}
+        id={id}
+        className={`whitespace-pre-wrap wrap-break-word text-[15px] leading-relaxed text-subtle ${expanded ? "" : CLAMP[lines]}`}
+      >
+        {text}
+      </p>
+      {(overflows || expanded) && (
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          aria-controls={id}
+          className="mt-2 inline-flex min-h-9 items-center gap-1.5 text-[15px] font-medium text-primary hover:text-primary-dark"
+        >
+          {expanded ? "Show less" : "Show more"}
+          <FaChevronDown aria-hidden className={`h-2.5 w-2.5 transition-transform duration-150 ${expanded ? "rotate-180" : ""}`} />
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -94,11 +139,7 @@ function NextUp({ event }: { event: CalendarEvent }) {
               </>
             )}
           </dl>
-          {event.description && (
-            <p className="mt-4 line-clamp-4 whitespace-pre-wrap text-[15px] leading-relaxed text-subtle">
-              {event.description}
-            </p>
-          )}
+          {event.description && <Description text={event.description} lines={4} className="mt-4" />}
           <div className="mt-6">
             <AddToCalendar event={event} />
           </div>
@@ -160,9 +201,7 @@ function EventRow({ event, upcoming }: { event: CalendarEvent; upcoming: boolean
                   </>
                 )}
               </dl>
-              {event.description && (
-                <p className="mt-3 whitespace-pre-wrap text-[15px] leading-relaxed text-subtle">{event.description}</p>
-              )}
+              {event.description && <Description text={event.description} lines={6} className="mt-3" />}
               {upcoming && (
                 <div className="mt-4">
                   <AddToCalendar event={event} tone="quiet" />
