@@ -1,47 +1,11 @@
 // ============================================================
 // Google Calendar API Integration
+// Fetches events; parsing lives in event-parser.ts.
 // ============================================================
 
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  date: Date;
-  startTime: string;
-  endTime: string;
-  location: string;
-  type: EventType;
-  description: string;
-  isFlagship: boolean;
-}
+import { parseGoogleEvent, type CalendarEvent, type GoogleCalendarEvent } from "./event-parser.ts";
 
-export type EventType =
-  | "meeting"
-  | "tabling"
-  | "hackathon"
-  | "workshop"
-  | "demo"
-  | "social"
-  | "speaker"
-  | "other";
-
-// Google Calendar API response types
-interface GoogleCalendarEvent {
-  id: string;
-  summary?: string;
-  description?: string;
-  location?: string;
-  start: {
-    dateTime?: string;
-    date?: string;
-    timeZone?: string;
-  };
-  end: {
-    dateTime?: string;
-    date?: string;
-    timeZone?: string;
-  };
-  colorId?: string;
-}
+export type { CalendarEvent, EventType } from "./event-parser.ts";
 
 interface GoogleCalendarResponse {
   items: GoogleCalendarEvent[];
@@ -51,103 +15,53 @@ interface GoogleCalendarResponse {
   };
 }
 
-// Map Google Calendar color IDs to event types
-// Google Calendar colors: https://developers.google.com/calendar/api/v3/reference/colors
-const COLOR_TO_TYPE: Record<string, EventType> = {
-  "1": "other", // Lavender
-  "2": "demo", // Sage (green)
-  "3": "hackathon", // Grape → we'll use for hackathons (purple-ish)
-  "4": "social", // Flamingo (pink)
-  "5": "workshop", // Banana (yellow)
-  "6": "hackathon", // Tangerine (orange) - flagship
-  "7": "tabling", // Peacock (teal)
-  "8": "other", // Graphite
-  "9": "workshop", // Blueberry (blue)
-  "10": "demo", // Basil (green)
-  "11": "hackathon", // Tomato (red/orange)
-};
+// ------------------------------------------------------------
+// Fake event for local testing. It is added only under `next dev`
+// (NODE_ENV is "development"), whatever host or IP the page is opened
+// from, and never in a production build. Its description is HTML, the
+// way Google Calendar stores it, and long enough to collapse.
+// ------------------------------------------------------------
 
-// Keywords in title/description that indicate event type
-const TYPE_KEYWORDS: Record<EventType, string[]> = {
-  meeting: ["meeting", "gm", "general meeting", "gm#", "general mtg"],
-  tabling: ["tabling", "table", "recruitment", "speedway"],
-  hackathon: ["hackathon", "hack", "buildathon", "claudehacks"],
-  workshop: ["workshop", "tutorial", "hands-on", "learn", "intro to"],
-  demo: ["demo", "showcase", "presentation", "show and tell"],
-  social: ["social", "hangout", "mixer", "party", "networking"],
-  speaker: ["guest speaker", "speaker", "talk", "fireside", "keynote", "guest lecture"],
-  other: [],
-};
+function mockEvents(): CalendarEvent[] {
+  const start = new Date();
+  start.setDate(start.getDate() + 3);
+  start.setHours(18, 0, 0, 0);
+  const end = new Date(start);
+  end.setHours(20);
 
-// Keywords that indicate a flagship/featured event
-const FLAGSHIP_KEYWORDS = [
-  "flagship",
-  "featured",
-  "main event",
-  "hackathon",
-  "claudehacks",
-  "★",
-  "⭐",
-];
-
-function detectEventType(event: GoogleCalendarEvent): EventType {
-  const title = (event.summary || "").toLowerCase();
-  const description = (event.description || "").toLowerCase();
-  const combined = `${title} ${description}`;
-
-  // First, check for keyword matches (more reliable than colors)
-  for (const [type, keywords] of Object.entries(TYPE_KEYWORDS)) {
-    if (keywords.some((keyword) => combined.includes(keyword))) {
-      return type as EventType;
-    }
-  }
-
-  // Fall back to color-based detection
-  if (event.colorId && COLOR_TO_TYPE[event.colorId]) {
-    return COLOR_TO_TYPE[event.colorId];
-  }
-
-  return "other";
-}
-
-function detectIsFlagship(event: GoogleCalendarEvent): boolean {
-  const title = (event.summary || "").toLowerCase();
-  const description = (event.description || "").toLowerCase();
-  const combined = `${title} ${description}`;
-
-  return FLAGSHIP_KEYWORDS.some((keyword) => combined.includes(keyword));
-}
-
-function formatTime(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-}
-
-function parseGoogleEvent(event: GoogleCalendarEvent): CalendarEvent {
-  // Handle all-day events vs timed events
-  const startDateTime = event.start.dateTime || event.start.date || "";
-  const endDateTime = event.end.dateTime || event.end.date || "";
-
-  const isAllDay = !event.start.dateTime;
-
-  return {
-    id: event.id,
-    title: event.summary || "Untitled Event",
-    date: new Date(startDateTime),
-    startTime: isAllDay ? "All Day" : formatTime(startDateTime),
-    endTime: isAllDay ? "" : formatTime(endDateTime),
-    location: event.location || "TBA",
-    type: detectEventType(event),
-    description: event.description || "No description provided.",
-    isFlagship: detectIsFlagship(event),
-  };
+  return [
+    parseGoogleEvent({
+      id: "dev-mock-event",
+      summary: "[FAKE] Test Event (dev only)",
+      location: "Nowhere, this event is not real",
+      start: { dateTime: start.toISOString() },
+      end: { dateTime: end.toISOString() },
+      colorId: "5",
+      description:
+        "<p><b>This is a fake event for testing.</b> It only appears on the local dev server and is not on the club calendar.</p>" +
+        "<p>The description is HTML, like Google Calendar sends it: paragraphs, line breaks,<br>entities like &amp; and &quot;quotes&quot;, and a <a href=\"https://example.com\">link</a>.</p>" +
+        "<ul><li>First bullet</li><li>Second bullet</li><li>Third bullet</li></ul>" +
+        "<p>This paragraph is filler so the description runs long enough to collapse. " +
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>" +
+        "<p>Last paragraph. If you can read this, Show more works.</p>",
+    }),
+  ];
 }
 
 export async function fetchCalendarEvents(): Promise<{
+  events: CalendarEvent[];
+  error: string | null;
+}> {
+  const result = await fetchGoogleEvents();
+  if (process.env.NODE_ENV !== "development") return result;
+  // In dev the mock shows even when the calendar can't load (e.g. no API key).
+  if (result.error) console.warn("[calendar] Showing only the dev mock event:", result.error);
+  const events = [...result.events, ...mockEvents()].sort((a, b) => a.date.getTime() - b.date.getTime());
+  return { events, error: null };
+}
+
+async function fetchGoogleEvents(): Promise<{
   events: CalendarEvent[];
   error: string | null;
 }> {
