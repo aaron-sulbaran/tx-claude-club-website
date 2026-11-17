@@ -23,9 +23,8 @@ export const metadata: Metadata = {
   title: "UT Austin Claude Builder Club",
   description:
     "University of Texas at Austin Claude Builder Club: workshops, hackathons, and demos.",
-  icons: {
-    icon: "/images/claude_logo.svg",
-  },
+  // The favicon is app/icon.png (and app/apple-icon.png): the club's tower and sun
+  // on a clay square, cropped tight so the tower still reads at 16 px.
 };
 
 export default function RootLayout({
