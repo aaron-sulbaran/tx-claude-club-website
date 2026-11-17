@@ -1,7 +1,10 @@
 // ============================================================
-// Google Sheets API Integration — Meeting Slides Library
+// Google Sheets API integration: the meeting slides library
 // ============================================================
-// Sheet columns: Title | Date | Link | Description | Topic
+// Sheet columns: Title | Date | Link | Description | Topic | Tags
+// The sheet's "Topic" column holds the meeting type (GM, Mini Demo). The
+// optional "Tags" column holds subject tags, comma separated (MCP, Claude
+// Code); the Slides filter offers a Topic section once any deck has one.
 // ============================================================
 
 export interface SlideEntry {
@@ -10,7 +13,8 @@ export interface SlideEntry {
   date: Date;
   url: string;
   description: string;
-  topic: string;
+  meetingType: string;
+  topics: string[];
 }
 
 interface GoogleSheetsResponse {
@@ -32,12 +36,12 @@ export function getThumbnailUrl(url: string): string | null {
   if (!url.includes("docs.google.com/presentation")) return null;
   const id = extractPresentationId(url);
   if (!id) return null;
-  // Export first slide as PNG — works reliably for publicly shared presentations
+  // Export the first slide as PNG; this works reliably for publicly shared presentations
   return `https://docs.google.com/presentation/d/${id}/export/png`;
 }
 
 function parseRow(row: string[], index: number): SlideEntry | null {
-  const [title, date, url, description, topic] = row;
+  const [title, date, url, description, meetingType, tags] = row;
 
   if (!title || !date || !url) return null;
 
@@ -50,7 +54,11 @@ function parseRow(row: string[], index: number): SlideEntry | null {
     date: parsed,
     url: url.trim(),
     description: (description || "").trim(),
-    topic: (topic || "").trim(),
+    meetingType: (meetingType || "").trim(),
+    topics: (tags || "")
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean),
   };
 }
 
@@ -69,8 +77,8 @@ export async function fetchSlides(): Promise<{
     };
   }
 
-  // Fetch rows from Sheet1, skipping the header row (A2:E)
-  const range = encodeURIComponent("Sheet1!A2:E");
+  // Fetch rows from Sheet1, skipping the header row (A2:F)
+  const range = encodeURIComponent("Sheet1!A2:F");
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
   try {
